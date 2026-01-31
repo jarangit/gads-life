@@ -18,9 +18,9 @@ export const Button: React.FC<ButtonProps> = ({
   href
 }) => {
   const variants = {
-    primary: 'bg-[#05db04] text-white hover:bg-[#04b803]',
+    primary: 'bg-brand text-white hover:bg-brand-dark',
     secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
-    ghost: 'bg-transparent text-[#05db04] hover:bg-[#e6ffe6]',
+    ghost: 'bg-transparent text-brand hover:bg-brand-light',
   };
 
   const sizes = {

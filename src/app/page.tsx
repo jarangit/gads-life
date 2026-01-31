@@ -1,5 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
+import { FiCheck, FiArrowRight, FiArrowUpRight, FiSend } from 'react-icons/fi';
+import { HiOutlineLightBulb } from 'react-icons/hi';
+import { RiRobot2Line } from 'react-icons/ri';
+import { BsHeadphones, BsPhone, BsDiamond } from 'react-icons/bs';
+import { BiTargetLock } from 'react-icons/bi';
 
 export default function Home() {
   return (
@@ -9,7 +14,7 @@ export default function Home() {
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center">
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-              <span className="text-[#05db04] text-xl">✓</span>
+              <FiCheck className="text-brand text-xl" />
             </div>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
@@ -41,7 +46,7 @@ export default function Home() {
         <Link href="/category" className="md:col-span-1 lg:row-span-2">
           <div className="bg-black rounded-[2rem] p-8 h-full min-h-[400px] flex flex-col justify-between relative overflow-hidden group cursor-pointer">
             <div>
-              <span className="text-[#05db04] text-sm font-semibold tracking-wider uppercase">
+              <span className="text-brand text-sm font-semibold tracking-wider uppercase">
                 CURATED PICKS
               </span>
               <h1 className="text-white text-4xl md:text-5xl font-bold mt-4 leading-tight">
@@ -54,7 +59,7 @@ export default function Home() {
             {/* Product Image Placeholder */}
             <div className="absolute bottom-8 right-4 w-48 h-48 opacity-80">
               <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl flex items-center justify-center">
-                <span className="text-6xl">🤖</span>
+                <RiRobot2Line className="text-6xl text-gray-400" />
               </div>
             </div>
 
@@ -64,9 +69,7 @@ export default function Home() {
                 <span className="text-black font-semibold">All products</span>
               </div>
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <FiArrowRight className="w-5 h-5" />
               </div>
             </div>
           </div>
@@ -79,9 +82,7 @@ export default function Home() {
               WORLD OF GADGETS
             </span>
             <div className="w-8 h-8 border border-gray-400 rounded-full flex items-center justify-center">
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-              </svg>
+              <FiArrowUpRight className="w-4 h-4 text-gray-600" />
             </div>
           </div>
           
@@ -109,9 +110,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="w-8 h-8 border border-purple-400 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-purple-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                </svg>
+                <FiArrowUpRight className="w-4 h-4 text-purple-900" />
               </div>
             </div>
             <h2 className="text-4xl font-bold text-purple-900 absolute bottom-6 left-6">
@@ -122,7 +121,7 @@ export default function Home() {
 
         {/* Contact Card - Green */}
         <Link href="/contact" className="block">
-          <div className="bg-[#05db04] rounded-[2rem] p-6 min-h-[200px] relative group cursor-pointer hover:bg-[#04c903] transition-colors">
+          <div className="bg-brand rounded-[2rem] p-6 min-h-[200px] relative group cursor-pointer hover:bg-brand-hover transition-colors">
             <div className="flex justify-between items-start">
               <div>
                 <span className="text-green-900 text-xs font-semibold tracking-wider uppercase block">
@@ -133,9 +132,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="w-8 h-8 border border-green-700 rounded-full flex items-center justify-center">
-                <svg className="w-4 h-4 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
+                <FiSend className="w-4 h-4 text-green-900" />
               </div>
             </div>
             <h2 className="text-4xl font-bold text-black absolute bottom-6 left-6">
@@ -154,12 +151,10 @@ export default function Home() {
               <div className="bg-white rounded-[2rem] p-6 min-h-[180px] relative group cursor-pointer hover:shadow-lg transition-shadow">
                 <div className="flex justify-between items-start">
                   <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                    🤖
+                    <RiRobot2Line className="text-gray-700" />
                   </div>
-                  <div className="w-8 h-8 bg-[#05db04] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7v10" />
-                    </svg>
+                  <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <FiArrowUpRight className="w-4 h-4 text-white" />
                   </div>
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mt-4">Robot Vacuums</h3>
@@ -171,7 +166,7 @@ export default function Home() {
             <div className="bg-white/50 rounded-[2rem] p-6 min-h-[180px] relative opacity-60">
               <div className="flex justify-between items-start">
                 <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                  🎧
+                  <BsHeadphones className="text-gray-700" />
                 </div>
                 <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
                   SOON
@@ -185,7 +180,7 @@ export default function Home() {
             <div className="bg-white/50 rounded-[2rem] p-6 min-h-[180px] relative opacity-60">
               <div className="flex justify-between items-start">
                 <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                  📱
+                  <BsPhone className="text-gray-700" />
                 </div>
                 <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
                   SOON
@@ -202,8 +197,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             
             <div className="bg-black rounded-[2rem] p-6 text-white">
-              <div className="w-12 h-12 bg-[#05db04] rounded-xl flex items-center justify-center mb-4">
-                <span className="text-2xl">✓</span>
+              <div className="w-12 h-12 bg-brand rounded-xl flex items-center justify-center mb-4">
+                <FiCheck className="text-2xl text-white" />
               </div>
               <h3 className="text-lg font-bold mb-2">จากการใช้งานจริง</h3>
               <p className="text-gray-400 text-sm">
@@ -213,7 +208,7 @@ export default function Home() {
 
             <div className="bg-white rounded-[2rem] p-6">
               <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-                <span className="text-2xl">🎯</span>
+                <BiTargetLock className="text-2xl text-purple-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">ตัดสินใจง่าย</h3>
               <p className="text-gray-500 text-sm">
@@ -223,7 +218,7 @@ export default function Home() {
 
             <div className="bg-white rounded-[2rem] p-6">
               <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                <span className="text-2xl">💎</span>
+                <BsDiamond className="text-2xl text-green-600" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-2">โปร่งใส</h3>
               <p className="text-gray-500 text-sm">
@@ -240,9 +235,9 @@ export default function Home() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-              <span className="text-[#05db04] text-sm">✓</span>
+              <FiCheck className="text-brand text-sm" />
             </div>
-            <span className="font-bold text-gray-900">gads✓life</span>
+            <span className="font-bold text-gray-900">gads<FiCheck className="inline text-brand" />life</span>
           </div>
           <div className="flex gap-6 text-sm text-gray-600">
             <Link href="/disclosure" className="hover:text-black">Disclosure</Link>

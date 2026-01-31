@@ -3,9 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --brand: #00b500;
+  --brand: #05db04;
   --brand-dark: #04b803;
   --brand-light: #e6ffe6;
+  --brand-hover: #04c903;
 }
 
 @theme inline {
@@ -14,6 +15,7 @@
   --color-brand: var(--brand);
   --color-brand-dark: var(--brand-dark);
   --color-brand-light: var(--brand-light);
+  --color-brand-hover: var(--brand-hover);
   --font-sans: var(--font-ibm-plex);
   --font-mono: var(--font-geist-mono);
 }

@@ -13,7 +13,7 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const variants = {
     default: 'bg-white border border-gray-200',
-    highlight: 'bg-[#e6ffe6] border-2 border-[#05db04]',
+    highlight: 'bg-brand-light border-2 border-brand',
   };
 
   return (

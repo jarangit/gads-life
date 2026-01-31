@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { FiCheck } from 'react-icons/fi';
 
 export const Header: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ export const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-bold text-gray-900">
-              gads<span className="text-[#05db04]">✓</span>life
+              gads<FiCheck className="inline text-brand" />life
             </span>
           </Link>
           <nav>

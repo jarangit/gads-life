@@ -13,8 +13,8 @@ export const Badge: React.FC<BadgeProps> = ({
 }) => {
   const variants = {
     default: 'bg-gray-100 text-gray-800',
-    success: 'bg-[#e6ffe6] text-[#04b803]',
-    info: 'bg-[#e6ffe6] text-[#04b803]',
+    success: 'bg-brand-light text-brand-dark',
+    info: 'bg-brand-light text-brand-dark',
     warning: 'bg-yellow-100 text-yellow-800',
   };
 

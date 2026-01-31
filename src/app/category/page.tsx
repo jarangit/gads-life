@@ -7,6 +7,8 @@ import { Card } from '@/components/Card';
 import { ProductCard } from '@/components/ProductCard';
 import { FAQ } from '@/components/FAQ';
 import { robotVacuumCategoryData as data } from '@/data/categories';
+import { FiCheck, FiArrowRight } from 'react-icons/fi';
+import { HiOutlineLightBulb } from 'react-icons/hi';
 
 export default function CategoryPage() {
   return (
@@ -28,7 +30,7 @@ export default function CategoryPage() {
           <div className="space-y-2 mb-8">
             {data.hero.trustPoints.map((point, index) => (
               <div key={index} className="flex items-center gap-2 text-gray-700">
-                <span className="text-[#05db04]">✓</span>
+                <FiCheck className="text-brand" />
                 <span>{point.text}</span>
               </div>
             ))}
@@ -41,7 +43,7 @@ export default function CategoryPage() {
 
         {/* 2️⃣ Trust Framing */}
         <section className="mb-16">
-          <div className="bg-gray-50 border-l-4 border-[#05db04] p-6 rounded-r-lg">
+          <div className="bg-gray-50 border-l-4 border-brand p-6 rounded-r-lg">
             <p className="text-gray-700 whitespace-pre-line">
               {data.trustFraming}
             </p>
@@ -89,7 +91,7 @@ export default function CategoryPage() {
             </div>
 
             <div className="mb-6">
-              <h3 className="font-semibold text-[#04b803] mb-2">เหมาะกับ</h3>
+              <h3 className="font-semibold text-brand-dark mb-2">เหมาะกับ</h3>
               <p className="text-gray-700">
                 {data.safeChoice.bestFor}
               </p>
@@ -102,8 +104,8 @@ export default function CategoryPage() {
               </p>
             </div>
 
-            <Button variant="primary" size="lg">
-              ดูราคาล่าสุด →
+            <Button variant="primary" size="lg" className="flex items-center gap-1">
+              ดูราคาล่าสุด <FiArrowRight />
             </Button>
           </Card>
         </section>
@@ -152,8 +154,9 @@ export default function CategoryPage() {
               ))}
 
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r">
-                <p className="text-gray-800">
-                  <strong>💡 คำแนะนำ:</strong> {data.compareHelper.hint}
+                <p className="text-gray-800 flex items-start gap-2">
+                  <HiOutlineLightBulb className="text-yellow-500 text-xl flex-shrink-0 mt-0.5" />
+                  <span><strong>คำแนะนำ:</strong> {data.compareHelper.hint}</span>
                 </p>
               </div>
             </div>

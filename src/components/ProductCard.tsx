@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Badge } from './Badge';
 import { Button } from './Button';
 import { Card } from './Card';
+import { FiCheck, FiX, FiArrowRight } from 'react-icons/fi';
 
 interface ProductCardProps {
   rank: number;
@@ -48,7 +49,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className="space-y-4 mb-4 border-t pt-4">
           {pros.length > 0 && (
             <div>
-              <h4 className="font-semibold text-[#04b803] mb-2">✓ ข้อดี</h4>
+              <h4 className="font-semibold text-brand-dark mb-2 flex items-center gap-1"><FiCheck /> ข้อดี</h4>
               <ul className="space-y-1">
                 {pros.map((pro, idx) => (
                   <li key={idx} className="text-sm text-gray-700">• {pro}</li>
@@ -59,7 +60,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {cons.length > 0 && (
             <div>
-              <h4 className="font-semibold text-red-800 mb-2">✗ ข้อเสีย</h4>
+              <h4 className="font-semibold text-red-800 mb-2 flex items-center gap-1"><FiX /> ข้อเสีย</h4>
               <ul className="space-y-1">
                 {cons.map((con, idx) => (
                   <li key={idx} className="text-sm text-gray-700">• {con}</li>
@@ -70,7 +71,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {bestFor && (
             <div>
-              <h4 className="font-semibold text-[#04b803] mb-2">เหมาะกับ</h4>
+              <h4 className="font-semibold text-brand-dark mb-2">เหมาะกับ</h4>
               <p className="text-sm text-gray-700">{bestFor}</p>
             </div>
           )}
@@ -92,8 +93,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         >
           {isExpanded ? 'ซ่อนรายละเอียด' : 'ดูรายละเอียด'}
         </Button>
-        <Button variant="primary" size="sm">
-          ดูราคาล่าสุด →
+        <Button variant="primary" size="sm" className="flex items-center gap-1">
+          ดูราคาล่าสุด <FiArrowRight />
         </Button>
       </div>
     </Card>
