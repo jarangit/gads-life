@@ -12,8 +12,24 @@ export interface Category {
   icon?: string;
 }
 
+export interface Subcategory {
+  id: string;
+  type: 'subcategory';
+  parentCategoryId: string;
+  title: string;
+  slug: string;
+  description: string;
+  order: number;
+  status: CategoryStatus;
+  icon?: string;
+}
+
 export interface CategoriesData {
   categories: Category[];
+}
+
+export interface SubcategoriesData {
+  subcategories: Subcategory[];
 }
 
 // Categories Data
@@ -127,4 +143,97 @@ export const getCategoryBySlug = (slug: string): Category | undefined => {
 
 export const getCategoryById = (id: string): Category | undefined => {
   return categoriesData.categories.find((cat) => cat.id === id);
+};
+
+// Subcategories Data
+export const subcategoriesData: SubcategoriesData = {
+  subcategories: [
+    {
+      id: 'power-bank',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'Power Bank',
+      slug: 'power-bank',
+      description: 'แบตเตอรี่สำรองสำหรับพกพาในชีวิตประจำวัน',
+      order: 1,
+      status: 'active',
+      icon: 'power-bank',
+    },
+    {
+      id: 'wall-charger',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'Wall Charger & GaN Charger',
+      slug: 'wall-charger',
+      description: 'หัวชาร์จไฟบ้าน รวมถึง GaN Charger สำหรับใช้งานทั่วไป',
+      order: 2,
+      status: 'active',
+      icon: 'wall-charger',
+    },
+    {
+      id: 'charging-cable',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'Charging Cables',
+      slug: 'charging-cable',
+      description: 'สายชาร์จ USB-C, Lightning และสายอเนกประสงค์',
+      order: 3,
+      status: 'active',
+      icon: 'charging-cable',
+    },
+    {
+      id: 'magsafe-wireless',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'MagSafe & Wireless Charging',
+      slug: 'magsafe-wireless',
+      description: 'อุปกรณ์ชาร์จไร้สาย และ MagSafe',
+      order: 4,
+      status: 'draft',
+      icon: 'magsafe-wireless',
+    },
+    {
+      id: 'charging-station',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'Charging Station',
+      slug: 'charging-station',
+      description: 'แท่นชาร์จหลายอุปกรณ์สำหรับบ้านและโต๊ะทำงาน',
+      order: 5,
+      status: 'draft',
+      icon: 'charging-station',
+    },
+    {
+      id: 'car-charger',
+      type: 'subcategory',
+      parentCategoryId: 'charging-power',
+      title: 'Car Charger',
+      slug: 'car-charger',
+      description: 'อุปกรณ์ชาร์จไฟสำหรับใช้งานในรถยนต์',
+      order: 6,
+      status: 'hidden',
+      icon: 'car-charger',
+    },
+  ],
+};
+
+// Subcategory Helper functions
+export const getSubcategoriesByCategoryId = (categoryId: string): Subcategory[] => {
+  return subcategoriesData.subcategories
+    .filter((sub) => sub.parentCategoryId === categoryId && sub.status !== 'hidden')
+    .sort((a, b) => a.order - b.order);
+};
+
+export const getActiveSubcategoriesByCategoryId = (categoryId: string): Subcategory[] => {
+  return subcategoriesData.subcategories
+    .filter((sub) => sub.parentCategoryId === categoryId && sub.status === 'active')
+    .sort((a, b) => a.order - b.order);
+};
+
+export const getSubcategoryBySlug = (slug: string): Subcategory | undefined => {
+  return subcategoriesData.subcategories.find((sub) => sub.slug === slug);
+};
+
+export const getSubcategoryById = (id: string): Subcategory | undefined => {
+  return subcategoriesData.subcategories.find((sub) => sub.id === id);
 };

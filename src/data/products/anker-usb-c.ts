@@ -2,8 +2,8 @@ import { ProductData } from "./macbook-air-m3";
 
 export const data: ProductData = {
   id: "anker-powerline-plus-iii",
-  category: "charging-cable",
-  categoryLabel: "สายชาร์จ",
+  subCategory: "charging-cable",
+  subCategoryLabel: "สายชาร์จ",
   name: "Anker PowerLine+ III (Series 544)",
   subtitle: "สายชาร์จ USB-C คุณภาพสูง แข็งแรง ทนทาน รองรับ PD ชาร์จเร็ว",
   image: "https://images.anker.com/powerline-plus-iii.jpg",
@@ -11,10 +11,10 @@ export const data: ProductData = {
   overallScore: 4.7,
   isRecommended: true,
   ratings: [
-    { category: "ความทนทาน", score: 5 },
-    { category: "ความเร็วในการชาร์จ", score: 5 },
-    { category: "ความเข้ากันได้", score: 4 },
-    { category: "ราคา", score: 4 },
+    { subCategory: "ความทนทาน", score: 5 },
+    { subCategory: "ความเร็วในการชาร์จ", score: 5 },
+    { subCategory: "ความเข้ากันได้", score: 4 },
+    { subCategory: "ราคา", score: 4 },
   ],
 
   quickVerdict: {

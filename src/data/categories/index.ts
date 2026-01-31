@@ -16,5 +16,7 @@ export * from './categories-list';
 export type { 
   Category, 
   CategoryStatus, 
-  CategoriesData 
+  CategoriesData,
+  Subcategory,
+  SubcategoriesData
 } from './categories-list';

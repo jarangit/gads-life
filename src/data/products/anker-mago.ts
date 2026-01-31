@@ -2,8 +2,8 @@ import { ProductData } from "./macbook-air-m3";
 
 export const data: ProductData = {
   id: "anker-maggo-10k-qi2",
-  category: "power-bank",
-  categoryLabel: "แบตสำรองไร้สาย",
+  subCategory: "power-bank",
+  subCategoryLabel: "แบตสำรองไร้สาย",
   name: "Anker MagGo Power Bank 10K (Qi2)",
   subtitle: "แบตสำรองไร้สาย MagSafe รองรับ Qi2, ขนาดกะทัดรัด ชาร์จเร็ว 15W",
   image: "https://cdn.anker.com/image/anker-maggo-qi2-10k.jpg",
@@ -11,10 +11,10 @@ export const data: ProductData = {
   overallScore: 4.6,
   isRecommended: true,
   ratings: [
-    { category: "ความสะดวกในการใช้งาน", score: 5 },
-    { category: "ความเร็วในการชาร์จ", score: 4 },
-    { category: "ดีไซน์และวัสดุ", score: 5 },
-    { category: "ความคุ้มค่า", score: 4 },
+    { subCategory: "ความสะดวกในการใช้งาน", score: 5 },
+    { subCategory: "ความเร็วในการชาร์จ", score: 4 },
+    { subCategory: "ดีไซน์และวัสดุ", score: 5 },
+    { subCategory: "ความคุ้มค่า", score: 4 },
   ],
 
   quickVerdict: {

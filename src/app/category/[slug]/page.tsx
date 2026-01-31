@@ -8,9 +8,11 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { ProductCard } from '@/components/ProductCard';
 import { FAQ } from '@/components/FAQ';
+import { SubcategoryGrid } from '@/components/SubcategoryCard';
 import { 
   getCategoryBySlug, 
   getAllVisibleCategories,
+  getSubcategoriesByCategoryId,
   robotVacuumCategoryData,
   type CategoryPageData
 } from '@/data/categories';
@@ -81,6 +83,63 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
   // Get the category page data (if available)
   const data = categoryDataMap[slug];
+  
+  // Get subcategories for this category
+  const subcategories = getSubcategoriesByCategoryId(category.id);
+  
+  // If has subcategories, show subcategory listing page
+  if (subcategories.length > 0) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Link 
+            href="/categories" 
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-8"
+          >
+            <FiArrowLeft /> กลับไปหน้าหมวดหมู่
+          </Link>
+          
+          {/* Category Header */}
+          <div className="bg-white rounded-2xl p-8 mb-8 shadow-sm">
+            <Badge variant="default" className="mb-4">{category.title}</Badge>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {category.title}
+            </h1>
+            <p className="text-lg text-gray-600 max-w-2xl">
+              {category.description}
+            </p>
+            
+            {/* Stats */}
+            <div className="flex gap-6 mt-6 pt-6 border-t border-gray-100">
+              <div>
+                <div className="text-2xl font-bold text-brand">
+                  {subcategories.filter(s => s.status === 'active').length}
+                </div>
+                <div className="text-sm text-gray-500">หมวดย่อยพร้อมให้บริการ</div>
+              </div>
+              {subcategories.filter(s => s.status === 'draft').length > 0 && (
+                <div>
+                  <div className="text-2xl font-bold text-yellow-500">
+                    {subcategories.filter(s => s.status === 'draft').length}
+                  </div>
+                  <div className="text-sm text-gray-500">เร็วๆ นี้</div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Subcategories Grid */}
+          <SubcategoryGrid 
+            subcategories={subcategories}
+            categorySlug={slug}
+            title="เลือกหมวดย่อยที่สนใจ"
+          />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
   
   // If no detailed data yet, show placeholder
   if (!data) {

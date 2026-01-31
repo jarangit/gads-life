@@ -1,18 +1,45 @@
-"use client";
+import React from 'react';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import { 
+  getCategoryBySlug,
+  getSubcategoryBySlug,
+} from '@/data/categories';
+import { getProductById } from '@/data/products';
+import { FiArrowLeft, FiArrowRight, FiCheck, FiX } from 'react-icons/fi';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { macbookAirM3 } from "@/data/products";
-import { data as ankerUSBC } from "@/data/products/anker-usb-c";
-import { data as ankerMago } from "@/data/products/anker-mago";
+interface ProductDetailPageProps {
+  params: Promise<{
+    slug: string;
+    subSlug: string;
+    productId: string;
+  }>;
+}
 
-import { FiCheck, FiX, FiArrowRight, FiArrowLeft } from "react-icons/fi";
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const { slug, subSlug, productId } = await params;
+  
+  // Get parent category
+  const category = getCategoryBySlug(slug);
+  if (!category || category.status === 'hidden') {
+    notFound();
+  }
+  
+  // Get subcategory
+  const subcategory = getSubcategoryBySlug(subSlug);
+  if (!subcategory || subcategory.parentCategoryId !== category.id || subcategory.status === 'hidden') {
+    notFound();
+  }
 
-export default function MacBookDetailPage() {
+  // Get product
+  const product = getProductById(productId);
+  if (!product || product.subCategory !== subcategory.id) {
+    notFound();
+  }
+
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("th-TH").format(price);
+    return new Intl.NumberFormat('th-TH').format(price);
   };
-  const [product, setproduct] = useState(ankerMago);
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] p-4 md:p-8">
@@ -29,10 +56,10 @@ export default function MacBookDetailPage() {
           </span>
         </Link>
         <Link
-          href="/subCategory"
+          href={`/category/${slug}/${subSlug}`}
           className="text-gray-600 hover:text-black font-medium flex items-center gap-1"
         >
-          <FiArrowLeft /> กลับไปหน้ารวม
+          <FiArrowLeft /> กลับไป {subcategory.title}
         </Link>
       </header>
 
@@ -71,9 +98,7 @@ export default function MacBookDetailPage() {
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div
                       key={i}
-                      className={`w-6 h-2 rounded-full ${
-                        i <= rating.score ? "bg-brand" : "bg-gray-700"
-                      }`}
+                      className={`w-6 h-2 rounded-full ${i <= rating.score ? 'bg-brand' : 'bg-gray-700'}`}
                     ></div>
                   ))}
                 </div>
@@ -94,7 +119,7 @@ export default function MacBookDetailPage() {
           <div className="text-center">
             <div className="text-9xl mb-4">{product.image}</div>
             <span className="text-gray-500 text-sm">
-              {product.name} {product.subtitle.split(" • ")[0]}
+              {product.name}
             </span>
           </div>
         </div>
@@ -175,7 +200,7 @@ export default function MacBookDetailPage() {
         </div>
       </div>
 
-      {/* Review Section - After Usage */}
+      {/* Review Section - Before/After */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Before Purchase - ก่อนซื้อ */}
         <div className="lg:col-span-2 bg-white rounded-[2rem] p-8">
@@ -220,7 +245,7 @@ export default function MacBookDetailPage() {
               <div key={index} className="flex items-start gap-3">
                 <FiCheck className="text-brand mt-1" />
                 <p className="text-gray-300">
-                  <strong className="text-white">{point.highlight}</strong> —{" "}
+                  <strong className="text-white">{point.highlight}</strong> —{' '}
                   {point.detail}
                 </p>
               </div>
@@ -319,17 +344,22 @@ export default function MacBookDetailPage() {
                   <p className="text-3xl font-bold">
                     ฿{formatPrice(product.pricing.price)}
                   </p>
-                  {product.pricing.monthlyPrice ? (
+                  {product.pricing.monthlyPrice && (
                     <span className="text-gray-400 text-sm">
                       หรือ ฿{formatPrice(product.pricing.monthlyPrice)}/เดือน
                     </span>
-                  ) : (
-                    ""
                   )}
                 </div>
-                <button className="bg-brand text-black font-bold px-8 py-4 rounded-full hover:bg-brand-hover transition-colors flex items-center gap-2">
-                  เช็กราคาล่าสุด <FiArrowRight />
-                </button>
+                {product.affiliateLink && (
+                  <a 
+                    href={product.affiliateLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-brand text-black font-bold px-8 py-4 rounded-full hover:bg-brand-hover transition-colors flex items-center gap-2"
+                  >
+                    เช็กราคาล่าสุด <FiArrowRight />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -356,4 +386,29 @@ export default function MacBookDetailPage() {
       </footer>
     </div>
   );
+}
+
+// Generate static params for all products
+export async function generateStaticParams() {
+  const { getAllVisibleCategories, getSubcategoriesByCategoryId } = await import('@/data/categories');
+  const { getProductsBySubcategory } = await import('@/data/products');
+  
+  const categories = getAllVisibleCategories();
+  const params: { slug: string; subSlug: string; productId: string }[] = [];
+  
+  for (const category of categories) {
+    const subcategories = getSubcategoriesByCategoryId(category.id);
+    for (const subcategory of subcategories) {
+      const products = getProductsBySubcategory(subcategory.id);
+      for (const product of products) {
+        params.push({
+          slug: category.slug,
+          subSlug: subcategory.slug,
+          productId: product.id,
+        });
+      }
+    }
+  }
+  
+  return params;
 }

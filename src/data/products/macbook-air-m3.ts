@@ -1,5 +1,5 @@
 export interface ProductRating {
-  category: string;
+  subCategory: string;
   score: number; // 1-5
 }
 
@@ -28,8 +28,8 @@ export interface ProCon {
 export interface ProductData {
   // Basic Info
   id: string;
-  category: string;
-  categoryLabel: string;
+  subCategory: string;
+  subCategoryLabel: string;
   name: string;
   subtitle: string;
   image: string;
@@ -95,8 +95,8 @@ export interface ProductData {
 export const macbookAirM3: ProductData = {
   // Basic Info
   id: "macbook-air-m3-15",
-  category: "LAPTOP",
-  categoryLabel: "LAPTOP • REVIEWED",
+  subCategory: "LAPTOP",
+  subCategoryLabel: "LAPTOP • REVIEWED",
   name: "MacBook Air M3",
   subtitle: "15\" • 2024 • Space Gray",
   image: "💻",
@@ -105,10 +105,10 @@ export const macbookAirM3: ProductData = {
   overallScore: 9.2,
   isRecommended: true,
   ratings: [
-    { category: "Performance", score: 5 },
-    { category: "Battery", score: 5 },
-    { category: "Display", score: 4 },
-    { category: "Value", score: 4 },
+    { subCategory: "Performance", score: 5 },
+    { subCategory: "Battery", score: 5 },
+    { subCategory: "Display", score: 4 },
+    { subCategory: "Value", score: 4 },
   ],
   
   // Quick Verdict
