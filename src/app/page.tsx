@@ -1,12 +1,30 @@
 import React from 'react';
 import Link from 'next/link';
 import { FiCheck, FiArrowRight, FiArrowUpRight, FiSend } from 'react-icons/fi';
-import { HiOutlineLightBulb } from 'react-icons/hi';
+import { HiOutlineLightBulb, HiOutlineDesktopComputer, HiOutlineDeviceMobile, HiOutlineMusicNote, HiOutlineHome, HiOutlineLightningBolt, HiOutlineHeart, HiOutlineOfficeBuilding } from 'react-icons/hi';
 import { RiRobot2Line } from 'react-icons/ri';
-import { BsHeadphones, BsPhone, BsDiamond } from 'react-icons/bs';
+import { BsHeadphones, BsPhone, BsDiamond, BsSmartwatch } from 'react-icons/bs';
 import { BiTargetLock } from 'react-icons/bi';
+import { getAllVisibleCategories, type Category } from '@/data/categories';
+
+// Icon mapping for categories
+const categoryIcons: Record<string, React.ReactNode> = {
+  laptop: <HiOutlineDesktopComputer className="text-gray-700" />,
+  smartphone: <HiOutlineDeviceMobile className="text-gray-700" />,
+  audio: <HiOutlineMusicNote className="text-gray-700" />,
+  wearable: <BsSmartwatch className="text-gray-700" />,
+  home: <HiOutlineHome className="text-gray-700" />,
+  'home-gadgets': <HiOutlineHome className="text-gray-700" />,
+  desk: <HiOutlineOfficeBuilding className="text-gray-700" />,
+  charging: <HiOutlineLightningBolt className="text-gray-700" />,
+  'charging-power': <HiOutlineLightningBolt className="text-gray-700" />,
+  health: <HiOutlineHeart className="text-gray-700" />,
+  'health-lifestyle': <HiOutlineHeart className="text-gray-700" />,
+};
 
 export default function Home() {
+  const categories = getAllVisibleCategories();
+
   return (
     <div className="min-h-screen bg-[#f0f0f0] p-4 md:p-6">
       {/* Header */}
@@ -143,52 +161,65 @@ export default function Home() {
 
         {/* Categories Section */}
         <div className="md:col-span-2 lg:col-span-3 mt-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">หมวดหมู่แนะนำ</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            
-            {/* Robot Vacuum Card */}
-            <Link href="/category" className="block">
-              <div className="bg-white rounded-[2rem] p-6 min-h-[180px] relative group cursor-pointer hover:shadow-lg transition-shadow">
-                <div className="flex justify-between items-start">
-                  <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                    <RiRobot2Line className="text-gray-700" />
-                  </div>
-                  <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <FiArrowUpRight className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mt-4">Robot Vacuums</h3>
-                <p className="text-gray-500 text-sm mt-1">Top 5 ที่คุ้มที่สุดในปี 2026</p>
-              </div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-gray-900">หมวดหมู่แนะนำ</h2>
+            <Link href="/categories" className="text-brand font-medium hover:underline flex items-center gap-1">
+              ดูทั้งหมด <FiArrowRight className="w-4 h-4" />
             </Link>
-
-            {/* Headphones Card */}
-            <div className="bg-white/50 rounded-[2rem] p-6 min-h-[180px] relative opacity-60">
-              <div className="flex justify-between items-start">
-                <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                  <BsHeadphones className="text-gray-700" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {categories.slice(0, 4).map((category) => {
+              const isActive = category.status === 'active';
+              const isDraft = category.status === 'draft';
+              const isClickable = isActive || isDraft;
+              
+              const cardContent = (
+                <div 
+                  className={`
+                    bg-white rounded-[2rem] p-6 min-h-[180px] relative group
+                    transition-all duration-300
+                    ${isClickable ? 'hover:shadow-lg cursor-pointer' : 'bg-white/50 opacity-60'}
+                  `}
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
+                      {categoryIcons[category.icon || category.slug] || categoryIcons[category.id] || <HiOutlineDesktopComputer className="text-gray-700" />}
+                    </div>
+                    {isActive ? (
+                      <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <FiArrowUpRight className="w-4 h-4 text-white" />
+                      </div>
+                    ) : isDraft ? (
+                      <span className="text-xs font-medium text-yellow-800 bg-yellow-100 px-2 py-1 rounded-full">
+                        SOON
+                      </span>
+                    ) : (
+                      <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
+                        HIDDEN
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mt-4">{category.title}</h3>
+                  <p className={`text-sm mt-1 line-clamp-2 ${isClickable ? 'text-gray-500' : 'text-gray-400'}`}>
+                    {category.description}
+                  </p>
                 </div>
-                <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
-                  SOON
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mt-4">Headphones</h3>
-              <p className="text-gray-400 text-sm mt-1">เร็วๆ นี้</p>
-            </div>
-
-            {/* Smartphones Card */}
-            <div className="bg-white/50 rounded-[2rem] p-6 min-h-[180px] relative opacity-60">
-              <div className="flex justify-between items-start">
-                <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                  <BsPhone className="text-gray-700" />
+              );
+              
+              if (isClickable) {
+                return (
+                  <Link key={category.id} href={`/category/${category.slug}`} className="block">
+                    {cardContent}
+                  </Link>
+                );
+              }
+              
+              return (
+                <div key={category.id} className="block cursor-default">
+                  {cardContent}
                 </div>
-                <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
-                  SOON
-                </span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mt-4">Smartphones</h3>
-              <p className="text-gray-400 text-sm mt-1">เร็วๆ นี้</p>
-            </div>
+              );
+            })}
           </div>
         </div>
 

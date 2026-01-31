@@ -1,3 +1,4 @@
+// Category Page Data (for individual category pages)
 export * from './robot-vacuum';
 export type { 
   CategoryPageData, 
@@ -9,3 +10,11 @@ export type {
   CompareOption, 
   ObjectionItem 
 } from './robot-vacuum';
+
+// Categories List Data (for category listing)
+export * from './categories-list';
+export type { 
+  Category, 
+  CategoryStatus, 
+  CategoriesData 
+} from './categories-list';
