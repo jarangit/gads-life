@@ -1,7 +1,8 @@
-import React from 'react';
-import Link from 'next/link';
-import { FiArrowUpRight, FiCheck } from 'react-icons/fi';
-import type { ProductData } from '@/data/products';
+import React from "react";
+import Link from "next/link";
+import { FiArrowUpRight, FiCheck } from "react-icons/fi";
+import type { ProductData } from "@/data/products";
+import Image from "next/image";
 
 interface ProductListCardProps {
   product: ProductData;
@@ -15,7 +16,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
   subcategorySlug,
 }) => {
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('th-TH').format(price);
+    return new Intl.NumberFormat("th-TH").format(price);
   };
 
   return (
@@ -34,7 +35,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
               </span>
             </div>
           )}
-          
+
           {/* Arrow */}
           <div className="absolute top-4 right-4 w-8 h-8 bg-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
             <FiArrowUpRight className="w-4 h-4 text-white" />
@@ -42,12 +43,21 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
 
           {/* Product Image/Icon */}
           <div className="text-center py-4">
-            <span className="text-6xl">{product.image}</span>
+            {/* adjst to use tag image fo next js inteast */}
+            <Image
+              src={product.image ?? ''}
+              alt={product.name}
+              width={300}
+              height={300}
+              className="mx-auto"
+            />
           </div>
 
           {/* Score Badge */}
           <div className="absolute bottom-4 right-4 bg-black text-white px-3 py-1.5 rounded-full">
-            <span className="text-lg font-bold text-brand">{product.overallScore}</span>
+            <span className="text-lg font-bold text-brand">
+              {product.overallScore}
+            </span>
             <span className="text-xs text-gray-400">/5</span>
           </div>
         </div>
@@ -91,14 +101,17 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
           {/* Rating Bars */}
           <div className="mt-4 space-y-2">
             {product.ratings.slice(0, 3).map((rating, index) => (
-              <div key={index} className="flex items-center justify-between text-xs">
+              <div
+                key={index}
+                className="flex items-center justify-between text-xs"
+              >
                 <span className="text-gray-500">{rating.subCategory}</span>
                 <div className="flex gap-0.5">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div
                       key={i}
                       className={`w-4 h-1.5 rounded-full ${
-                        i <= rating.score ? 'bg-brand' : 'bg-gray-200'
+                        i <= rating.score ? "bg-brand" : "bg-gray-200"
                       }`}
                     />
                   ))}

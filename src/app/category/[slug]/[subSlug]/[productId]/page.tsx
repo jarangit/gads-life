@@ -1,12 +1,10 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { 
-  getCategoryBySlug,
-  getSubcategoryBySlug,
-} from '@/data/categories';
-import { getProductById } from '@/data/products';
-import { FiArrowLeft, FiArrowRight, FiCheck, FiX } from 'react-icons/fi';
+import React from "react";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { getCategoryBySlug, getSubcategoryBySlug } from "@/data/categories";
+import { getProductById } from "@/data/products";
+import { FiArrowLeft, FiArrowRight, FiCheck, FiX } from "react-icons/fi";
+import Image from "next/image";
 
 interface ProductDetailPageProps {
   params: Promise<{
@@ -16,18 +14,24 @@ interface ProductDetailPageProps {
   }>;
 }
 
-export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+export default async function ProductDetailPage({
+  params,
+}: ProductDetailPageProps) {
   const { slug, subSlug, productId } = await params;
-  
+
   // Get parent category
   const category = getCategoryBySlug(slug);
-  if (!category || category.status === 'hidden') {
+  if (!category || category.status === "hidden") {
     notFound();
   }
-  
+
   // Get subcategory
   const subcategory = getSubcategoryBySlug(subSlug);
-  if (!subcategory || subcategory.parentCategoryId !== category.id || subcategory.status === 'hidden') {
+  if (
+    !subcategory ||
+    subcategory.parentCategoryId !== category.id ||
+    subcategory.status === "hidden"
+  ) {
     notFound();
   }
 
@@ -38,7 +42,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
   }
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('th-TH').format(price);
+    return new Intl.NumberFormat("th-TH").format(price);
   };
 
   return (
@@ -98,7 +102,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div
                       key={i}
-                      className={`w-6 h-2 rounded-full ${i <= rating.score ? 'bg-brand' : 'bg-gray-700'}`}
+                      className={`w-6 h-2 rounded-full ${i <= rating.score ? "bg-brand" : "bg-gray-700"}`}
                     ></div>
                   ))}
                 </div>
@@ -117,10 +121,14 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
         {/* Hero Image Card */}
         <div className="md:col-span-2 lg:col-span-2 bg-gradient-to-br from-gray-100 to-gray-200 rounded-[2rem] p-8 relative overflow-hidden min-h-[300px] flex items-center justify-center">
           <div className="text-center">
-            <div className="text-9xl mb-4">{product.image}</div>
-            <span className="text-gray-500 text-sm">
-              {product.name}
-            </span>
+            <Image
+              src={product.image}
+              alt={product.name}
+              width={300}
+              height={300}
+              className="mx-auto"
+            />
+            <span className="text-gray-500 text-sm">{product.name}</span>
           </div>
         </div>
 
@@ -245,7 +253,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
               <div key={index} className="flex items-start gap-3">
                 <FiCheck className="text-brand mt-1" />
                 <p className="text-gray-300">
-                  <strong className="text-white">{point.highlight}</strong> —{' '}
+                  <strong className="text-white">{point.highlight}</strong> —{" "}
                   {point.detail}
                 </p>
               </div>
@@ -351,7 +359,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                   )}
                 </div>
                 {product.affiliateLink && (
-                  <a 
+                  <a
                     href={product.affiliateLink}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -390,12 +398,13 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  const { getAllVisibleCategories, getSubcategoriesByCategoryId } = await import('@/data/categories');
-  const { getProductsBySubcategory } = await import('@/data/products');
-  
+  const { getAllVisibleCategories, getSubcategoriesByCategoryId } =
+    await import("@/data/categories");
+  const { getProductsBySubcategory } = await import("@/data/products");
+
   const categories = getAllVisibleCategories();
   const params: { slug: string; subSlug: string; productId: string }[] = [];
-  
+
   for (const category of categories) {
     const subcategories = getSubcategoriesByCategoryId(category.id);
     for (const subcategory of subcategories) {
@@ -409,6 +418,6 @@ export async function generateStaticParams() {
       }
     }
   }
-  
+
   return params;
 }

@@ -1,35 +1,37 @@
-import React from 'react';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { Badge } from '@/components/Badge';
-import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
-import { ProductCard } from '@/components/ProductCard';
-import { FAQ } from '@/components/FAQ';
-import { robotVacuumCategoryData as data } from '@/data/categories';
-import { FiCheck, FiArrowRight } from 'react-icons/fi';
-import { HiOutlineLightBulb } from 'react-icons/hi';
+import React from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Badge } from "@/components/Badge";
+import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
+import { ProductCard } from "@/components/ProductCard";
+import { FAQ } from "@/components/FAQ";
+import { robotVacuumCategoryData as data } from "@/data/categories";
+import { FiCheck, FiArrowRight } from "react-icons/fi";
+import { HiOutlineLightBulb } from "react-icons/hi";
 
 export default function CategoryPage() {
   return (
     <div className="min-h-screen bg-white">
       <Header />
-      
+
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        
         {/* 1️⃣ Hero — Decision Promise */}
         <section className="mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             {data.hero.title}
           </h1>
-          
+
           <p className="text-xl text-gray-600 mb-6 whitespace-pre-line">
             {data.hero.subtitle}
           </p>
 
           <div className="space-y-2 mb-8">
             {data.hero.trustPoints.map((point, index) => (
-              <div key={index} className="flex items-center gap-2 text-gray-700">
+              <div
+                key={index}
+                className="flex items-center gap-2 text-gray-700"
+              >
                 <FiCheck className="text-brand" />
                 <span>{point.text}</span>
               </div>
@@ -55,16 +57,14 @@ export default function CategoryPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">
             {data.selectionCriteria.title}
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {data.selectionCriteria.items.map((item, index) => (
               <Card key={index}>
                 <h3 className="font-semibold text-gray-900 mb-2">
                   • {item.title}
                 </h3>
-                <p className="text-sm text-gray-600">
-                  {item.description}
-                </p>
+                <p className="text-sm text-gray-600">{item.description}</p>
               </Card>
             ))}
           </div>
@@ -82,7 +82,9 @@ export default function CategoryPage() {
             </h2>
 
             <div className="mb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">เหตุผลที่เราเลือก</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">
+                เหตุผลที่เราเลือก
+              </h3>
               <ul className="space-y-2 text-gray-700">
                 {data.safeChoice.reasons.map((reason, index) => (
                   <li key={index}>• {reason}</li>
@@ -92,19 +94,19 @@ export default function CategoryPage() {
 
             <div className="mb-6">
               <h3 className="font-semibold text-brand-dark mb-2">เหมาะกับ</h3>
-              <p className="text-gray-700">
-                {data.safeChoice.bestFor}
-              </p>
+              <p className="text-gray-700">{data.safeChoice.bestFor}</p>
             </div>
 
             <div className="mb-6">
               <h3 className="font-semibold text-orange-800 mb-2">ใครควรข้าม</h3>
-              <p className="text-gray-700">
-                {data.safeChoice.whoShouldSkip}
-              </p>
+              <p className="text-gray-700">{data.safeChoice.whoShouldSkip}</p>
             </div>
 
-            <Button variant="primary" size="lg" className="flex items-center gap-1">
+            <Button
+              variant="primary"
+              size="lg"
+              className="flex items-center gap-1"
+            >
               ดูราคาล่าสุด <FiArrowRight />
             </Button>
           </Card>
@@ -147,16 +149,16 @@ export default function CategoryPage() {
                   <h3 className="font-semibold text-gray-900 mb-2">
                     {option.name}
                   </h3>
-                  <p className="text-gray-700">
-                    {option.description}
-                  </p>
+                  <p className="text-gray-700">{option.description}</p>
                 </div>
               ))}
 
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r">
                 <p className="text-gray-800 flex items-start gap-2">
                   <HiOutlineLightBulb className="text-yellow-500 text-xl flex-shrink-0 mt-0.5" />
-                  <span><strong>คำแนะนำ:</strong> {data.compareHelper.hint}</span>
+                  <span>
+                    <strong>คำแนะนำ:</strong> {data.compareHelper.hint}
+                  </span>
                 </p>
               </div>
             </div>
@@ -175,9 +177,7 @@ export default function CategoryPage() {
                 <h3 className="font-semibold text-gray-900 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-gray-700">
-                  {item.description}
-                </p>
+                <p className="text-gray-700">{item.description}</p>
               </Card>
             ))}
           </div>
@@ -214,7 +214,6 @@ export default function CategoryPage() {
             <FAQ items={data.faq.items} />
           </Card>
         </section>
-
       </main>
 
       <Footer />
