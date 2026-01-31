@@ -13,9 +13,38 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://gads.life";
+
 export const metadata: Metadata = {
-  title: "gads✓life | เลือกของดี โดยไม่ต้องคิดเยอะ",
-  description: "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "gads✓life | เลือกของดี โดยไม่ต้องคิดเยอะ",
+    template: "%s | gads✓life",
+  },
+  description:
+    "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
+  alternates: {
+    canonical: "/",
+    languages: {
+      "th-TH": "/",
+      "en-US": "/en",
+    },
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    title: "gads✓life | เลือกของดี โดยไม่ต้องคิดเยอะ",
+    description:
+      "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
+    siteName: "gads✓life",
+    locale: "th_TH",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "gads✓life | เลือกของดี โดยไม่ต้องคิดเยอะ",
+    description:
+      "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
+  },
 };
 
 export default function RootLayout({
@@ -23,12 +52,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "gads✓life",
+    url: siteUrl,
+    inLanguage: ["th-TH", "en-US"],
+    description:
+      "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
+  };
+
   return (
     <html lang="th">
       <body
         className={`${ibmPlexSansThai.variable} ${geistMono.variable} antialiased font-sans`}
       >
         {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );
