@@ -2,12 +2,20 @@ import React from 'react';
 import Link from 'next/link';
 import { FiCheck, FiArrowRight } from 'react-icons/fi';
 import { CategoryGrid } from '@/components/CategoryCard';
-import { getAllVisibleCategories } from '@/data/categories';
+import { getCategories } from '@/app/service/public-api';
+import type { ICategoryItemVm } from '@/types/models/category';
 
-export default function CategoriesPage() {
-  const categories = getAllVisibleCategories();
-  const activeCount = categories.filter(c => c.status === 'active').length;
-  const comingSoonCount = categories.filter(c => c.status === 'draft').length;
+export default async function CategoriesPage() {
+  let categories: ICategoryItemVm[] = [];
+  let total = 0;
+
+  try {
+    const res = await getCategories({ limit: 50 });
+    categories = res.items ?? [];
+    total = res.total ?? 0;
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+  }
 
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
@@ -68,15 +76,9 @@ export default function CategoriesPage() {
               {/* Stats */}
               <div className="flex gap-8 mt-8">
                 <div>
-                  <div className="text-3xl font-bold text-brand">{activeCount}</div>
+                  <div className="text-3xl font-bold text-brand">{total}</div>
                   <div className="text-gray-500 text-sm">หมวดหมู่พร้อมให้บริการ</div>
                 </div>
-                {comingSoonCount > 0 && (
-                  <div>
-                    <div className="text-3xl font-bold text-yellow-400">{comingSoonCount}</div>
-                    <div className="text-gray-500 text-sm">เร็วๆ นี้</div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -86,7 +88,6 @@ export default function CategoriesPage() {
         <CategoryGrid 
           categories={categories} 
           title="หมวดหมู่ทั้งหมด"
-          showDrafts={true}
         />
 
         {/* Trust Section */}
