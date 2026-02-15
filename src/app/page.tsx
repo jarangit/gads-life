@@ -1,39 +1,123 @@
 import React from 'react';
 import Link from 'next/link';
-import { FiCheck, FiArrowRight, FiArrowUpRight, FiSend } from 'react-icons/fi';
-import { HiOutlineLightBulb, HiOutlineDesktopComputer, HiOutlineDeviceMobile, HiOutlineMusicNote, HiOutlineHome, HiOutlineLightningBolt, HiOutlineHeart, HiOutlineOfficeBuilding } from 'react-icons/hi';
-import { RiRobot2Line } from 'react-icons/ri';
-import { BsHeadphones, BsPhone, BsDiamond, BsSmartwatch } from 'react-icons/bs';
+import Image from 'next/image';
+import { FiCheck, FiArrowRight, FiArrowUpRight, FiSearch, FiClock } from 'react-icons/fi';
+import { HiOutlineDesktopComputer, HiOutlineDeviceMobile, HiOutlineMusicNote, HiOutlineHome, HiOutlineLightningBolt, HiOutlineHeart, HiOutlineOfficeBuilding, HiOutlineSparkles, HiOutlineTrendingUp, HiOutlineQuestionMarkCircle } from 'react-icons/hi';
+import { BsSmartwatch, BsDiamond, BsBatteryCharging, BsHeadphones, BsLightningCharge } from 'react-icons/bs';
 import { BiTargetLock } from 'react-icons/bi';
-import { getAllVisibleCategories, type Category } from '@/data/categories';
+import { getProducts, getCategories } from '@/app/service/public-api';
+import { ICategoryItemVm } from '@/types/models/category';
+import { IProductItemVm } from '@/types/models/product';
 
 // Icon mapping for categories
 const categoryIcons: Record<string, React.ReactNode> = {
-  laptop: <HiOutlineDesktopComputer className="text-gray-700" />,
-  smartphone: <HiOutlineDeviceMobile className="text-gray-700" />,
-  audio: <HiOutlineMusicNote className="text-gray-700" />,
-  wearable: <BsSmartwatch className="text-gray-700" />,
-  home: <HiOutlineHome className="text-gray-700" />,
-  'home-gadgets': <HiOutlineHome className="text-gray-700" />,
-  desk: <HiOutlineOfficeBuilding className="text-gray-700" />,
-  charging: <HiOutlineLightningBolt className="text-gray-700" />,
-  'charging-power': <HiOutlineLightningBolt className="text-gray-700" />,
-  health: <HiOutlineHeart className="text-gray-700" />,
-  'health-lifestyle': <HiOutlineHeart className="text-gray-700" />,
+  laptop: <HiOutlineDesktopComputer className="text-gray-700 text-2xl" />,
+  smartphone: <HiOutlineDeviceMobile className="text-gray-700 text-2xl" />,
+  audio: <HiOutlineMusicNote className="text-gray-700 text-2xl" />,
+  wearable: <BsSmartwatch className="text-gray-700 text-2xl" />,
+  home: <HiOutlineHome className="text-gray-700 text-2xl" />,
+  'home-gadgets': <HiOutlineHome className="text-gray-700 text-2xl" />,
+  desk: <HiOutlineOfficeBuilding className="text-gray-700 text-2xl" />,
+  charging: <HiOutlineLightningBolt className="text-gray-700 text-2xl" />,
+  'charging-power': <HiOutlineLightningBolt className="text-gray-700 text-2xl" />,
+  health: <HiOutlineHeart className="text-gray-700 text-2xl" />,
+  'health-lifestyle': <HiOutlineHeart className="text-gray-700 text-2xl" />,
 };
 
-export default function Home() {
-  const categories = getAllVisibleCategories();
+// Mock data for problems/needs
+const commonProblems = [
+  {
+    id: 1,
+    icon: <BsBatteryCharging className="text-xl" />,
+    title: 'แบตหมดบ่อย',
+    description: 'Power Bank ชาร์จเร็ว จุเยอะ',
+    color: 'bg-orange-100 text-orange-600',
+    slug: '/category/charging-power/power-bank'
+  },
+  {
+    id: 2,
+    icon: <BsHeadphones className="text-xl" />,
+    title: 'หูฟังไม่สบาย',
+    description: 'หูฟังใส่นานได้ ไม่เจ็บ',
+    color: 'bg-violet-100 text-violet-600',
+    slug: '/category/audio/headphones?filter=comfort'
+  },
+  {
+    id: 3,
+    icon: <BsLightningCharge className="text-xl" />,
+    title: 'ชาร์จช้ามาก',
+    description: 'หัวชาร์จ + สาย Fast Charge',
+    color: 'bg-sky-100 text-sky-600',
+    slug: '/category/charging-power/charger'
+  },
+  {
+    id: 4,
+    icon: <HiOutlineDesktopComputer className="text-xl" />,
+    title: 'โน้ตบุ๊คหนัก',
+    description: 'บาง เบา แต่แรง',
+    color: 'bg-emerald-100 text-emerald-600',
+    slug: '/category/laptop'
+  },
+];
+
+// Helper: format relative time in Thai
+function formatRelativeTime(date: Date | string): string {
+  const now = new Date();
+  const d = new Date(date);
+  const diffMs = now.getTime() - d.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDays === 0) return 'วันนี้';
+  if (diffDays === 1) return 'เมื่อวาน';
+  if (diffDays < 7) return `${diffDays} วันที่แล้ว`;
+  const diffWeeks = Math.floor(diffDays / 7);
+  if (diffWeeks < 5) return `${diffWeeks} สัปดาห์ที่แล้ว`;
+  const diffMonths = Math.floor(diffDays / 30);
+  return `${diffMonths} เดือนที่แล้ว`;
+}
+
+export default async function Home() {
+  // Fetch real data from API in parallel
+  let products: IProductItemVm[] = [];
+  let categories: ICategoryItemVm[] = [];
+
+  try {
+    const [productsRes, categoriesRes] = await Promise.all([
+      getProducts({ limit: 20, sort: 'scoreDesc' }),
+      getCategories({ limit: 20 }),
+    ]);
+    products = productsRes.items ?? [];
+    categories = categoriesRes.items ?? [];
+  } catch (error) {
+    console.error('Failed to fetch data from API:', error);
+  }
+
+  // Top picks = recommended products or highest score
+  const topPicks = products
+    .filter((p) => p.isRecommended)
+    .sort((a, b) => b.overallScore - a.overallScore)
+    .slice(0, 3);
+
+  // Fallback if no recommended products
+  const topPicksFinal =
+    topPicks.length > 0
+      ? topPicks
+      : [...products].sort((a, b) => b.overallScore - a.overallScore).slice(0, 3);
+
+  // Latest reviews = most recently updated
+  const latestReviews = [...products]
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen bg-[#f0f0f0] p-4 md:p-6">
       {/* Header */}
-      <header className="flex items-center justify-between mb-6">
+      <header className="flex items-center justify-between mb-6 max-w-7xl mx-auto">
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
               <FiCheck className="text-brand text-xl" />
             </div>
+            <span className="hidden md:block font-bold text-gray-900">gads<FiCheck className="inline text-brand" />life</span>
           </Link>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/category" className="text-gray-800 hover:text-black font-medium">
@@ -48,212 +132,255 @@ export default function Home() {
           </nav>
         </div>
         <div className="flex items-center gap-3">
-          <button className="px-4 py-2 text-gray-800 font-medium hover:bg-gray-200 rounded-full transition-colors">
-            LOG IN
+          {/* Search Button */}
+          <button className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors">
+            <FiSearch className="text-gray-600" />
           </button>
-          <button className="px-4 py-2 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors">
+          <button className="hidden md:block px-4 py-2 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors">
             SIGN UP
           </button>
         </div>
       </header>
 
-      {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto">
+      {/* Main Bento Grid */}
+      <div className="max-w-7xl mx-auto space-y-6">
         
-        {/* Main Hero Card - Large */}
-        <Link href="/category" className="md:col-span-1 lg:row-span-2">
-          <div className="bg-black rounded-[2rem] p-8 h-full min-h-[400px] flex flex-col justify-between relative overflow-hidden group cursor-pointer">
+        {/* Hero Section - Prompt + Top Picks */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          
+          {/* Main Hero - What are you looking for? */}
+          <div className="lg:col-span-1 lg:row-span-2 bg-black rounded-[2.5rem] rounded-br-[3.5rem] p-8 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
             <div>
-              <span className="text-brand text-sm font-semibold tracking-wider uppercase">
-                CURATED PICKS
+              <span className="text-brand/80 text-xs font-medium tracking-wide flex items-center gap-1.5">
+                <HiOutlineSparkles className="text-sm" /> หาของดีๆ กันเถอะ
               </span>
-              <h1 className="text-white text-4xl md:text-5xl font-bold mt-4 leading-tight">
-                เลือกของดี<br />
-                โดยไม่ต้อง<br />
-                คิดเยอะ
+              <h1 className="text-white text-3xl md:text-[2.75rem] font-bold mt-5 leading-[1.15]">
+                วันนี้<br />
+                อยากได้อะไร?
               </h1>
+              <p className="text-gray-500 mt-4 text-[13px] leading-relaxed">
+                บอกมาเลย — จะเป็นหมวดหมู่ หรือปัญหาที่เจอก็ได้<br />
+                เดี๋ยวเราช่วยหาให้
+              </p>
             </div>
             
-            {/* Product Image Placeholder */}
-            <div className="absolute bottom-8 right-4 w-48 h-48 opacity-80">
-              <div className="w-full h-full bg-gradient-to-br from-gray-700 to-gray-900 rounded-2xl flex items-center justify-center">
-                <RiRobot2Line className="text-6xl text-gray-400" />
+            {/* Quick Search Prompt */}
+            <div className="mt-6 space-y-3">
+              <Link href="/category" className="block">
+                <div className="bg-white/10 backdrop-blur rounded-xl px-4 py-3 flex items-center gap-3 hover:bg-white/20 transition-colors">
+                  <FiSearch className="text-gray-400" />
+                  <span className="text-gray-300 text-sm">ค้นหาสินค้า...</span>
+                </div>
+              </Link>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/category/charging-power" className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all">
+                  🔋 Power Bank
+                </Link>
+                <Link href="/category/audio" className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all">
+                  🎧 หูฟัง
+                </Link>
+                <Link href="/category/laptop" className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all">
+                  💻 Laptop
+                </Link>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 mt-auto relative z-10">
-              <div className="bg-white rounded-xl px-4 py-3 flex items-center gap-3">
-                <span className="text-gray-500 text-xs uppercase">SHOP</span>
-                <span className="text-black font-semibold">All products</span>
-              </div>
-              <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-                <FiArrowRight className="w-5 h-5" />
-              </div>
+            <div className="flex items-center gap-3 mt-auto">
+              <Link href="/category" className="bg-brand text-black font-semibold px-6 py-3 rounded-2xl rounded-tl-lg hover:bg-brand-hover transition-all hover:scale-[1.02] flex items-center gap-2">
+                ดูของทั้งหมด <FiArrowRight />
+              </Link>
             </div>
           </div>
-        </Link>
 
-        {/* Blog Card */}
-        <div className="bg-[#e8e8e8] rounded-[2rem] p-6 relative overflow-hidden min-h-[200px]">
-          <div className="flex justify-between items-start">
-            <span className="text-gray-600 text-xs font-semibold tracking-wider uppercase">
-              WORLD OF GADGETS
-            </span>
-            <div className="w-8 h-8 border border-gray-400 rounded-full flex items-center justify-center">
-              <FiArrowUpRight className="w-4 h-4 text-gray-600" />
+          {/* 🌟 Top Picks Section */}
+          <div className="lg:col-span-2 bg-white rounded-[1.75rem] rounded-tl-[2.5rem] p-6 md:p-7">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">⭐</span>
+                <h2 className="text-lg font-bold text-gray-900">ของดีประจำเดือน</h2>
+              </div>
+              <Link href="/top-picks" className="text-gray-500 text-sm hover:text-brand flex items-center gap-1 transition-colors">
+                ดูเพิ่ม <FiArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              {topPicksFinal.map((item, idx) => (
+                <Link key={item.id} href={`/product/${item.id}`} className="group">
+                  <div className={`bg-gray-50/80 p-4 hover:bg-gray-100/80 transition-all hover:-translate-y-0.5 ${
+                    idx === 0 ? 'rounded-2xl rounded-tl-3xl' : 
+                    idx === 1 ? 'rounded-2xl' : 
+                    'rounded-2xl rounded-br-3xl'
+                  }`}>
+                    {item.image ? (
+                      <div className="relative w-full h-28 md:h-32 mb-3 rounded-xl overflow-hidden bg-white/80">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-full h-28 md:h-32 mb-3 rounded-xl bg-gray-100 flex items-center justify-center">
+                        <span className="text-3xl text-gray-300">📦</span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1.5">
+                      {item.isRecommended && (
+                        <span className="inline-block text-[11px] text-brand font-medium bg-brand/10 px-2 py-0.5 rounded-full">แนะนำ</span>
+                      )}
+                      <span className="inline-block text-[11px] text-gray-500 font-medium bg-gray-100 px-2 py-0.5 rounded-full">{item.overallScore}/10</span>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mt-2 line-clamp-1 text-[15px]">{item.name}</h3>
+                    <p className="text-xs text-gray-400 mt-0.5">{item.category?.nameTh || item.brand?.name || ''}</p>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
-          
-          {/* Abstract shapes */}
-          <div className="absolute top-12 right-8">
-            <div className="w-32 h-32 bg-gradient-to-b from-gray-400 to-gray-600 rounded-full opacity-60"></div>
-            <div className="w-20 h-20 bg-gradient-to-b from-gray-500 to-gray-700 rounded-full absolute -bottom-4 left-8 opacity-60"></div>
-          </div>
 
-          <h2 className="text-3xl font-bold text-black mt-auto absolute bottom-6 left-6">
-            View our blog
-          </h2>
+          {/* 🧠 Problem-based Section */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-amber-50/80 via-orange-50/50 to-yellow-50/80 rounded-[1.75rem] rounded-tr-[2.5rem] p-6 md:p-7">
+            <div className="flex items-center gap-2 mb-5">
+              <span className="text-lg">🤔</span>
+              <h2 className="text-lg font-bold text-gray-900">เจอปัญหาแบบนี้มั้ย?</h2>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3">
+              {commonProblems.map((problem, idx) => (
+                <Link key={problem.id} href={problem.slug} className="group">
+                  <div className={`bg-white/90 backdrop-blur-sm p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 h-full ${
+                    idx === 0 ? 'rounded-2xl rounded-tl-3xl' :
+                    idx === 3 ? 'rounded-2xl rounded-br-3xl' :
+                    'rounded-2xl'
+                  }`}>
+                    <div className={`w-9 h-9 ${problem.color} rounded-lg flex items-center justify-center mb-2.5`}>
+                      {problem.icon}
+                    </div>
+                    <h3 className="font-semibold text-gray-900 text-[13px] leading-tight">{problem.title}</h3>
+                    <p className="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">{problem.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* About Card - Purple */}
-        <Link href="/about" className="block">
-          <div className="bg-[#c4b5fd] rounded-[2rem] p-6 min-h-[200px] relative group cursor-pointer hover:bg-[#b4a5ed] transition-colors">
-            <div className="flex justify-between items-start">
-              <div>
-                <span className="text-purple-900 text-xs font-semibold tracking-wider uppercase block">
-                  DISCOVER
-                </span>
-                <span className="text-purple-900 text-xs font-semibold tracking-wider uppercase">
-                  OUR HISTORY
-                </span>
-              </div>
-              <div className="w-8 h-8 border border-purple-400 rounded-full flex items-center justify-center">
-                <FiArrowUpRight className="w-4 h-4 text-purple-900" />
-              </div>
-            </div>
-            <h2 className="text-4xl font-bold text-purple-900 absolute bottom-6 left-6">
-              About us
-            </h2>
-          </div>
-        </Link>
-
-        {/* Contact Card - Green */}
-        <Link href="/contact" className="block">
-          <div className="bg-brand rounded-[2rem] p-6 min-h-[200px] relative group cursor-pointer hover:bg-brand-hover transition-colors">
-            <div className="flex justify-between items-start">
-              <div>
-                <span className="text-green-900 text-xs font-semibold tracking-wider uppercase block">
-                  HAVE SOME
-                </span>
-                <span className="text-green-900 text-xs font-semibold tracking-wider uppercase">
-                  QUESTIONS?
-                </span>
-              </div>
-              <div className="w-8 h-8 border border-green-700 rounded-full flex items-center justify-center">
-                <FiSend className="w-4 h-4 text-green-900" />
-              </div>
-            </div>
-            <h2 className="text-4xl font-bold text-black absolute bottom-6 left-6">
-              Contact us
-            </h2>
-          </div>
-        </Link>
-
-        {/* Categories Section */}
-        <div className="md:col-span-2 lg:col-span-3 mt-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-900">หมวดหมู่แนะนำ</h2>
-            <Link href="/categories" className="text-brand font-medium hover:underline flex items-center gap-1">
-              ดูทั้งหมด <FiArrowRight className="w-4 h-4" />
+        {/* 🧭 Categories Section */}
+        <div className="bg-white rounded-[1.75rem] rounded-bl-[2.5rem] p-6 md:p-7">
+          <div className="flex items-center justify-between mb-5">
+            <h2 className="text-lg font-bold text-gray-900">🗂️ เลือกตามหมวด</h2>
+            <Link href="/categories" className="text-gray-500 text-sm hover:text-brand flex items-center gap-1 transition-colors">
+              ทั้งหมด <FiArrowRight className="w-3 h-3" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {categories.slice(0, 4).map((category) => {
-              const isActive = category.status === 'active';
-              const isDraft = category.status === 'draft';
-              const isClickable = isActive || isDraft;
-              
-              const cardContent = (
-                <div 
-                  className={`
-                    bg-white rounded-[2rem] p-6 min-h-[180px] relative group
-                    transition-all duration-300
-                    ${isClickable ? 'hover:shadow-lg cursor-pointer' : 'bg-white/50 opacity-60'}
-                  `}
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center text-3xl">
-                      {categoryIcons[category.icon || category.slug] || categoryIcons[category.id] || <HiOutlineDesktopComputer className="text-gray-700" />}
-                    </div>
-                    {isActive ? (
-                      <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <FiArrowUpRight className="w-4 h-4 text-white" />
-                      </div>
-                    ) : isDraft ? (
-                      <span className="text-xs font-medium text-yellow-800 bg-yellow-100 px-2 py-1 rounded-full">
-                        SOON
-                      </span>
-                    ) : (
-                      <span className="text-xs font-medium text-gray-400 bg-gray-200 px-2 py-1 rounded-full">
-                        HIDDEN
-                      </span>
-                    )}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mt-4">{category.title}</h3>
-                  <p className={`text-sm mt-1 line-clamp-2 ${isClickable ? 'text-gray-500' : 'text-gray-400'}`}>
-                    {category.description}
-                  </p>
-                </div>
-              );
-              
-              if (isClickable) {
-                return (
-                  <Link key={category.id} href={`/category/${category.slug}`} className="block">
-                    {cardContent}
-                  </Link>
-                );
-              }
+          
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
+            {categories.slice(0, 6).map((category, idx) => {
+              // Varying border radius for organic feel
+              const radiusClass = idx === 0 ? 'rounded-xl rounded-tl-2xl' :
+                                  idx === 2 ? 'rounded-xl rounded-tr-2xl' :
+                                  idx === 5 ? 'rounded-xl rounded-br-2xl' :
+                                  'rounded-xl';
               
               return (
-                <div key={category.id} className="block cursor-default">
-                  {cardContent}
-                </div>
+                <Link key={category.id} href={`/category/${category.slug}`} className="block">
+                  <div 
+                    className={`
+                      ${radiusClass} p-3 md:p-4 text-center group transition-all
+                      bg-gray-50/80 hover:bg-gray-100 cursor-pointer hover:-translate-y-0.5
+                    `}
+                  >
+                    <div className="w-10 h-10 md:w-11 md:h-11 bg-white rounded-lg flex items-center justify-center mx-auto mb-2 shadow-sm group-hover:shadow transition-shadow">
+                      {categoryIcons[category.slug] || <HiOutlineDesktopComputer className="text-gray-700 text-xl" />}
+                    </div>
+                    <h3 className="font-medium text-gray-800 text-[13px]">{category.nameTh || category.nameEn}</h3>
+                  </div>
+                </Link>
               );
             })}
           </div>
         </div>
 
-        {/* Trust Section */}
-        <div className="md:col-span-2 lg:col-span-3 mt-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* 🔥 Latest Reviews Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2 bg-white rounded-[1.75rem] rounded-tr-[2.5rem] p-6 md:p-7">
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">🆕</span>
+                <h2 className="text-lg font-bold text-gray-900">เพิ่งรีวิวไป</h2>
+              </div>
+              <Link href="/reviews" className="text-gray-500 text-sm hover:text-brand flex items-center gap-1 transition-colors">
+                ดูเพิ่ม <FiArrowRight className="w-3 h-3" />
+              </Link>
+            </div>
             
-            <div className="bg-black rounded-[2rem] p-6 text-white">
-              <div className="w-12 h-12 bg-brand rounded-xl flex items-center justify-center mb-4">
-                <FiCheck className="text-2xl text-white" />
-              </div>
-              <h3 className="text-lg font-bold mb-2">จากการใช้งานจริง</h3>
-              <p className="text-gray-400 text-sm">
-                ไม่ใช่แค่สเปกบนกระดาษ แต่มาจากประสบการณ์จริง
+            <div className="space-y-2">
+              {latestReviews.map((review, idx) => (
+                <Link key={review.id} href={`/product/${review.id}`} className="block group">
+                  <div className={`flex items-center gap-4 p-3 hover:bg-gray-50/80 transition-all ${
+                    idx === 0 ? 'rounded-xl rounded-tl-2xl' :
+                    idx === latestReviews.length - 1 ? 'rounded-xl rounded-br-2xl' :
+                    'rounded-xl'
+                  }`}>
+                    {review.image ? (
+                      <div className="relative w-14 h-14 flex-shrink-0 bg-gray-100/80 rounded-lg overflow-hidden">
+                        <Image
+                          src={review.image}
+                          alt={review.name}
+                          fill
+                          className="object-contain p-1.5"
+                          sizes="56px"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-14 h-14 flex-shrink-0 bg-gray-100/80 rounded-lg flex items-center justify-center">
+                        <span className="text-xl text-gray-300">📦</span>
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 group-hover:text-brand transition-colors line-clamp-1 text-[15px]">
+                        {review.name}
+                      </h3>
+                      <p className="text-xs text-gray-400 mt-0.5">{review.category?.nameTh || review.brand?.name || ''}</p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="text-base font-bold text-brand">{review.overallScore}</div>
+                      <div className="text-[11px] text-gray-400 mt-0.5">
+                        {formatRelativeTime(review.updatedAt)}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Trust Section - Compact */}
+          <div className="space-y-3">
+            <div className="bg-black rounded-[1.5rem] rounded-tr-[2.5rem] p-5 text-white">
+              <span className="text-2xl mb-2 block">✓</span>
+              <h3 className="font-bold mb-0.5 text-[15px]">ใช้จริง รีวิวจริง</h3>
+              <p className="text-gray-500 text-[13px]">
+                ไม่ได้มาจากสเปก
               </p>
             </div>
 
-            <div className="bg-white rounded-[2rem] p-6">
-              <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-                <BiTargetLock className="text-2xl text-purple-600" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">ตัดสินใจง่าย</h3>
-              <p className="text-gray-500 text-sm">
-                เราคิดให้แล้ว คุณแค่เลือกตัวเลือกที่เหมาะกับคุณ
+            <div className="bg-white rounded-[1.5rem] p-5">
+              <span className="text-2xl mb-2 block">🎯</span>
+              <h3 className="font-bold text-gray-900 mb-0.5 text-[15px]">เลือกง่าย</h3>
+              <p className="text-gray-500 text-[13px]">
+                สรุปให้แล้ว แค่เลือก
               </p>
             </div>
 
-            <div className="bg-white rounded-[2rem] p-6">
-              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
-                <BsDiamond className="text-2xl text-green-600" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">โปร่งใส</h3>
-              <p className="text-gray-500 text-sm">
-                ไม่มีอันดับสปอนเซอร์ มีเฉพาะ affiliate links
+            <div className="bg-white rounded-[1.5rem] rounded-bl-[2.5rem] p-5">
+              <span className="text-2xl mb-2 block">💎</span>
+              <h3 className="font-bold text-gray-900 mb-0.5 text-[15px]">ไม่มีสปอนเซอร์</h3>
+              <p className="text-gray-500 text-[13px]">
+                มีแค่ affiliate link
               </p>
             </div>
           </div>
@@ -262,20 +389,20 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="max-w-7xl mx-auto mt-12 py-8 border-t border-gray-300">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+      <footer className="max-w-7xl mx-auto mt-16 pt-8 pb-6 border-t border-gray-200/60">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-              <FiCheck className="text-brand text-sm" />
+            <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
+              <FiCheck className="text-brand text-xs" />
             </div>
-            <span className="font-bold text-gray-900">gads<FiCheck className="inline text-brand" />life</span>
+            <span className="font-bold text-gray-800 text-sm">gads✓life</span>
           </div>
-          <div className="flex gap-6 text-sm text-gray-600">
-            <Link href="/disclosure" className="hover:text-black">Disclosure</Link>
-            <Link href="/methodology" className="hover:text-black">Methodology</Link>
-            <Link href="/legal" className="hover:text-black">Legal</Link>
+          <div className="flex gap-6 text-[13px] text-gray-500">
+            <Link href="/disclosure" className="hover:text-gray-800 transition-colors">Disclosure</Link>
+            <Link href="/methodology" className="hover:text-gray-800 transition-colors">How we test</Link>
+            <Link href="/legal" className="hover:text-gray-800 transition-colors">Legal stuff</Link>
           </div>
-          <p className="text-sm text-gray-500">© 2026 gadslife</p>
+          <p className="text-[13px] text-gray-400">© 2026 gadslife</p>
         </div>
       </footer>
     </div>

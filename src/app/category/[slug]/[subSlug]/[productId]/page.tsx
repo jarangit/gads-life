@@ -102,7 +102,9 @@ export default async function ProductDetailPage({
                   {[1, 2, 3, 4, 5].map((i) => (
                     <div
                       key={i}
-                      className={`w-6 h-2 rounded-full ${i <= rating.score ? "bg-brand" : "bg-gray-700"}`}
+                      className={`w-6 h-2 rounded-full ${
+                        i <= rating.score ? "bg-brand" : "bg-gray-700"
+                      }`}
                     ></div>
                   ))}
                 </div>
@@ -121,13 +123,15 @@ export default async function ProductDetailPage({
         {/* Hero Image Card */}
         <div className="md:col-span-2 lg:col-span-2 bg-gradient-to-br from-gray-100 to-gray-200 rounded-[2rem] p-8 relative overflow-hidden min-h-[300px] flex items-center justify-center">
           <div className="text-center">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={300}
-              height={300}
-              className="mx-auto"
-            />
+            {product.image && (
+              <Image
+                src={product?.image}
+                alt={product?.name}
+                width={300}
+                height={300}
+                className="mx-auto"
+              />
+            )}
             <span className="text-gray-500 text-sm">{product.name}</span>
           </div>
         </div>
@@ -398,8 +402,10 @@ export default async function ProductDetailPage({
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  const { getAllVisibleCategories, getSubcategoriesByCategoryId } =
-    await import("@/data/categories");
+  const {
+    getAllVisibleCategories,
+    getSubcategoriesByCategoryId,
+  } = await import("@/data/categories");
   const { getProductsBySubcategory } = await import("@/data/products");
 
   const categories = getAllVisibleCategories();

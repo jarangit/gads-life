@@ -44,13 +44,15 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
           {/* Product Image/Icon */}
           <div className="text-center py-4">
             {/* adjst to use tag image fo next js inteast */}
-            <Image
-              src={product.image ?? ''}
-              alt={product.name}
-              width={300}
-              height={300}
-              className="mx-auto"
-            />
+            {product?.image !== "" && (
+              <Image
+                src={product?.image ?? ""}
+                alt={product?.name}
+                width={300}
+                height={300}
+                className="mx-auto"
+              />
+            )}
           </div>
 
           {/* Score Badge */}
