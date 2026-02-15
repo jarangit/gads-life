@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FiCheck, FiArrowRight, FiSearch } from "react-icons/fi";
+import { FiCheck, FiArrowRight, FiSearch, FiPackage } from "react-icons/fi";
 import {
   HiOutlineDesktopComputer,
   HiOutlineDeviceMobile,
@@ -12,12 +12,19 @@ import {
   HiOutlineHeart,
   HiOutlineOfficeBuilding,
   HiOutlineSparkles,
+  HiOutlineStar,
+  HiOutlineQuestionMarkCircle,
+  HiOutlineFolder,
+  HiOutlineClock,
 } from "react-icons/hi";
 import {
   BsSmartwatch,
   BsBatteryCharging,
   BsHeadphones,
   BsLightningCharge,
+  BsGem,
+  BsBullseye,
+  BsLaptop,
 } from "react-icons/bs";
 import { useHome } from "@/hooks/useHome";
 
@@ -147,21 +154,21 @@ export default function Home() {
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/category/charging-power"
-                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all"
+                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all flex items-center gap-1.5"
               >
-                🔋 Power Bank
+                <BsBatteryCharging className="text-sm" /> Power Bank
               </Link>
               <Link
                 href="/category/audio"
-                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all"
+                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all flex items-center gap-1.5"
               >
-                🎧 หูฟัง
+                <BsHeadphones className="text-sm" /> หูฟัง
               </Link>
               <Link
                 href="/category/laptop"
-                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all"
+                className="px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs rounded-full hover:bg-white/10 hover:text-gray-300 transition-all flex items-center gap-1.5"
               >
-                💻 Laptop
+                <BsLaptop className="text-sm" /> Laptop
               </Link>
             </div>
           </div>
@@ -180,7 +187,7 @@ export default function Home() {
         <div className="lg:col-span-2 bg-white rounded-[1.75rem] rounded-tl-[2.5rem] p-6 md:p-7">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <span className="text-lg">⭐</span>
+              <HiOutlineStar className="text-xl text-amber-500" />
               <h2 className="text-lg font-bold text-gray-900">
                 ของดีประจำเดือน
               </h2>
@@ -221,7 +228,7 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="w-full h-28 md:h-32 mb-3 rounded-xl bg-gray-100 flex items-center justify-center">
-                      <span className="text-3xl text-gray-300">📦</span>
+                      <FiPackage className="text-3xl text-gray-300" />
                     </div>
                   )}
                   <div className="flex items-center gap-1.5">
@@ -249,7 +256,7 @@ export default function Home() {
         {/* 🧠 Problem-based Section */}
         <div className="lg:col-span-2 bg-gradient-to-br from-amber-50/80 via-orange-50/50 to-yellow-50/80 rounded-[1.75rem] rounded-tr-[2.5rem] p-6 md:p-7">
           <div className="flex items-center gap-2 mb-5">
-            <span className="text-lg">🤔</span>
+            <HiOutlineQuestionMarkCircle className="text-xl text-orange-500" />
             <h2 className="text-lg font-bold text-gray-900">
               เจอปัญหาแบบนี้มั้ย?
             </h2>
@@ -288,7 +295,9 @@ export default function Home() {
       {/* 🧭 Categories Section */}
       <div className="bg-white rounded-[1.75rem] rounded-bl-[2.5rem] p-6 md:p-7">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-lg font-bold text-gray-900">🗂️ เลือกตามหมวด</h2>
+          <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <HiOutlineFolder className="text-xl text-gray-600" /> เลือกตามหมวด
+          </h2>
           <Link
             href="/categories"
             className="text-gray-500 text-sm hover:text-brand flex items-center gap-1 transition-colors"
@@ -341,7 +350,7 @@ export default function Home() {
         <div className="lg:col-span-2 bg-white rounded-[1.75rem] rounded-tr-[2.5rem] p-6 md:p-7">
           <div className="flex items-center justify-between mb-5">
             <div className="flex items-center gap-2">
-              <span className="text-lg">🆕</span>
+              <HiOutlineClock className="text-xl text-blue-500" />
               <h2 className="text-lg font-bold text-gray-900">เพิ่งรีวิวไป</h2>
             </div>
             <Link
@@ -380,7 +389,7 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="w-14 h-14 flex-shrink-0 bg-gray-100/80 rounded-lg flex items-center justify-center">
-                      <span className="text-xl text-gray-300">📦</span>
+                      <FiPackage className="text-xl text-gray-300" />
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
@@ -408,13 +417,13 @@ export default function Home() {
         {/* Trust Section - Compact */}
         <div className="space-y-3">
           <div className="bg-black rounded-[1.5rem] rounded-tr-[2.5rem] p-5 text-white">
-            <span className="text-2xl mb-2 block">✓</span>
+            <FiCheck className="text-2xl mb-2 text-brand" />
             <h3 className="font-bold mb-0.5 text-[15px]">ใช้จริง รีวิวจริง</h3>
             <p className="text-gray-500 text-[13px]">ไม่ได้มาจากสเปก</p>
           </div>
 
           <div className="bg-white rounded-[1.5rem] p-5">
-            <span className="text-2xl mb-2 block">🎯</span>
+            <BsBullseye className="text-2xl mb-2 text-orange-500" />
             <h3 className="font-bold text-gray-900 mb-0.5 text-[15px]">
               เลือกง่าย
             </h3>
@@ -422,7 +431,7 @@ export default function Home() {
           </div>
 
           <div className="bg-white rounded-[1.5rem] rounded-bl-[2.5rem] p-5">
-            <span className="text-2xl mb-2 block">💎</span>
+            <BsGem className="text-2xl mb-2 text-purple-500" />
             <h3 className="font-bold text-gray-900 mb-0.5 text-[15px]">
               ไม่มีสปอนเซอร์
             </h3>
