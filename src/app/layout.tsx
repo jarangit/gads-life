@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Geist_Mono } from "next/font/google";
+import { QueryProvider } from "@/providers";
 import "./globals.css";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
@@ -67,7 +68,9 @@ export default function RootLayout({
       <body
         className={`${ibmPlexSansThai.variable} ${geistMono.variable} antialiased font-sans`}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
