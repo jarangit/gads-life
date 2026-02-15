@@ -3,6 +3,7 @@ import { IBM_Plex_Sans_Thai, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers";
 import "./globals.css";
 import Nav from "@/components/layouts/nav";
+import { Footer } from "@/components/layouts/Footer";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex",
@@ -72,13 +73,14 @@ export default function RootLayout({
         <QueryProvider>
           <Nav />
           <main className="container min-h-screen">
-            <div className="p-6 bg-amber-600">{children}</div>
+            <div className="">{children}</div>
           </main>
         </QueryProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <Footer />
       </body>
     </html>
   );

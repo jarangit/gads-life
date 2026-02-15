@@ -2,7 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
+import { Footer } from '@/components/layouts/Footer';
 import { Badge } from '@/components/Badge';
 import { Button } from '@/components/Button';
 import { ProductListGrid } from '@/components/ProductListCard';

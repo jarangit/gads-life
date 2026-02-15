@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FiArrowLeft, FiStar } from "react-icons/fi";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/layouts/Footer";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { useCategoryBySlug } from "@/hooks";
@@ -65,9 +65,7 @@ function ProductItemCard({ product }: { product: ProductItemDto }) {
         </div>
 
         {/* Price */}
-        <p className="text-lg font-bold text-gray-900">
-          {product.priceLabel}
-        </p>
+        <p className="text-lg font-bold text-gray-900">{product.priceLabel}</p>
       </div>
     </div>
   );
@@ -82,8 +80,7 @@ interface Props {
 }
 
 export default function CategoryDetailContent({ slug }: Props) {
-  const { data, isLoading, isError, error, refetch } =
-    useCategoryBySlug(slug);
+  const { data, isLoading, isError, error, refetch } = useCategoryBySlug(slug);
 
   if (isLoading) {
     return (
@@ -106,10 +103,7 @@ export default function CategoryDetailContent({ slug }: Props) {
           >
             <FiArrowLeft /> กลับไปหน้าหมวดหมู่
           </Link>
-          <ErrorFallback
-            message={error?.message}
-            onRetry={() => refetch()}
-          />
+          <ErrorFallback message={error?.message} onRetry={() => refetch()} />
         </main>
         <Footer />
       </div>
@@ -119,9 +113,8 @@ export default function CategoryDetailContent({ slug }: Props) {
   const { category, items, pagination } = data;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="">
+      <main className="">
         {/* Back navigation */}
         <Link
           href="/categories"
@@ -188,9 +181,7 @@ export default function CategoryDetailContent({ slug }: Props) {
           </section>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">
-              ยังไม่มีสินค้าในหมวดหมู่นี้
-            </p>
+            <p className="text-gray-500 text-lg">ยังไม่มีสินค้าในหมวดหมู่นี้</p>
             <Link href="/categories">
               <Button variant="secondary" size="lg" className="mt-6">
                 ดูหมวดหมู่อื่น
@@ -199,7 +190,6 @@ export default function CategoryDetailContent({ slug }: Props) {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 }

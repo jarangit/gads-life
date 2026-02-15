@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/layouts/Footer";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
@@ -13,8 +13,6 @@ import { HiOutlineLightBulb } from "react-icons/hi";
 export default function CategoryPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
-
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* 1️⃣ Hero — Decision Promise */}
         <section className="mb-16">
@@ -215,8 +213,6 @@ export default function CategoryPage() {
           </Card>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }

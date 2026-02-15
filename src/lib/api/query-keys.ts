@@ -22,6 +22,10 @@ export const queryKeys = {
     detail: (slug: string) =>
       [...queryKeys.categories.all, "detail", slug] as const,
   },
+  home: {
+    all: ["home"] as const,
+    list: () => [...queryKeys.home.all, "list"] as const,
+  },
 
   // ── 🔮 Future modules (add here when needed) ──
   // products: { ... },
