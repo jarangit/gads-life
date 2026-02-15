@@ -1,12 +1,10 @@
-import { getCategories, getProducts } from "../service/public-api";
 
 export default async function ProductsPage() {
-  const { items: products } = await getProducts();
-  const { items: categories } = await getCategories();
+
 
   return (
     <div style={{ padding: 24 }}>
-      <h1>Products ({products.length})</h1>
+      {/* <h1>Products ({products.length})</h1>
       <ul>
         {products.map((p) => (
           <li key={p.id}>
@@ -21,7 +19,7 @@ export default async function ProductsPage() {
         {categories.map((c) => (
           <li key={c.id}>{c.nameTh || c.nameEn} ({c.slug})</li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 }

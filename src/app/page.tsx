@@ -5,7 +5,6 @@ import { FiCheck, FiArrowRight, FiArrowUpRight, FiSearch, FiClock } from 'react-
 import { HiOutlineDesktopComputer, HiOutlineDeviceMobile, HiOutlineMusicNote, HiOutlineHome, HiOutlineLightningBolt, HiOutlineHeart, HiOutlineOfficeBuilding, HiOutlineSparkles, HiOutlineTrendingUp, HiOutlineQuestionMarkCircle } from 'react-icons/hi';
 import { BsSmartwatch, BsDiamond, BsBatteryCharging, BsHeadphones, BsLightningCharge } from 'react-icons/bs';
 import { BiTargetLock } from 'react-icons/bi';
-import { getProducts, getCategories } from '@/app/service/public-api';
 import { ICategoryItemVm } from '@/types/models/category';
 import { IProductItemVm } from '@/types/models/product';
 
@@ -80,16 +79,7 @@ export default async function Home() {
   let products: IProductItemVm[] = [];
   let categories: ICategoryItemVm[] = [];
 
-  try {
-    const [productsRes, categoriesRes] = await Promise.all([
-      getProducts({ limit: 20, sort: 'scoreDesc' }),
-      getCategories({ limit: 20 }),
-    ]);
-    products = productsRes.items ?? [];
-    categories = categoriesRes.items ?? [];
-  } catch (error) {
-    console.error('Failed to fetch data from API:', error);
-  }
+ 
 
   // Top picks = recommended products or highest score
   const topPicks = products

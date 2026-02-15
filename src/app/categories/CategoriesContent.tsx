@@ -5,8 +5,8 @@ import Link from "next/link";
 import { FiCheck, FiArrowRight } from "react-icons/fi";
 import { CategoryGrid } from "@/components/CategoryCard";
 import { useCategories } from "@/hooks";
-import { toCategoryDisplay } from "@/lib/api/mappers";
 import { CategoryGridSkeleton, ErrorFallback } from "@/components/Skeleton";
+import { toCategoryDisplay } from "@/lib/api/mappers";
 
 export default function CategoriesContent() {
   const { data, isLoading, isError, error, refetch } = useCategories();
@@ -33,10 +33,7 @@ export default function CategoriesContent() {
                 </div>
               </Link>
               <nav className="hidden md:flex items-center gap-6">
-                <Link
-                  href="/categories"
-                  className="text-black font-semibold"
-                >
+                <Link href="/categories" className="text-black font-semibold">
                   Categories
                 </Link>
                 <Link
@@ -82,8 +79,7 @@ export default function CategoriesContent() {
               </h1>
               <p className="text-gray-400 text-lg max-w-2xl">
                 เราคัดสินค้าคุณภาพจากหลากหลายหมวดหมู่
-                เพื่อให้คุณเลือกได้ง่ายขึ้น
-                โดยไม่ต้องเสียเวลาค้นหาเอง
+                เพื่อให้คุณเลือกได้ง่ายขึ้น โดยไม่ต้องเสียเวลาค้นหาเอง
               </p>
 
               {/* Stats — only show when data is ready */}
@@ -115,16 +111,13 @@ export default function CategoriesContent() {
         {isLoading ? (
           <CategoryGridSkeleton />
         ) : isError ? (
-          <ErrorFallback
-            message={error?.message}
-            onRetry={() => refetch()}
-          />
+          <ErrorFallback message={error?.message} onRetry={() => refetch()} />
         ) : (
-          <CategoryGrid
-            categories={categories}
-            title="หมวดหมู่ทั้งหมด"
-            showDrafts={true}
-          />
+          <div>cat grid goes here</div>
+          // <CategoryGrid
+          //   categories={categories}
+          //   title="หมวดหมู่ทั้งหมด"
+          // />
         )}
 
         {/* Trust Section */}
@@ -138,8 +131,7 @@ export default function CategoriesContent() {
                 คัดสรรอย่างดี
               </h3>
               <p className="text-gray-500 text-sm">
-                ทุกหมวดหมู่ผ่านการคัดเลือกจากทีมงาน
-                ไม่ใช่แค่รวบรวมมาเยอะๆ
+                ทุกหมวดหมู่ผ่านการคัดเลือกจากทีมงาน ไม่ใช่แค่รวบรวมมาเยอะๆ
               </p>
             </div>
 
@@ -196,10 +188,7 @@ export default function CategoriesContent() {
             >
               Methodology
             </Link>
-            <Link
-              href="/legal"
-              className="hover:text-black transition-colors"
-            >
+            <Link href="/legal" className="hover:text-black transition-colors">
               Legal
             </Link>
           </div>
