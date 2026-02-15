@@ -2,9 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Badge } from './Badge';
-import { Button } from './Button';
-import { Card } from './Card';
+import { Badge, Button, Card } from '@/components/ui';
 import { FiCheck, FiX, FiArrowRight } from 'react-icons/fi';
 
 interface ProductCardProps {

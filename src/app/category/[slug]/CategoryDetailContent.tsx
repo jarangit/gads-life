@@ -4,12 +4,18 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiArrowLeft, FiStar } from "react-icons/fi";
+import {
+  Badge,
+  Button,
+  Card,
+  ProductImage,
+  EmptyState,
+  ErrorFallback,
+} from "@/components/ui";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/layouts/Footer";
-import { Badge } from "@/components/Badge";
-import { Button } from "@/components/Button";
 import { useCategoryBySlug } from "@/hooks";
-import { CategoryDetailSkeleton, ErrorFallback } from "@/components/Skeleton";
+import { CategoryDetailSkeleton } from "@/components/Skeleton";
 import type { ProductItemDto } from "@/lib/api/category/types";
 
 // ──────────────────────────────────────────────
@@ -21,19 +27,16 @@ function ProductItemCard({ product }: { product: ProductItemDto }) {
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
       {/* Image */}
       <div className="aspect-square bg-gray-50 relative overflow-hidden">
-        {product.image ? (
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="flex items-center justify-center h-full text-gray-300 text-4xl">
-            📦
-          </div>
-        )}
+        <ProductImage
+          src={product.image}
+          alt={product.name}
+          sizeClass="w-full h-full"
+          radius=""
+          bgClass="bg-gray-50"
+          imagePadding="p-4"
+          hoverScale
+          fallbackIconClass="text-4xl text-gray-300"
+        />
 
         {/* Recommended badge */}
         {product.isRecommended && (
@@ -180,14 +183,13 @@ export default function CategoryDetailContent({ slug }: Props) {
             </div>
           </section>
         ) : (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">ยังไม่มีสินค้าในหมวดหมู่นี้</p>
+          <EmptyState message="ยังไม่มีสินค้าในหมวดหมู่นี้">
             <Link href="/categories">
-              <Button variant="secondary" size="lg" className="mt-6">
+              <Button variant="secondary" size="lg">
                 ดูหมวดหมู่อื่น
               </Button>
             </Link>
-          </div>
+          </EmptyState>
         )}
       </main>
     </div>

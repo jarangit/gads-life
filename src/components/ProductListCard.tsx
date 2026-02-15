@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FiArrowUpRight, FiCheck } from "react-icons/fi";
 import type { ProductData } from "@/data/products";
-import Image from "next/image";
+import { ProductImage, EmptyState, formatPrice } from "@/components/ui";
 
 interface ProductListCardProps {
   product: ProductData;
@@ -15,10 +15,6 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
   categorySlug,
   subcategorySlug,
 }) => {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("th-TH").format(price);
-  };
-
   return (
     <Link
       href={`/category/${categorySlug}/${subcategorySlug}/${product.id}`}
@@ -43,14 +39,17 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
 
           {/* Product Image/Icon */}
           <div className="text-center py-4">
-            {/* adjst to use tag image fo next js inteast */}
             {product?.image !== "" && (
-              <Image
-                src={product?.image ?? ""}
+              <ProductImage
+                src={product?.image ?? null}
                 alt={product?.name}
+                sizeClass="w-full"
+                fill={false}
                 width={300}
                 height={300}
-                className="mx-auto"
+                radius=""
+                bgClass=""
+                imagePadding=""
               />
             )}
           </div>
@@ -157,11 +156,7 @@ export const ProductListGrid: React.FC<ProductListGridProps> = ({
   title,
 }) => {
   if (products.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500">ยังไม่มีสินค้าในหมวดหมู่นี้</p>
-      </div>
-    );
+    return <EmptyState message="ยังไม่มีสินค้าในหมวดหมู่นี้" />;
   }
 
   return (

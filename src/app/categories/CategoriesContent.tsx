@@ -2,6 +2,7 @@
 
 import React from "react";
 import { FiCheck, FiArrowRight } from "react-icons/fi";
+import { TrustCard } from "@/components/ui";
 import { CategoryGrid } from "@/components/CategoryCard";
 import { useCategories } from "@/hooks";
 import { CategoryGridSkeleton, ErrorFallback } from "@/components/Skeleton";
@@ -78,41 +79,30 @@ export default function CategoriesContent() {
       {/* Trust Section */}
       <section className="mt-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-[2rem] p-6">
-            <div className="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center mb-4">
-              <FiCheck className="text-2xl text-brand" />
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
-              คัดสรรอย่างดี
-            </h3>
-            <p className="text-gray-500 text-sm">
-              ทุกหมวดหมู่ผ่านการคัดเลือกจากทีมงาน ไม่ใช่แค่รวบรวมมาเยอะๆ
-            </p>
-          </div>
-
-          <div className="bg-white rounded-[2rem] p-6">
-            <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
-              <FiArrowRight className="text-2xl text-purple-600" />
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
-              อัปเดตสม่ำเสมอ
-            </h3>
-            <p className="text-gray-500 text-sm">
-              เราอัปเดตข้อมูลและรีวิวสินค้าใหม่ๆ ทุกเดือน
-            </p>
-          </div>
-
-          <div className="bg-white rounded-[2rem] p-6">
-            <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-              <span className="text-2xl">🎯</span>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
-              ตรงจุด ไม่อ้อม
-            </h3>
-            <p className="text-gray-500 text-sm">
-              บอกตรงๆ ว่าอะไรดี อะไรไม่ดี ไม่ต้องอ่านยาว
-            </p>
-          </div>
+          <TrustCard
+            icon={<FiCheck className="text-2xl text-brand" />}
+            title="คัดสรรอย่างดี"
+            description="ทุกหมวดหมู่ผ่านการคัดเลือกจากทีมงาน ไม่ใช่แค่รวบรวมมาเยอะๆ"
+            iconStyle="box"
+            iconBg="bg-brand/10"
+            radius="rounded-[2rem]"
+          />
+          <TrustCard
+            icon={<FiArrowRight className="text-2xl text-purple-600" />}
+            title="อัปเดตสม่ำเสมอ"
+            description="เราอัปเดตข้อมูลและรีวิวสินค้าใหม่ๆ ทุกเดือน"
+            iconStyle="box"
+            iconBg="bg-purple-100"
+            radius="rounded-[2rem]"
+          />
+          <TrustCard
+            icon={<span className="text-2xl">🎯</span>}
+            title="ตรงจุด ไม่อ้อม"
+            description="บอกตรงๆ ว่าอะไรดี อะไรไม่ดี ไม่ต้องอ่านยาว"
+            iconStyle="box"
+            iconBg="bg-orange-100"
+            radius="rounded-[2rem]"
+          />
         </div>
       </section>
     </div>

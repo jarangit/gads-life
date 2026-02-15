@@ -1,9 +1,5 @@
 import React from "react";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/layouts/Footer";
-import { Badge } from "@/components/Badge";
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
+import { Badge, Button, Card } from "@/components/ui";
 import { ProductCard } from "@/components/ProductCard";
 import { FAQ } from "@/components/FAQ";
 import { robotVacuumCategoryData as data } from "@/data/categories";

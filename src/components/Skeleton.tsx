@@ -1,16 +1,7 @@
 "use client";
 
 import React from "react";
-
-/** Pulsing placeholder block — the building brick for all skeletons */
-function Bone({ className = "" }: { className?: string }) {
-  return (
-    <div
-      className={`animate-pulse rounded-2xl bg-gray-200 ${className}`}
-      aria-hidden
-    />
-  );
-}
+import { Bone } from "@/components/ui";
 
 // ──────────────────────────────────────────────
 //  Category Card skeleton
@@ -79,32 +70,6 @@ export function CategoryDetailSkeleton() {
 //  Generic error fallback
 // ──────────────────────────────────────────────
 
-interface ErrorFallbackProps {
-  message?: string;
-  onRetry?: () => void;
-}
-
-export function ErrorFallback({
-  message = "เกิดข้อผิดพลาดในการโหลดข้อมูล",
-  onRetry,
-}: ErrorFallbackProps) {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 text-center">
-      <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-        <span className="text-2xl">⚠️</span>
-      </div>
-      <h3 className="text-lg font-bold text-gray-900 mb-2">
-        ไม่สามารถโหลดข้อมูลได้
-      </h3>
-      <p className="text-gray-500 mb-6 max-w-md">{message}</p>
-      {onRetry && (
-        <button
-          onClick={onRetry}
-          className="px-6 py-2.5 bg-black text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
-        >
-          ลองใหม่
-        </button>
-      )}
-    </div>
-  );
-}
+// Re-export ErrorFallback from design system for backward compatibility
+export { ErrorFallback } from "@/components/ui";
+export type { ErrorFallbackProps } from "@/components/ui";
