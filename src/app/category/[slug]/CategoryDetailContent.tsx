@@ -10,7 +10,7 @@ import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { useCategoryBySlug } from "@/hooks";
 import { CategoryDetailSkeleton, ErrorFallback } from "@/components/Skeleton";
-import type { ProductItemDto } from "@/lib/api/types";
+import type { ProductItemDto } from "@/lib/api/category/types";
 
 // ──────────────────────────────────────────────
 //  Product card for category product listing

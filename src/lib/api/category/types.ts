@@ -30,17 +30,18 @@ export interface Brand {
 
 // ---- Category ----
 
-export interface CategoryDto {
-  id: string;
-  slug: string;
-  nameTh: string;
-  nameEn: string | null;
-  description: string | null;
-  heroImage: string | null;
-  isActive: boolean;
-  orderIndex: number;
-  createdAt: string;
-  updatedAt: string;
+export interface CategoryItemResponse {
+  id: "tbk3Hhf1Eg";
+  slug: "laptops";
+  nameTh: "แล็ปท็อป edit";
+  nameEn: "Laptop";
+  description: "test";
+  heroImage: null;
+  isActive: 1;
+  orderIndex: 0;
+  createdAt: "2026-02-15T01:35:12.541Z";
+  updatedAt: "2026-02-15T01:40:09.000Z";
+  productCount: 0;
 }
 
 // ---- Product Item (inside a category) ----
@@ -62,7 +63,12 @@ export interface ProductItemDto {
 // ---- Category with products ----
 
 export interface CategoryWithProductsDto {
-  category: CategoryDto;
+  category: CategoryItemResponse;
   items: ProductItemDto[];
+  pagination: Pagination;
+}
+
+export interface ICategoryListResponse {
+  items: CategoryItemResponse[];
   pagination: Pagination;
 }

@@ -6,7 +6,7 @@ import {
   fetchCategories,
   fetchCategoryBySlug,
   type ListCategoriesParams,
-} from "@/lib/api/categories";
+} from "@/lib/api/category/categories";
 
 // ──────────────────────────────────────────────
 //  useCategories — paginated category list

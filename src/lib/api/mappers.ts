@@ -5,7 +5,7 @@
  * and is the single place to adjust when the backend evolves.
  */
 
-import type { CategoryDto, CategoryWithProductsDto, ProductItemDto } from "@/lib/api/types";
+import type { CategoryDto, CategoryWithProductsDto, ProductItemDto } from "@/lib/api/category/types";
 import type { Category, CategoryStatus } from "@/data/categories/categories-list";
 
 /** Map a backend CategoryDto to the frontend Category shape used by components */

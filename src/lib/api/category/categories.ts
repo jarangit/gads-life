@@ -10,8 +10,9 @@
 import { http } from "@/lib/api/http";
 import type {
   CategoryWithProductsDto,
+  ICategoryListResponse,
   PaginatedResponse,
-} from "@/lib/api/types";
+} from "@/lib/api/category/types";
 
 // ---- Params ----
 
@@ -26,11 +27,12 @@ export interface ListCategoriesParams {
 export async function fetchCategories(
   params?: ListCategoriesParams,
   signal?: AbortSignal,
-): Promise<PaginatedResponse<CategoryWithProductsDto>> {
-  return http<PaginatedResponse<CategoryWithProductsDto>>(
-    "/public/categories",
-    { params: params as Record<string, string | number>, signal },
-  );
+): Promise<ICategoryListResponse> {
+  const data = await http<ICategoryListResponse>("/public/categories", {
+    params: params as Record<string, string | number>,
+    signal,
+  });
+  return data;
 }
 
 /** GET /public/categories/:slug — single category with its products */

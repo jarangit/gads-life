@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fetchCategories } from "@/lib/api/categories";
+import { fetchCategories } from "@/lib/api/category/categories";
 import CategoryDetailContent from "./CategoryDetailContent";
 
 interface CategoryPageProps {

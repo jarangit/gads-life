@@ -7,18 +7,20 @@ import { CategoryGrid } from "@/components/CategoryCard";
 import { useCategories } from "@/hooks";
 import { CategoryGridSkeleton, ErrorFallback } from "@/components/Skeleton";
 import { toCategoryDisplay } from "@/lib/api/mappers";
+import { ICategoryItemVm } from "@/types/models/category";
 
 export default function CategoriesContent() {
   const { data, isLoading, isError, error, refetch } = useCategories();
 
   // Map API response → display Categories
   const categories = React.useMemo(
-    () => (data?.items ?? []).map((item) => toCategoryDisplay(item.category)),
+    () =>
+      ((data?.items ?? []).map((item) => item) as unknown) as ICategoryItemVm[],
     [data],
   );
 
-  const activeCount = categories.filter((c) => c.status === "active").length;
-  const comingSoonCount = categories.filter((c) => c.status === "draft").length;
+  const activeCount = data?.pagination.total ?? 0; // Assuming all returned items are active
+  // const comingSoonCount = categories.filter((c) => c.isActive === "draft").length;
 
   return (
     <div className="min-h-screen bg-[#f0f0f0]">
@@ -93,14 +95,14 @@ export default function CategoriesContent() {
                       หมวดหมู่พร้อมให้บริการ
                     </div>
                   </div>
-                  {comingSoonCount > 0 && (
+                  {/* {comingSoonCount > 0 && (
                     <div>
                       <div className="text-3xl font-bold text-yellow-400">
                         {comingSoonCount}
                       </div>
                       <div className="text-gray-500 text-sm">เร็วๆ นี้</div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               )}
             </div>
@@ -113,11 +115,7 @@ export default function CategoriesContent() {
         ) : isError ? (
           <ErrorFallback message={error?.message} onRetry={() => refetch()} />
         ) : (
-          <div>cat grid goes here</div>
-          // <CategoryGrid
-          //   categories={categories}
-          //   title="หมวดหมู่ทั้งหมด"
-          // />
+          <CategoryGrid categories={categories} title="หมวดหมู่ทั้งหมด" />
         )}
 
         {/* Trust Section */}

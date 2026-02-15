@@ -9,4 +9,5 @@ export interface ICategoryItemVm {
   orderIndex: number;
   createdAt: Date;
   updatedAt: Date;
+  productCount?: number;
 }

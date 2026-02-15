@@ -34,6 +34,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
+  console.log("🚀 ~ CategoryCard ~ category:", category)
   return (
     <Link href={`/category/${category.slug}`} className="block">
       <div 

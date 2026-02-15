@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans_Thai, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers";
 import "./globals.css";
+import Nav from "@/components/layouts/nav";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex",
@@ -69,7 +70,10 @@ export default function RootLayout({
         className={`${ibmPlexSansThai.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <QueryProvider>
-          {children}
+          <Nav />
+          <main className="container min-h-screen">
+            <div className="p-6 bg-amber-600">{children}</div>
+          </main>
         </QueryProvider>
         <script
           type="application/ld+json"
