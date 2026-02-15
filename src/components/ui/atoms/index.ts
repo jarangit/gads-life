@@ -21,3 +21,9 @@ export type { SectionHeaderProps } from "./SectionHeader";
 
 export { IconBox } from "./IconBox";
 export type { IconBoxProps, IconBoxSize } from "./IconBox";
+
+export { FilterChip } from "./FilterChip";
+export type { FilterChipProps } from "./FilterChip";
+
+export { SortSelect } from "./SortSelect";
+export type { SortSelectProps, SortOption } from "./SortSelect";

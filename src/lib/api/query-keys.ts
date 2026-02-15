@@ -27,8 +27,17 @@ export const queryKeys = {
     list: () => [...queryKeys.home.all, "list"] as const,
   },
 
-  // ── 🔮 Future modules (add here when needed) ──
-  // products: { ... },
-  // brands:   { ... },
-  // collections: { ... },
+  products: {
+    all: ["products"] as const,
+    list: (params?: Record<string, string | number | boolean>) =>
+      [...queryKeys.products.all, "list", params ?? {}] as const,
+    detail: (id: string) =>
+      [...queryKeys.products.all, "detail", id] as const,
+  },
+
+  brands: {
+    all: ["brands"] as const,
+    list: (params?: Record<string, string | number | boolean>) =>
+      [...queryKeys.brands.all, "list", params ?? {}] as const,
+  },
 } as const;

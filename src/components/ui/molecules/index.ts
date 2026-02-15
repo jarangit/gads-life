@@ -12,3 +12,6 @@ export type { ProductCardCompactProps } from "./ProductCardCompact";
 
 export { ReviewRow } from "./ReviewRow";
 export type { ReviewRowProps } from "./ReviewRow";
+
+export { ProductGridCard } from "./ProductGridCard";
+export type { ProductGridCardProps } from "./ProductGridCard";
