@@ -11,7 +11,7 @@ import { http } from "@/lib/api/http";
 import type {
   IProductListResponse,
   ListProductsParams,
-  ProductResponse,
+  ProductDetailResponse,
 } from "@/lib/api/product/types";
 
 // ---- Functions ----
@@ -31,6 +31,14 @@ export async function fetchProducts(
 export async function fetchProductById(
   id: string,
   signal?: AbortSignal,
-): Promise<ProductResponse> {
-  return http<ProductResponse>(`/public/products/${id}`, { signal });
+): Promise<ProductDetailResponse> {
+  return http<ProductDetailResponse>(`/public/products/${id}`, { signal });
+}
+
+/** GET /public/products/slug/:slug — single product detail by slug */
+export async function fetchProductBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<ProductDetailResponse> {
+  return http<ProductDetailResponse>(`/public/products/slug/${slug}`, { signal });
 }

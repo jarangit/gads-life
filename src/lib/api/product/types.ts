@@ -8,6 +8,7 @@ import type { Brand, PaginatedResponse } from "@/lib/api/category/types";
 
 export interface ProductResponse {
   id: string;
+  slug: string;
   name: string;
   subtitle: string;
   image: string | null;
@@ -38,6 +39,90 @@ export interface ProductRating {
   productId: string;
   subCategory: string;
   score: number;
+}
+
+// ---- Product Detail Sub-types ----
+
+export interface ProductKeyHighlight {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductWeakness {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductBeforePurchasePoint {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductAfterUsagePoint {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductPro {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductCon {
+  id: string;
+  content: string;
+  sortOrder: number;
+}
+
+export interface ProductQuickVerdict {
+  id: string;
+  quote: string;
+  description: string;
+}
+
+export interface ProductQuickVerdictTag {
+  id: string;
+  tag: string;
+  sortOrder: number;
+}
+
+export interface ProductPricing {
+  id: string;
+  price: number;
+  currency: string;
+  priceLabel: string;
+}
+
+export enum FinalVerdictType {
+  BUY_IF = "BUY_IF",
+  SKIP_IF = "SKIP_IF",
+}
+
+export interface ProductFinalVerdictPoint {
+  id: number;
+  type: FinalVerdictType;
+  text: string;
+  orderIndex: number;
+}
+
+// ---- Full Product Detail Response ----
+
+export interface ProductDetailResponse extends ProductResponse {
+  keyHighlights: ProductKeyHighlight[];
+  weaknesses: ProductWeakness[];
+  beforePurchasePoints: ProductBeforePurchasePoint[];
+  afterUsagePoints: ProductAfterUsagePoint[];
+  pros: ProductPro[];
+  cons: ProductCon[];
+  quickVerdict: ProductQuickVerdict | null;
+  quickVerdictTags: ProductQuickVerdictTag[];
+  pricing: ProductPricing | null;
+  finalVerdictPoints: ProductFinalVerdictPoint[];
 }
 
 // ---- Paginated list ----

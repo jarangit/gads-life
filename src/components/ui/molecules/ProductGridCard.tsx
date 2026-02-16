@@ -39,7 +39,7 @@ export function ProductGridCard({
   radius = "rounded-2xl",
   className,
 }: ProductGridCardProps) {
-  const href = slug ? `/product/${slug}` : `/product/${id}`;
+  const href = slug ? `/products/${slug}` : `/products/${id}`;
 
   return (
     <Link href={href} className={cn("group block", className)}>
@@ -99,7 +99,7 @@ export function ProductGridCard({
           <div className="flex items-center gap-1.5">
             <FiStar className="text-brand fill-brand w-4 h-4" />
             <span className="font-semibold text-gray-900">
-              {overallScore.toFixed(1)}
+              {/* {overallScore?.toFixed(1)} */}
             </span>
             <span className="text-gray-400 text-sm">/ 10</span>
           </div>

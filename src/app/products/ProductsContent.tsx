@@ -339,6 +339,7 @@ export default function ProductsContent() {
                 <ProductGridCard
                   key={product.id}
                   id={product.id}
+                  slug={product.slug}
                   name={product.name}
                   image={product.image}
                   overallScore={product.overallScore}
