@@ -4,8 +4,19 @@ import { cn } from "@/utils/cn";
 /* ─────────────────────────────────────────────
  *  Card – flexible container surface
  *
- *  Use `radius` for the organic border-radius
- *  styles used across the project.
+ *  Design Tokens:
+ *    - Token-based border-radius (radius prop)
+ *    - Consistent padding scale
+ *    - Shadow tokens for elevation
+ *    - Brand colors for highlight states
+ *
+ *  Variants:
+ *    default   – white surface
+ *    highlight – brand-accented border
+ *    muted     – subtle gray background
+ *    dark      – inverted colors
+ *    glass     – frosted glass effect
+ *    gradient  – warm gradient background
  * ───────────────────────────────────────────── */
 
 const variantStyles = {

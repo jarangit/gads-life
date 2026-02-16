@@ -1,5 +1,11 @@
 /* ──────────────────────────────────────────────
  *  SortSelect — dropdown for sort options
+ *
+ *  Design Tokens:
+ *    - Token-based spacing (px-4, py-2)
+ *    - Token-based radius (rounded-xl)
+ *    - Brand colors for focus ring
+ *    - Token-based typography
  * ──────────────────────────────────────────────*/
 
 import { cn } from "@/utils/cn";
@@ -27,9 +33,10 @@ export function SortSelect<T extends string = string>({
       value={value}
       onChange={(e) => onChange(e.target.value as T)}
       className={cn(
+        // Base styles with token-based values
         "px-4 py-2 rounded-xl border border-gray-200 bg-white text-sm font-medium",
         "text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand",
-        "cursor-pointer transition-colors",
+        "cursor-pointer transition-colors duration-200",
         className,
       )}
     >

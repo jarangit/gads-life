@@ -7,6 +7,12 @@ import { cn } from "@/utils/cn";
  *
  *  Supports rendering as `<button>`, `<a>`, or Next `<Link>`.
  *  Pass `href` to render a link automatically.
+ *
+ *  Design Tokens:
+ *    - Uses brand colors from CSS custom properties
+ *    - Consistent spacing scale (px/py)
+ *    - Unified border-radius tokens
+ *    - Standard transition timing
  * ───────────────────────────────────────────── */
 
 const variantStyles = {
@@ -17,18 +23,21 @@ const variantStyles = {
   outline: "border border-gray-200 text-gray-700 hover:bg-gray-50",
 } as const;
 
+// Token-based size presets
 const sizeStyles = {
-  xs: "px-2.5 py-1 text-xs gap-1",
-  sm: "px-3 py-1.5 text-sm gap-1.5",
-  md: "px-4 py-2 text-base gap-2",
-  lg: "px-6 py-3 text-lg gap-2",
+  xs: "px-2.5 py-1 text-xs gap-1",       // space-2.5, space-1
+  sm: "px-3 py-1.5 text-sm gap-1.5",     // space-3, space-1.5
+  md: "px-4 py-2 text-base gap-2",       // space-4, space-2
+  lg: "px-6 py-3 text-lg gap-2.5",       // space-6, space-3
 } as const;
 
+// Token-based radius presets
 const radiusStyles = {
-  default: "rounded-lg",
-  full: "rounded-full",
-  xl: "rounded-xl",
-  "2xl": "rounded-2xl",
+  default: "rounded-lg",   // radius-lg (12px)
+  md: "rounded-md",        // radius-md (8px)
+  xl: "rounded-xl",        // radius-xl (16px)
+  "2xl": "rounded-2xl",    // radius-2xl (20px)
+  full: "rounded-full",    // radius-full
 } as const;
 
 export type ButtonVariant = keyof typeof variantStyles;
@@ -59,7 +68,9 @@ export function Button({
   type = "button",
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center font-medium transition-all",
+    // Base styles with token-based transition
+    "inline-flex items-center justify-center font-medium",
+    "transition-all duration-200 ease-out",
     variantStyles[variant],
     sizeStyles[size],
     radiusStyles[radius],

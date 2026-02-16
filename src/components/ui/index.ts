@@ -4,6 +4,9 @@
  *  import { Badge, Button, Card, ... } from "@/components/ui";
  * ───────────────────────────────────────────── */
 
+// Design Tokens
+export * from "./tokens";
+
 // Atoms
 export * from "./atoms";
 

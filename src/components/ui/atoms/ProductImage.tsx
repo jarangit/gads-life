@@ -6,6 +6,12 @@ import { cn } from "@/utils/cn";
 /* ─────────────────────────────────────────────
  *  ProductImage – image with automatic fallback
  *
+ *  Design Tokens:
+ *    - Token-based radius (rounded-xl = radius-xl)
+ *    - Uses gray-100/80 as default background
+ *    - Token-based transition duration (duration-300)
+ *    - Consistent padding scale
+ *
  *  Re-used everywhere a product/category image
  *  is shown with a placeholder.
  * ───────────────────────────────────────────── */

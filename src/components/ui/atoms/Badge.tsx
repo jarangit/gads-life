@@ -4,14 +4,19 @@ import { cn } from "@/utils/cn";
 /* ─────────────────────────────────────────────
  *  Badge – unified badge for the entire app
  *
+ *  Design Tokens:
+ *    - Uses brand colors from CSS custom properties
+ *    - Token-based spacing scale (px/py)
+ *    - Consistent typography sizing
+ *
  *  Variants:
- *    default   – neutral gray
- *    success   – green/brand
- *    info      – blue-ish brand
- *    warning   – yellow
- *    recommended – brand accent (แนะนำ)
- *    score     – gray with score display
- *    status    – configurable status badge
+ *    default     – neutral gray (gray-100/gray-800)
+ *    success     – green/brand (brand/10)
+ *    info        – blue-ish brand
+ *    warning     – yellow accent
+ *    recommended – brand highlight (แนะนำ)
+ *    score       – muted gray for scores
+ *    status      – configurable (pass className)
  * ───────────────────────────────────────────── */
 
 const variantStyles = {
@@ -24,10 +29,11 @@ const variantStyles = {
   status: "",
 } as const;
 
+// Token-based size presets
 const sizeStyles = {
-  xs: "px-2 py-0.5 text-[11px]",
-  sm: "px-2.5 py-0.5 text-xs",
-  md: "px-3 py-1 text-sm",
+  xs: "px-2 py-0.5 text-[11px]",   // space-2, space-0.5
+  sm: "px-2.5 py-0.5 text-xs",     // space-2.5, space-0.5, font-size-xs
+  md: "px-3 py-1 text-sm",         // space-3, space-1, font-size-sm
 } as const;
 
 export type BadgeVariant = keyof typeof variantStyles;

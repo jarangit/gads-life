@@ -28,15 +28,57 @@ npm run lint     # ESLint
 
 ## Design Tokens
 
-Defined in `src/app/globals.css` and exposed via `@theme inline`:
+Defined in `src/app/globals.css` and exposed via `@theme inline`. TypeScript constants available in `src/components/ui/tokens.ts`.
+
+### Color Tokens
 
 | Token | Value | Tailwind Class |
 |-------|-------|----------------|
 | `--background` | `#f0f0f0` | `bg-background` |
+| `--foreground` | `#171717` | `text-foreground` |
 | `--brand` | `#05db04` | `bg-brand`, `text-brand` |
 | `--brand-dark` | `#04b803` | `bg-brand-dark` |
 | `--brand-light` | `#e6ffe6` | `bg-brand-light` |
 | `--brand-hover` | `#04c903` | `bg-brand-hover` |
+
+### Spacing Tokens
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--space-1` | `0.25rem` (4px) | `p-1`, `gap-1` |
+| `--space-2` | `0.5rem` (8px) | `p-2`, `gap-2` |
+| `--space-3` | `0.75rem` (12px) | `p-3`, `gap-3` |
+| `--space-4` | `1rem` (16px) | `p-4`, `gap-4` |
+| `--space-6` | `1.5rem` (24px) | `p-6`, `gap-6` |
+| `--space-8` | `2rem` (32px) | `p-8`, `gap-8` |
+| `--space-12` | `3rem` (48px) | `py-12` |
+
+### Border Radius Tokens
+
+| Token | Value | Tailwind Class |
+|-------|-------|----------------|
+| `--radius-sm` | `0.375rem` (6px) | `rounded-sm` |
+| `--radius-md` | `0.5rem` (8px) | `rounded-md` |
+| `--radius-lg` | `0.75rem` (12px) | `rounded-lg` |
+| `--radius-xl` | `1rem` (16px) | `rounded-xl` |
+| `--radius-2xl` | `1.25rem` (20px) | `rounded-2xl` |
+| `--radius-full` | `9999px` | `rounded-full` |
+
+### Shadow Tokens
+
+| Token | Tailwind Class | Use Case |
+|-------|----------------|----------|
+| `--shadow-card` | `shadow-card` | Cards, panels |
+| `--shadow-hover` | `shadow-hover` | Hover states |
+| `--shadow-sm/md/lg` | `shadow-sm/md/lg` | General elevation |
+
+### Transition Tokens
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `--duration-fast` | `150ms` | `duration-150` |
+| `--duration-normal` | `200ms` | `duration-200` |
+| `--duration-slow` | `300ms` | `duration-300` |
 
 **Container:** `max-width: 1200px`, `margin: 0 auto`, `padding: 0 1rem`.
 
@@ -55,10 +97,11 @@ src/
 ├── components/
 │   ├── ui/                  # 🎨 Design System (app-wide reusable)
 │   │   ├── atoms/           # Badge, Button, Card, Bone, ProductImage,
-│   │   │                    # EmptyState, SectionHeader, IconBox
+│   │   │                    # EmptyState, SectionHeader, IconBox, FilterChip, SortSelect
 │   │   ├── molecules/       # TrustCard, ErrorFallback, LinkCard,
 │   │   │                    # ProductCardCompact, ReviewRow
 │   │   ├── constants/       # categoryIcons (getCategoryIcon, categoryIconMap)
+│   │   ├── tokens.ts        # 🎨 Design token TypeScript constants
 │   │   ├── utils.ts         # formatRelativeTime, formatPrice
 │   │   └── index.ts         # Barrel — import everything from "@/components/ui"
 │   ├── home/                # Home page feature components
@@ -84,14 +127,24 @@ src/
 
 ## Design System Usage
 
-**Single import** for all shared components:
+**Single import** for all shared components and tokens:
 
 ```tsx
 import {
+  // Design Tokens
+  spacing, radius, shadows, typography, colors, transitions,
+  buttonSizes, badgeSizes, iconBoxSizes,
+  
+  // Atoms
   Badge, RecommendedBadge, ScoreBadge,
   Button, Card, Bone,
   ProductImage, EmptyState, SectionHeader, IconBox,
+  FilterChip, SortSelect,
+  
+  // Molecules
   TrustCard, ErrorFallback, LinkCard, ProductCardCompact, ReviewRow,
+  
+  // Constants & Utils
   getCategoryIcon, categoryIconMap,
   formatRelativeTime, formatPrice,
 } from "@/components/ui";

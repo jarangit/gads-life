@@ -3,6 +3,11 @@ import { cn } from "@/utils/cn";
 
 /* ─────────────────────────────────────────────
  *  EmptyState – shown when a list has no items
+ *
+ *  Design Tokens:
+ *    - Token-based vertical padding (py-12 = space-12)
+ *    - Token-based spacing for icon/message/action
+ *    - Uses gray-500 for muted text
  * ───────────────────────────────────────────── */
 
 export interface EmptyStateProps {

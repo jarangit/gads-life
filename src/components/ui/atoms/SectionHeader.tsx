@@ -6,6 +6,11 @@ import { cn } from "@/utils/cn";
 /* ─────────────────────────────────────────────
  *  SectionHeader – section title with optional
  *  "see more" link on the right
+ *
+ *  Design Tokens:
+ *    - Token-based typography sizes (sm/md/lg)
+ *    - Token-based spacing (gap-2, mb-5)
+ *    - Brand color for hover states
  * ───────────────────────────────────────────── */
 
 export interface SectionHeaderProps {
@@ -20,11 +25,12 @@ export interface SectionHeaderProps {
   className?: string;
 }
 
+// Token-based typography sizes
 const sizeStyles = {
-  sm: "text-base",
-  md: "text-lg",
-  lg: "text-2xl",
-};
+  sm: "text-base",   // font-size-base (16px)
+  md: "text-lg",     // font-size-lg (18px)
+  lg: "text-2xl",    // font-size-2xl (24px)
+} as const;
 
 export function SectionHeader({
   icon,
