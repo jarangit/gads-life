@@ -27,3 +27,9 @@ export type { FilterChipProps } from "./FilterChip";
 
 export { SortSelect } from "./SortSelect";
 export type { SortSelectProps, SortOption } from "./SortSelect";
+
+export { ScoreBar } from "./ScoreBar";
+export type { ScoreBarProps } from "./ScoreBar";
+
+export { VerdictTag } from "./VerdictTag";
+export type { VerdictTagProps } from "./VerdictTag";
