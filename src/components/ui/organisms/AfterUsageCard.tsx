@@ -5,7 +5,7 @@
  * @token color: dark, brand
  */
 
-import { FiCheck } from "react-icons/fi";
+import { FiCheck, FiCheckCircle } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { ContentPoint } from "../molecules";
 
@@ -26,7 +26,7 @@ export function AfterUsageCard({ points, className }: AfterUsageCardProps) {
     <div className={cn("bg-[#1a1a1a] rounded-4xl p-8 text-white", className)}>
       <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 bg-brand/20 rounded-xl flex items-center justify-center">
-          <span className="text-2xl">✅</span>
+          <FiCheckCircle className="text-2xl text-brand" />
         </div>
         <div>
           <span className="text-gray-400 text-xs font-semibold tracking-wider uppercase">

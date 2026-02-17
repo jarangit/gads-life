@@ -6,6 +6,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { FiStar } from "react-icons/fi";
 
 export interface HighlightData {
   id: string;
@@ -37,7 +38,9 @@ export function KeyHighlightsCard({
             key={highlight.id}
             className="bg-white/50 backdrop-blur rounded-2xl p-4"
           >
-            <div className="text-3xl mb-2">✨</div>
+            <div className="text-3xl mb-2 text-yellow-500">
+              <FiStar />
+            </div>
             <p className="font-bold text-black">{highlight.content}</p>
           </div>
         ))}

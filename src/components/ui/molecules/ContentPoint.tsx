@@ -5,6 +5,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { FiCircle } from "react-icons/fi";
 import type { ReactNode } from "react";
 
 export interface ContentPointProps {
@@ -20,7 +21,7 @@ export interface ContentPointProps {
 
 export function ContentPoint({
   content,
-  icon = <span className="text-purple-500 mt-1">•</span>,
+  icon = <FiCircle className="text-purple-500 mt-1.5 text-xs" />,
   className,
   textClass = "text-gray-700",
 }: ContentPointProps) {

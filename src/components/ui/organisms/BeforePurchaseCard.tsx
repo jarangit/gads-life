@@ -6,6 +6,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { FiHelpCircle } from "react-icons/fi";
 import { ContentPoint } from "../molecules";
 
 export interface PointData {
@@ -28,7 +29,7 @@ export function BeforePurchaseCard({
     <div className={cn("bg-white rounded-4xl p-8", className)}>
       <div className="flex items-center gap-3 mb-6">
         <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-          <span className="text-2xl">🤔</span>
+          <FiHelpCircle className="text-2xl text-purple-500" />
         </div>
         <div>
           <span className="text-gray-400 text-xs font-semibold tracking-wider uppercase">
