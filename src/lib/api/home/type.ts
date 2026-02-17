@@ -1,8 +1,11 @@
+import { IProductItemVm } from "@/types/models/product";
+
 export interface IHomeResponse {
   categories: Category[];
   topPicks: LastReview[];
   lastReview: LastReview[];
   topBrands: TopBrand[];
+  sellProducts: IProductItemVm[];
 }
 
 export interface Category {

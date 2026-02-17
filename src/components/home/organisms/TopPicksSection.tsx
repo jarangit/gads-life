@@ -3,9 +3,10 @@ import { HiOutlineStar } from "react-icons/hi";
 import { SectionHeader } from "../atoms";
 import { TopPickCard } from "../molecules";
 import { LastReview } from "@/lib/api/home/type";
+import { IProductItemVm } from "@/types/models/product";
 
 interface TopPicksSectionProps {
-  items: LastReview[];
+  items: IProductItemVm[];
 }
 
 const radiusClasses = [

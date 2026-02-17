@@ -23,7 +23,7 @@ export default function Home() {
       {/* Hero + Top Picks + Problems */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <HeroSection />
-        {homeData.topPicks && <TopPicksSection items={homeData.topPicks} />}
+        {homeData.sellProducts && <TopPicksSection items={homeData.sellProducts} />}
         <ProblemsSection />
       </div>
 

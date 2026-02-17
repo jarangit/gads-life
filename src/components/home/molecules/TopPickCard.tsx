@@ -1,8 +1,9 @@
 import { ProductCardCompact } from "@/components/ui";
 import { LastReview } from "@/lib/api/home/type";
+import { IProductItemVm } from "@/types/models/product";
 
 interface TopPickCardProps {
-  item: LastReview;
+  item: IProductItemVm;
   radiusClass: string;
 }
 
