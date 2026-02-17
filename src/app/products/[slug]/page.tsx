@@ -1,8 +1,15 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FiArrowLeft, FiCheck } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
+import type { Metadata } from "next";
 import { fetchProductBySlug } from "@/lib/api/product/products";
+import {
+  buildProductMetadata,
+  notFoundMetadata,
+  buildProductReviewJsonLd,
+  JsonLd,
+} from "@/lib/seo";
 import {
   ScoreCard,
   HeroImageCard,
@@ -14,13 +21,31 @@ import {
   ProsCard,
   ConsCard,
   FinalVerdictCard,
-  PricingCard,
 } from "@/components/ui/organisms";
 
 interface ProductDetailPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+// Generate dynamic metadata for SEO
+export async function generateMetadata({
+  params,
+}: ProductDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  try {
+    const product = await fetchProductBySlug(slug);
+
+    if (!product) {
+      return notFoundMetadata("Product");
+    }
+
+    return buildProductMetadata({ ...product, slug });
+  } catch {
+    return notFoundMetadata("Product");
+  }
 }
 
 export default async function ProductDetailPage({
@@ -39,8 +64,15 @@ export default async function ProductDetailPage({
     notFound();
   }
 
+  // JSON-LD Structured Data for SEO
+  const jsonLd = buildProductReviewJsonLd(product);
+
   return (
-    <div className="">
+    <>
+      {/* JSON-LD Structured Data */}
+      <JsonLd data={jsonLd} />
+
+      <div className="">
       <Link
         href="/products"
         className="text-gray-600 hover:text-black font-medium flex items-center gap-1"
@@ -147,5 +179,6 @@ export default async function ProductDetailPage({
 
     
     </div>
+    </>
   );
 }
