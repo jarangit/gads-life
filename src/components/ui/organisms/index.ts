@@ -37,3 +37,9 @@ export type {
 
 export { PricingCard } from "./PricingCard";
 export type { PricingCardProps, PricingData } from "./PricingCard";
+
+export { FeaturedBentoGrid } from "./FeaturedBentoGrid";
+export type { FeaturedBentoGridProps } from "./FeaturedBentoGrid";
+
+export { MonthlyEventList } from "./MonthlyEventList";
+export type { MonthlyEventListProps } from "./MonthlyEventList";

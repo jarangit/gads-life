@@ -44,7 +44,7 @@ export function FilterChip({
       {count !== undefined && (
         <span
           className={cn(
-            "text-xs rounded-full px-1.5 min-w-[1.25rem] text-center",
+            "text-xs rounded-full px-1.5 min-w-5 text-center",
             selected ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500",
           )}
         >
