@@ -26,7 +26,7 @@ const variantStyles = {
   dark: "bg-black text-white",
   glass: "bg-white/90 backdrop-blur-sm",
   gradient:
-    "bg-gradient-to-br from-amber-50/80 via-orange-50/50 to-yellow-50/80",
+    "bg-linear-to-br from-amber-50/80 via-orange-50/50 to-yellow-50/80",
 } as const;
 
 export type CardVariant = keyof typeof variantStyles;

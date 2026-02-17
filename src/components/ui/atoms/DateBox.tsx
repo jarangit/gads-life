@@ -1,6 +1,13 @@
 /* ─────────────────────────────────────────────
  *  DateBox – compact date display (day + month)
+ *
+ *  Design Tokens:
+ *    - Token-based sizing (w-14, h-14)
+ *    - Token-based radius (rounded-xl = radius-xl)
+ *    - Uses gray-100 background
  * ───────────────────────────────────────────── */
+
+import { cn } from "@/utils/cn";
 
 export interface DateBoxProps {
   date: string;
@@ -12,7 +19,11 @@ export function DateBox({ date, className }: DateBoxProps) {
 
   return (
     <div
-      className={`shrink-0 w-14 h-14 bg-gray-100 rounded-xl flex flex-col items-center justify-center text-center ${className ?? ""}`}
+      className={cn(
+        "shrink-0 w-14 h-14 bg-gray-100 rounded-xl",
+        "flex flex-col items-center justify-center text-center",
+        className,
+      )}
     >
       <span className="text-lg font-bold text-gray-900 leading-none">
         {d.getDate()}

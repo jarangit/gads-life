@@ -1,13 +1,18 @@
 import { cn } from "@/utils/cn";
+import { Badge } from "./Badge";
+import type { BadgeSize } from "./Badge";
 import { activityCategoryColors } from "../constants/activities";
 
 /* ─────────────────────────────────────────────
  *  CategoryTag – colored pill badge per category
+ *  Composes Badge atom for consistent sizing
  * ───────────────────────────────────────────── */
+
+export type CategoryTagSize = "xs" | "sm";
 
 export interface CategoryTagProps {
   category: string;
-  size?: "xs" | "sm";
+  size?: CategoryTagSize;
   className?: string;
 }
 
@@ -16,21 +21,16 @@ export function CategoryTag({
   size = "xs",
   className,
 }: CategoryTagProps) {
-  const sizeStyles = {
-    xs: "px-2 py-0.5 text-[11px]",
-    sm: "px-2.5 py-0.5 text-xs",
-  };
-
   return (
-    <span
+    <Badge
+      variant="status"
+      size={size as BadgeSize}
       className={cn(
-        "inline-flex items-center rounded-full font-medium",
-        sizeStyles[size],
         activityCategoryColors[category] || "bg-gray-100 text-gray-700",
-        className
+        className,
       )}
     >
       {category}
-    </span>
+    </Badge>
   );
 }
