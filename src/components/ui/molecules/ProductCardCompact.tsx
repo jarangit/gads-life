@@ -19,6 +19,9 @@ export interface ProductCardCompactProps {
   href?: string;
   /** Border-radius class */
   radius?: string;
+  price?: number;
+  currency?: string;
+  sellPrice?: number;
 }
 
 export function ProductCardCompact({
@@ -30,8 +33,13 @@ export function ProductCardCompact({
   subtitle,
   href,
   radius = "rounded-2xl",
+  price,
+  currency = "฿",
+  sellPrice,
 }: ProductCardCompactProps) {
   const link = href ?? `/product/${id}`;
+  const hasDiscount = sellPrice != null && price != null && sellPrice < price;
+  const displayPrice = hasDiscount ? sellPrice : price;
 
   return (
     <Link href={link} className="group">
@@ -64,6 +72,26 @@ export function ProductCardCompact({
           <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
             {subtitle}
           </p>
+        )}
+
+        {displayPrice != null && (
+          <div className="mt-2 flex items-baseline gap-1.5">
+            <span
+              className={cn(
+                "text-sm font-bold",
+                hasDiscount ? "text-red-500" : "text-gray-900",
+              )}
+            >
+              {currency}
+              {displayPrice.toLocaleString()}
+            </span>
+            {hasDiscount && (
+              <span className="text-xs text-gray-400 line-through">
+                {currency}
+                {price!.toLocaleString()}
+              </span>
+            )}
+          </div>
         )}
       </div>
     </Link>

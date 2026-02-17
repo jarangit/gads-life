@@ -8,6 +8,7 @@ interface TopPickCardProps {
 }
 
 export function TopPickCard({ item, radiusClass }: TopPickCardProps) {
+  console.log("🚀 ~ TopPickCard ~ item:", item);
   return (
     <ProductCardCompact
       id={item.id}
@@ -16,6 +17,9 @@ export function TopPickCard({ item, radiusClass }: TopPickCardProps) {
       overallScore={item.overallScore}
       isRecommended={item.isRecommended}
       radius={radiusClass}
+      price={item.price}
+      currency={item.currency}
+      sellPrice={item.sellPrice}
     />
   );
 }
