@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FiCheck, FiSearch } from "react-icons/fi";
+import { FiCheck, FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 
 const navLinks = [
@@ -13,43 +14,86 @@ const navLinks = [
 
 const Nav = () => {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between mb-6 max-w-7xl mx-auto p-6">
-      <div className="flex items-center gap-8">
-        <Link href="/" className="flex items-center gap-2 text-xl">
-          <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-            <FiCheck className="text-brand text-xl" />
-          </div>
-          <span className="font-bold text-gray-900">
-            Gads
-            <FiCheck className="inline" />
-            Life
-          </span>
-        </Link>
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/30 border-b border-gray-100/50">
+      <div className="flex items-center justify-between max-w-7xl mx-auto p-6">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2 text-xl">
+            <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
+              <FiCheck className="text-brand text-xl" />
+            </div>
+            <span className="font-bold text-gray-900">
+              Gads
+              <FiCheck className="inline" />
+              Life
+            </span>
+          </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-brand",
+                  pathname.startsWith(link.href)
+                    ? "text-brand"
+                    : "text-gray-600",
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {/* Search Button */}
+          <button className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors">
+            <FiSearch className="text-gray-600" />
+          </button>
+
+          {/* Hamburger – mobile only */}
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="md:hidden w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? (
+              <FiX className="text-gray-600 text-lg" />
+            ) : (
+              <FiMenu className="text-gray-600 text-lg" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu drawer */}
+      <div
+        className={cn(
+          "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+          menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0",
+        )}
+      >
+        <nav className="flex flex-col gap-1 px-6 pb-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              onClick={() => setMenuOpen(false)}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-brand",
+                "block px-4 py-3 rounded-xl text-sm font-medium transition-colors",
                 pathname.startsWith(link.href)
-                  ? "text-brand"
-                  : "text-gray-600"
+                  ? "bg-brand/10 text-brand"
+                  : "text-gray-600 hover:bg-gray-50",
               )}
             >
               {link.label}
             </Link>
           ))}
         </nav>
-      </div>
-      <div className="flex items-center gap-3">
-        {/* Search Button */}
-        <button className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors">
-          <FiSearch className="text-gray-600" />
-        </button>
       </div>
     </header>
   );
