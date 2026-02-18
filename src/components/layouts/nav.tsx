@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { FiCheck, FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { transitions, typography, radius } from "@/components/ui";
+import { SearchModal } from "@/components/search";
 
 const navLinks = [
   { href: "/products", label: "สินค้า" },
@@ -16,8 +17,10 @@ const navLinks = [
 const Nav = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
+    <>
     <header className="sticky top-0 z-50 backdrop-blur-md bg-white/30 border-b border-gray-100/50">
       <div className="flex items-center justify-between max-w-7xl mx-auto p-6">
         <div className="flex items-center gap-8">
@@ -52,7 +55,11 @@ const Nav = () => {
 
         <div className="flex items-center gap-3">
           {/* Search Button */}
-          <button className={`w-10 h-10 flex items-center justify-center bg-white ${radius.full} hover:bg-gray-100 ${transitions.colorsNormal}`}>
+          <button
+            onClick={() => setSearchOpen(true)}
+            className={`w-10 h-10 flex items-center justify-center bg-white ${radius.full} hover:bg-gray-100 ${transitions.colorsNormal}`}
+            aria-label="ค้นหาสินค้า"
+          >
             <FiSearch className="text-gray-600" />
           </button>
 
@@ -97,6 +104,10 @@ const Nav = () => {
         </nav>
       </div>
     </header>
+
+    {/* Search Modal */}
+    <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
   );
 };
 

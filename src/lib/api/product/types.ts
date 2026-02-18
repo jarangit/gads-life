@@ -139,4 +139,5 @@ export interface ListProductsParams {
   categoryId?: string;
   brandId?: string;
   sort?: ProductSortOption;
+  search?: string;
 }
