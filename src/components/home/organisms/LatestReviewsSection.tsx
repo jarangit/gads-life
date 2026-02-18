@@ -3,6 +3,7 @@ import { HiOutlineClock } from "react-icons/hi";
 import { SectionHeader } from "../atoms";
 import { ReviewListItem } from "../molecules";
 import { LastReview } from "@/lib/api/home/type";
+import { bentoRadius, sectionPanel, accentColors } from "@/components/ui";
 
 interface LatestReviewsSectionProps {
   reviews: LastReview[];
@@ -10,9 +11,9 @@ interface LatestReviewsSectionProps {
 
 export function LatestReviewsSection({ reviews }: LatestReviewsSectionProps) {
   return (
-    <div className="lg:col-span-2 bg-white rounded-[1.75rem] rounded-tr-[2.5rem] p-6 md:p-7">
+    <div className={`lg:col-span-2 bg-white ${bentoRadius.sectionTR} ${sectionPanel.padding}`}>
       <SectionHeader
-        icon={<HiOutlineClock className="text-xl text-blue-500" />}
+        icon={<HiOutlineClock className={`text-xl ${accentColors.blue.text}`} />}
         title="เพิ่งรีวิวไป"
         linkHref="/reviews"
         linkText="ดูเพิ่ม"
@@ -25,10 +26,10 @@ export function LatestReviewsSection({ reviews }: LatestReviewsSectionProps) {
             review={review}
             radiusClass={
               idx === 0
-                ? "rounded-xl rounded-tl-2xl"
+                ? bentoRadius.catTL
                 : idx === reviews.length - 1
-                ? "rounded-xl rounded-br-2xl"
-                : "rounded-xl"
+                ? bentoRadius.catBR
+                : bentoRadius.catDefault
             }
           />
         ))}

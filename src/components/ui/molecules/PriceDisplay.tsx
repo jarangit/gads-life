@@ -6,6 +6,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { accentColors, typography } from "../tokens";
 
 export interface PriceDisplayProps {
   /** Current price */
@@ -36,7 +37,7 @@ export function PriceDisplay({
   return (
     <div className={cn("flex items-center gap-2 flex-wrap", className)}>
       {label && <span className="text-gray-600">{label}</span>}
-      <span className="text-2xl font-bold text-purple-600">
+      <span className={`${typography.size['2xl']} ${typography.weight.bold} ${accentColors.purple.dark}`}>
         {currency}
         {formatPrice(price)}
       </span>

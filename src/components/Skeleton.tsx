@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Bone } from "@/components/ui";
+import { radius, cardHeights, gridPresets } from "@/components/ui";
 
 // ──────────────────────────────────────────────
 //  Category Card skeleton
@@ -9,7 +10,7 @@ import { Bone } from "@/components/ui";
 
 export function CategoryCardSkeleton() {
   return (
-    <div className="bg-white rounded-[2rem] p-6 min-h-[200px]">
+    <div className={`bg-white ${radius['4xl']} p-6 ${cardHeights.md}`}>
       <div className="flex justify-between items-start">
         <Bone className="w-14 h-14 rounded-2xl" />
         <Bone className="w-10 h-10 rounded-full" />
@@ -25,7 +26,7 @@ export function CategoryCardSkeleton() {
 
 export function CategoryGridSkeleton({ count = 8 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div className={`${gridPresets['4col']} gap-4`}>
       {Array.from({ length: count }).map((_, i) => (
         <CategoryCardSkeleton key={i} />
       ))}

@@ -3,20 +3,21 @@ import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { SearchPrompt } from "../molecules";
+import { bentoRadius, cardHeights, typography, transitions } from "@/components/ui";
 
 export function HeroSection() {
   return (
-    <div className="lg:col-span-1 lg:row-span-2 bg-black rounded-[2.5rem] rounded-br-[3.5rem] p-8 min-h-[420px] flex flex-col justify-between relative overflow-hidden">
+    <div className={`lg:col-span-1 lg:row-span-2 bg-black ${bentoRadius.hero} p-8 ${cardHeights.hero} flex flex-col justify-between relative overflow-hidden`}>
       <div>
-        <span className="text-brand/80 text-xs font-medium tracking-wide flex items-center gap-1.5">
-          <HiOutlineSparkles className="text-sm" /> หาของดีๆ กันเถอะ
+        <span className={`text-brand/80 ${typography.size.xs} ${typography.weight.medium} tracking-wide flex items-center gap-1.5`}>
+          <HiOutlineSparkles className={typography.size.sm} /> หาของดีๆ กันเถอะ
         </span>
-        <h1 className="text-white text-3xl md:text-[2.75rem] font-bold mt-5 leading-[1.15]">
+        <h1 className={`text-white ${typography.size['3xl']} md:${typography.size.display} ${typography.weight.bold} mt-5 ${typography.leading.hero}`}>
           วันนี้
           <br />
           อยากได้อะไร?
         </h1>
-        <p className="text-gray-500 mt-4 text-[13px] leading-relaxed">
+        <p className={`text-gray-500 mt-4 ${typography.size.caption} ${typography.leading.relaxed}`}>
           บอกมาเลย — จะเป็นหมวดหมู่ หรือปัญหาที่เจอก็ได้
           <br />
           เดี๋ยวเราช่วยหาให้
@@ -28,7 +29,7 @@ export function HeroSection() {
       <div className="flex items-center gap-3 mt-auto">
         <Link
           href="/category"
-          className="bg-brand text-black font-semibold px-6 py-3 rounded-2xl rounded-tl-lg hover:bg-brand-hover transition-all hover:scale-[1.02] flex items-center gap-2"
+          className={`bg-brand text-black ${typography.weight.semibold} px-6 py-3 rounded-2xl rounded-tl-lg hover:bg-brand-hover ${transitions.allNormal} hover:scale-[1.02] flex items-center gap-2`}
         >
           ดูของทั้งหมด <FiArrowRight />
         </Link>

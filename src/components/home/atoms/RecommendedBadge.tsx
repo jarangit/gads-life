@@ -1,9 +1,10 @@
 import React from "react";
+import { Badge } from "@/components/ui";
 
 export function RecommendedBadge() {
   return (
-    <span className="inline-block text-[11px] text-brand font-medium bg-brand/10 px-2 py-0.5 rounded-full">
+    <Badge variant="recommended" size="xs">
       แนะนำ
-    </span>
+    </Badge>
   );
 }

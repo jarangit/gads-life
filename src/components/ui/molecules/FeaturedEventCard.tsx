@@ -4,6 +4,7 @@ import { FiArrowRight, FiStar } from "react-icons/fi";
 import { CategoryTag } from "../atoms/CategoryTag";
 import { EventMeta } from "../atoms/EventMeta";
 import { daysUntil, getDaysLabel } from "../utils";
+import { transitions, typography, radius } from "../tokens";
 import type { Activity } from "../constants/activities";
 
 /* ─────────────────────────────────────────────
@@ -65,7 +66,7 @@ export function FeaturedEventCard({ activity }: FeaturedEventCardProps) {
             <span className="text-brand font-semibold text-lg">
               {getDaysLabel(days)}
             </span>
-            <button className="flex items-center gap-2 bg-brand text-black font-semibold px-5 py-2.5 rounded-full hover:bg-brand-hover transition-colors text-sm">
+            <button className={`flex items-center gap-2 bg-brand text-black ${typography.weight.semibold} px-5 py-2.5 ${radius.full} hover:bg-brand-hover ${transitions.colorsNormal} ${typography.size.sm}`}>
               ดูรายละเอียด
               <FiArrowRight />
             </button>

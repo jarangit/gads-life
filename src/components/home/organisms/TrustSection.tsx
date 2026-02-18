@@ -1,7 +1,7 @@
 import React from "react";
 import { FiCheck } from "react-icons/fi";
 import { BsBullseye, BsGem } from "react-icons/bs";
-import { TrustCard } from "@/components/ui";
+import { TrustCard, accentColors, bentoRadius } from "@/components/ui";
 
 export function TrustSection() {
   return (
@@ -11,18 +11,18 @@ export function TrustSection() {
         title="ใช้จริง รีวิวจริง"
         description="ไม่ได้มาจากสเปก"
         variant="dark"
-        radius="rounded-[1.5rem] rounded-tr-[2.5rem]"
+        radius={bentoRadius.trustTR}
       />
       <TrustCard
-        icon={<BsBullseye className="text-orange-500" />}
+        icon={<BsBullseye className={accentColors.orange.icon} />}
         title="เลือกง่าย"
         description="สรุปให้แล้ว แค่เลือก"
       />
       <TrustCard
-        icon={<BsGem className="text-purple-500" />}
+        icon={<BsGem className={accentColors.purple.text} />}
         title="ไม่มีสปอนเซอร์"
         description="มีแค่ affiliate link"
-        radius="rounded-[1.5rem] rounded-bl-[2.5rem]"
+        radius={bentoRadius.trustBL}
       />
     </div>
   );

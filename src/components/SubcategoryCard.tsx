@@ -8,6 +8,7 @@ import {
 import { BsBatteryFull, BsPlug } from 'react-icons/bs';
 import { MdCable, MdOutlineElectricalServices } from 'react-icons/md';
 import { IoCarSportOutline } from 'react-icons/io5';
+import { transitions, radius, gridPresets, typography } from '@/components/ui';
 import type { Subcategory, CategoryStatus } from '@/data/categories/categories-list';
 
 interface SubcategoryCardProps {
@@ -17,13 +18,13 @@ interface SubcategoryCardProps {
 
 // Icon mapping based on subcategory icon field
 const iconMap: Record<string, React.ReactNode> = {
-  'power-bank': <BsBatteryFull className="text-gray-700 text-2xl" />,
-  'wall-charger': <BsPlug className="text-gray-700 text-2xl" />,
-  'charging-cable': <MdCable className="text-gray-700 text-2xl" />,
-  'magsafe-wireless': <HiOutlineWifi className="text-gray-700 text-2xl" />,
-  'charging-station': <MdOutlineElectricalServices className="text-gray-700 text-2xl" />,
-  'car-charger': <IoCarSportOutline className="text-gray-700 text-2xl" />,
-  default: <HiOutlineLightningBolt className="text-gray-700 text-2xl" />,
+  'power-bank': <BsBatteryFull className={`text-gray-700 ${typography.size['2xl']}`} />,
+  'wall-charger': <BsPlug className={`text-gray-700 ${typography.size['2xl']}`} />,
+  'charging-cable': <MdCable className={`text-gray-700 ${typography.size['2xl']}`} />,
+  'magsafe-wireless': <HiOutlineWifi className={`text-gray-700 ${typography.size['2xl']}`} />,
+  'charging-station': <MdOutlineElectricalServices className={`text-gray-700 ${typography.size['2xl']}`} />,
+  'car-charger': <IoCarSportOutline className={`text-gray-700 ${typography.size['2xl']}`} />,
+  default: <HiOutlineLightningBolt className={`text-gray-700 ${typography.size['2xl']}`} />,
 };
 
 // Status badge styles
@@ -42,21 +43,21 @@ export const SubcategoryCard: React.FC<SubcategoryCardProps> = ({ subcategory, c
   const cardContent = (
     <div 
       className={`
-        bg-white rounded-2xl p-5 h-full min-h-[180px] relative group flex flex-col
-        transition-all duration-300 border border-gray-100
+        bg-white ${radius['2xl']} p-5 h-full min-h-[180px] relative group flex flex-col
+        ${transitions.allSlow} border border-gray-100
         ${isClickable ? 'hover:shadow-lg cursor-pointer hover:border-brand/30' : 'opacity-60'}
       `}
     >
       {/* Header */}
       <div className="flex justify-between items-start">
         {/* Icon */}
-        <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+        <div className={`${radius.xl} bg-gray-100 w-12 h-12 flex items-center justify-center`}>
           {iconMap[subcategory.icon || ''] || iconMap.default}
         </div>
         
         {/* Status Badge or Arrow */}
         {isActive ? (
-          <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
+          <div className={`w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 ${transitions.allSlow} transform group-hover:scale-110`}>
             <FiArrowUpRight className="w-4 h-4 text-white" />
           </div>
         ) : isDraft ? (
@@ -78,7 +79,7 @@ export const SubcategoryCard: React.FC<SubcategoryCardProps> = ({ subcategory, c
 
       {/* Bottom accent line for clickable cards */}
       {isClickable && (
-        <div className={`absolute bottom-0 left-4 right-4 h-0.5 ${isActive ? 'bg-brand' : 'bg-yellow-400'} rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+      <div className={`absolute bottom-0 left-4 right-4 h-0.5 ${isActive ? 'bg-brand' : 'bg-yellow-400'} rounded-full opacity-0 group-hover:opacity-100 ${transitions.colorsSlow}`} />
       )}
     </div>
   );
@@ -115,7 +116,7 @@ export const SubcategoryGrid: React.FC<SubcategoryGridProps> = ({
       {title && (
         <h2 className="text-2xl font-bold text-gray-900 mb-6">{title}</h2>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
+      <div className={`${gridPresets['3col']} gap-4 auto-rows-fr`}>
         {subcategories.map((subcategory) => (
           <SubcategoryCard 
             key={subcategory.id} 

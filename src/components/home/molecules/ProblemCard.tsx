@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { transitions, typography, iconBoxSizes, radius } from "@/components/ui";
 
 interface ProblemCardProps {
   icon: React.ReactNode;
@@ -21,17 +22,17 @@ export function ProblemCard({
   return (
     <Link href={slug} className="group">
       <div
-        className={`bg-white/90 backdrop-blur-sm p-4 hover:shadow-lg hover:-translate-y-1 transition-all duration-200 h-full ${radiusClass}`}
+        className={`bg-white/90 backdrop-blur-sm p-4 hover:shadow-lg hover:-translate-y-1 ${transitions.allNormal} h-full ${radiusClass}`}
       >
         <div
-          className={`w-9 h-9 ${color} rounded-lg flex items-center justify-center mb-2.5`}
+          className={`${iconBoxSizes.sm} ${color} ${radius.lg} flex items-center justify-center mb-2.5`}
         >
           {icon}
         </div>
-        <h3 className="font-semibold text-gray-900 text-[13px] leading-tight">
+        <h3 className={`${typography.weight.semibold} text-gray-900 ${typography.size.caption} ${typography.leading.tight}`}>
           {title}
         </h3>
-        <p className="text-[11px] text-gray-500 mt-1 line-clamp-2 leading-relaxed">
+        <p className={`${typography.size['2xs']} text-gray-500 mt-1 line-clamp-2 ${typography.leading.relaxed}`}>
           {description}
         </p>
       </div>

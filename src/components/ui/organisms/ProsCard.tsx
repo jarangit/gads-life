@@ -6,6 +6,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { typography, radius } from "../tokens";
 
 export interface ProData {
   id: string;
@@ -23,10 +24,10 @@ export function ProsCard({ pros, className }: ProsCardProps) {
   return (
     <div className={cn("bg-white rounded-4xl p-8", className)}>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-brand rounded-xl flex items-center justify-center">
-          <span className="text-white font-bold">+</span>
+        <div className={`w-10 h-10 bg-brand ${radius.xl} flex items-center justify-center`}>
+          <span className={`text-white ${typography.weight.bold}`}>+</span>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className={`${typography.size['2xl']} ${typography.weight.bold} text-gray-900`}>
           ข้อดีหลังใช้งานจริง
         </h2>
       </div>

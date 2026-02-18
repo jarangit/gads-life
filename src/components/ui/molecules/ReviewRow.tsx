@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ProductImage } from "../atoms/ProductImage";
 import { cn } from "@/utils/cn";
+import { typography, transitions } from "../tokens";
 
 /* ─────────────────────────────────────────────
  *  ReviewRow – horizontal row for listing
@@ -38,7 +39,7 @@ export function ReviewRow({
     <Link href={link} className="block group">
       <div
         className={cn(
-          "flex items-center gap-4 p-3 hover:bg-gray-50/80 transition-all",
+          `flex items-center gap-4 p-3 hover:bg-gray-50/80 ${transitions.allNormal}`,
           radius,
         )}
       >
@@ -55,7 +56,7 @@ export function ReviewRow({
         />
 
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 group-hover:text-brand transition-colors line-clamp-1 text-[15px]">
+          <h3 className={`${typography.weight.semibold} text-gray-900 group-hover:text-brand ${transitions.colorsNormal} line-clamp-1 ${typography.size.body}`}>
             {name}
           </h3>
           {subtitle && (
@@ -69,7 +70,7 @@ export function ReviewRow({
               <div className="text-base font-bold text-brand">{value}</div>
             )}
             {valueLabel && (
-              <div className="text-[11px] text-gray-400 mt-0.5">
+              <div className={`${typography.size['2xs']} text-gray-400 mt-0.5`}>
                 {valueLabel}
               </div>
             )}

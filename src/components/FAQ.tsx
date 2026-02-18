@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { transitions } from '@/components/ui';
 
 interface FAQItemProps {
   question: string;
@@ -14,7 +15,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
     <div className="border-b border-gray-200">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full py-4 flex justify-between items-center text-left hover:bg-gray-50 transition-colors"
+        className={`w-full py-4 flex justify-between items-center text-left hover:bg-gray-50 ${transitions.colorsNormal}`}
       >
         <span className="font-medium text-gray-900">{question}</span>
         <span className="text-gray-500 text-xl">{isOpen ? '−' : '+'}</span>

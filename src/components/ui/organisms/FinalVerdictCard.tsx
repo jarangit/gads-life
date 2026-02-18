@@ -9,6 +9,7 @@ import { FiArrowRight, FiCheck, FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { FinalVerdictType } from "@/lib/api/product/types";
 import { formatPrice } from "../utils";
+import { transitions, typography, radius } from "../tokens";
 
 export interface FinalVerdictPointData {
   id: string | number;
@@ -107,7 +108,7 @@ export function FinalVerdictCard({
                 href={affiliateLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-brand text-black font-bold px-8 py-4 rounded-full hover:bg-brand-hover transition-colors flex items-center gap-2"
+                className={`bg-brand text-black ${typography.weight.bold} px-8 py-4 ${radius.full} hover:bg-brand-hover ${transitions.colorsNormal} flex items-center gap-2`}
               >
                 เช็กราคาล่าสุด <FiArrowRight />
               </a>

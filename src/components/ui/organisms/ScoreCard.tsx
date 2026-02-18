@@ -7,6 +7,7 @@
 
 import { cn } from "@/utils/cn";
 import { ScoreBar } from "../atoms";
+import { typography } from "../tokens";
 
 export interface RatingData {
   id: string;
@@ -63,7 +64,7 @@ export function ScoreCard({
       </div>
       {isRecommended && (
         <div className="absolute bottom-6 right-6">
-          <span className="bg-brand text-black text-xs font-bold px-3 py-1 rounded-full">
+          <span className={`bg-brand text-black ${typography.size.xs} ${typography.weight.bold} px-3 py-1 rounded-full`}>
             RECOMMENDED
           </span>
         </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { ProductImage } from "../atoms/ProductImage";
 import { RecommendedBadge, ScoreBadge } from "../atoms/Badge";
+import { typography, transitions } from "../tokens";
 
 /* ─────────────────────────────────────────────
  *  ProductCard – compact product card (home,
@@ -45,7 +46,7 @@ export function ProductCardCompact({
     <Link href={link} className="group">
       <div
         className={cn(
-          "bg-gray-50/80 p-4 hover:bg-gray-100/80 transition-all hover:-translate-y-0.5",
+          "bg-gray-50/80 p-4 hover:bg-gray-100/80", transitions.allNormal, "hover:-translate-y-0.5",
           radius,
         )}
       >
@@ -64,7 +65,7 @@ export function ProductCardCompact({
           <ScoreBadge score={overallScore} />
         </div>
 
-        <h3 className="font-semibold text-gray-900 mt-2 line-clamp-1 text-[15px]">
+        <h3 className={`${typography.weight.semibold} text-gray-900 mt-2 line-clamp-1 ${typography.size.body}`}>
           {name}
         </h3>
 

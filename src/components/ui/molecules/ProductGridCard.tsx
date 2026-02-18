@@ -11,6 +11,7 @@ import { FiStar } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { Badge } from "@/components/ui/atoms/Badge";
 import { ProductImage } from "@/components/ui/atoms/ProductImage";
+import { transitions, typography, shadows } from "../tokens";
 
 export interface ProductGridCardProps {
   id: string;
@@ -46,7 +47,7 @@ export function ProductGridCard({
       <div
         className={cn(
           "bg-white border border-gray-100 overflow-hidden",
-          "hover:shadow-lg hover:border-gray-200 transition-all duration-300",
+          `hover:shadow-lg hover:border-gray-200 ${transitions.allSlow}`,
           radius,
         )}
       >
@@ -91,7 +92,7 @@ export function ProductGridCard({
           </div>
 
           {/* Name */}
-          <h3 className="font-bold text-gray-900 line-clamp-2 leading-tight group-hover:text-brand transition-colors">
+          <h3 className={`${typography.weight.bold} text-gray-900 line-clamp-2 ${typography.leading.tight} group-hover:text-brand ${transitions.colorsNormal}`}>
             {name}
           </h3>
 

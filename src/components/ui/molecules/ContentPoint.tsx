@@ -6,6 +6,7 @@
 
 import { cn } from "@/utils/cn";
 import { FiCircle } from "react-icons/fi";
+import { accentColors, typography } from "../tokens";
 import type { ReactNode } from "react";
 
 export interface ContentPointProps {
@@ -21,7 +22,7 @@ export interface ContentPointProps {
 
 export function ContentPoint({
   content,
-  icon = <FiCircle className="text-purple-500 mt-1.5 text-xs" />,
+  icon = <FiCircle className={`${accentColors.purple.text} mt-1.5 ${typography.size.xs}`} />,
   className,
   textClass = "text-gray-700",
 }: ContentPointProps) {

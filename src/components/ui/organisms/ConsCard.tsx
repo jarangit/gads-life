@@ -6,6 +6,7 @@
  */
 
 import { cn } from "@/utils/cn";
+import { typography, radius } from "../tokens";
 
 export interface ConData {
   id: string;
@@ -23,10 +24,10 @@ export function ConsCard({ cons, className }: ConsCardProps) {
   return (
     <div className={cn("bg-white rounded-4xl p-8", className)}>
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center">
-          <span className="text-white font-bold">−</span>
+        <div className={`w-10 h-10 bg-red-500 ${radius.xl} flex items-center justify-center`}>
+          <span className={`text-white ${typography.weight.bold}`}>−</span>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">ข้อเสียที่ต้องรู้</h2>
+        <h2 className={`${typography.size['2xl']} ${typography.weight.bold} text-gray-900`}>ข้อเสียที่ต้องรู้</h2>
       </div>
 
       <div className="space-y-6">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
 import { IconBox } from "../atoms/IconBox";
 import { cn } from "@/utils/cn";
+import { transitions, typography, radius, cardHeights, shadows } from "../tokens";
 
 /* ─────────────────────────────────────────────
  *  LinkCard – card that navigates on click.
@@ -35,8 +36,8 @@ export function LinkCard({
   showArrow = true,
   accentLine = true,
   accentColor = "bg-brand",
-  radius = "rounded-2xl",
-  minHeight = "min-h-[180px]",
+  radius: linkRadius = radius['2xl'],
+  minHeight = cardHeights.sm,
   className,
   children,
 }: LinkCardProps) {
@@ -45,21 +46,21 @@ export function LinkCard({
       <div
         className={cn(
           "bg-white p-5 h-full relative group flex flex-col",
-          "transition-all duration-300 border border-gray-100",
-          "hover:shadow-lg cursor-pointer hover:border-brand/30",
-          radius,
+          transitions.allSlow, "border border-gray-100",
+          `hover:${shadows.lg} cursor-pointer hover:border-brand/30`,
+          linkRadius,
           minHeight,
           className,
         )}
       >
         {/* Header */}
         <div className="flex justify-between items-start">
-          <IconBox size="lg" bgClass="bg-gray-100" radius="rounded-xl">
+          <IconBox size="lg" bgClass="bg-gray-100" radius="xl">
             {icon}
           </IconBox>
 
           {showArrow && (
-            <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-110">
+            <div className={`w-8 h-8 bg-brand rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 ${transitions.allSlow} transform group-hover:scale-110`}>
               <FiArrowUpRight className="w-4 h-4 text-white" />
             </div>
           )}
@@ -67,9 +68,9 @@ export function LinkCard({
 
         {/* Content */}
         <div className="mt-4 flex-1">
-          <h3 className="text-lg font-bold text-gray-900 mb-1">{title}</h3>
+          <h3 className={`${typography.size.lg} ${typography.weight.bold} text-gray-900 mb-1`}>{title}</h3>
           {description && (
-            <p className="text-sm text-gray-500 line-clamp-2">{description}</p>
+            <p className={`${typography.size.sm} text-gray-500 line-clamp-2`}>{description}</p>
           )}
         </div>
 
@@ -80,7 +81,7 @@ export function LinkCard({
           <div
             className={cn(
               "absolute bottom-0 left-4 right-4 h-0.5 rounded-full",
-              "opacity-0 group-hover:opacity-100 transition-opacity duration-300",
+              `opacity-0 group-hover:opacity-100 ${transitions.colorsSlow}`,
               accentColor,
             )}
           />

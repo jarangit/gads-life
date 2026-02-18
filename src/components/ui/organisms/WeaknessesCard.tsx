@@ -7,6 +7,7 @@
 
 import { FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
+import { typography, radius, accentColors } from "../tokens";
 
 export interface WeaknessData {
   id: string;
@@ -38,7 +39,7 @@ export function WeaknessesCard({
             key={weakness.id}
             className="flex items-start gap-4 bg-white/5 rounded-2xl p-4"
           >
-            <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center shrink-0">
+            <div className={`w-10 h-10 bg-red-500/20 ${radius.xl} flex items-center justify-center shrink-0`}>
               <FiX className="text-red-400" />
             </div>
             <div>

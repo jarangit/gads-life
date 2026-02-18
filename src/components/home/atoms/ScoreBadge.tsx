@@ -1,4 +1,5 @@
 import React from "react";
+import { Badge } from "@/components/ui";
 
 interface ScoreBadgeProps {
   score: string | number;
@@ -6,8 +7,8 @@ interface ScoreBadgeProps {
 
 export function ScoreBadge({ score }: ScoreBadgeProps) {
   return (
-    <span className="inline-block text-[11px] text-gray-500 font-medium bg-gray-100 px-2 py-0.5 rounded-full">
+    <Badge variant="score" size="xs">
       {score}/10
-    </span>
+    </Badge>
   );
 }

@@ -2,7 +2,15 @@ import React from "react";
 import Link from "next/link";
 import { FiArrowUpRight, FiCheck } from "react-icons/fi";
 import type { ProductData } from "@/data/products";
-import { ProductImage, EmptyState, formatPrice } from "@/components/ui";
+import {
+  ProductImage,
+  EmptyState,
+  formatPrice,
+  transitions,
+  typography,
+  radius,
+  gridPresets,
+} from "@/components/ui";
 
 interface ProductListCardProps {
   product: ProductData;
@@ -20,7 +28,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
       href={`/category/${categorySlug}/${subcategorySlug}/${product.id}`}
       className="block group h-full"
     >
-      <div className="bg-white rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-100 h-full flex flex-col">
+      <div className={`bg-white ${radius['2xl']} overflow-hidden ${transitions.allSlow} hover:shadow-xl border border-gray-100 h-full flex flex-col`}>
         {/* Header with Score */}
         <div className="relative bg-gradient-to-br from-gray-50 to-gray-100 p-6">
           {/* Recommended Badge */}
@@ -33,7 +41,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
           )}
 
           {/* Arrow */}
-          <div className="absolute top-4 right-4 w-8 h-8 bg-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <div className={`absolute top-4 right-4 w-8 h-8 bg-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 ${transitions.allSlow}`}>
             <FiArrowUpRight className="w-4 h-4 text-white" />
           </div>
 
@@ -71,7 +79,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
           </span>
 
           {/* Product Name */}
-          <h3 className="text-xl font-bold text-gray-900 mt-1 group-hover:text-brand transition-colors">
+          <h3 className={`${typography.size.xl} ${typography.weight.bold} text-gray-900 mt-1 group-hover:text-brand ${transitions.colorsNormal}`}>
             {product.name}
           </h3>
 
@@ -81,7 +89,7 @@ export const ProductListCard: React.FC<ProductListCardProps> = ({
           </p>
 
           {/* Quick Verdict */}
-          <div className="mt-4 p-3 bg-gray-50 rounded-xl">
+          <div className={`mt-4 p-3 bg-gray-50 ${radius.xl}`}>
             <p className="text-sm text-gray-700 font-medium">
               &ldquo;{product.quickVerdict.quote}&rdquo;
             </p>
@@ -164,7 +172,7 @@ export const ProductListGrid: React.FC<ProductListGridProps> = ({
       {title && (
         <h2 className="text-2xl font-bold text-gray-900 mb-6">{title}</h2>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+      <div className={`${gridPresets['3col']} gap-6 auto-rows-fr`}>
         {products.map((product) => (
           <ProductListCard
             key={product.id}

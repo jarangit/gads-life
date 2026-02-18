@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FiCheck, FiSearch, FiMenu, FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
+import { transitions, typography, radius } from "@/components/ui";
 
 const navLinks = [
   { href: "/products", label: "สินค้า" },
@@ -37,7 +38,7 @@ const Nav = () => {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-brand",
+                  `${typography.size.sm} ${typography.weight.medium} ${transitions.colorsNormal} hover:text-brand`,
                   pathname.startsWith(link.href)
                     ? "text-brand"
                     : "text-gray-600",
@@ -51,14 +52,14 @@ const Nav = () => {
 
         <div className="flex items-center gap-3">
           {/* Search Button */}
-          <button className="w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors">
+          <button className={`w-10 h-10 flex items-center justify-center bg-white ${radius.full} hover:bg-gray-100 ${transitions.colorsNormal}`}>
             <FiSearch className="text-gray-600" />
           </button>
 
           {/* Hamburger – mobile only */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden w-10 h-10 flex items-center justify-center bg-white rounded-full hover:bg-gray-100 transition-colors"
+            className={`md:hidden w-10 h-10 flex items-center justify-center bg-white ${radius.full} hover:bg-gray-100 ${transitions.colorsNormal}`}
             aria-label="Toggle menu"
           >
             {menuOpen ? (
@@ -73,7 +74,7 @@ const Nav = () => {
       {/* Mobile menu drawer */}
       <div
         className={cn(
-          "md:hidden overflow-hidden transition-all duration-300 ease-in-out",
+          `md:hidden overflow-hidden ${transitions.allSlow} ease-in-out`,
           menuOpen ? "max-h-60 opacity-100" : "max-h-0 opacity-0",
         )}
       >
@@ -84,7 +85,7 @@ const Nav = () => {
               href={link.href}
               onClick={() => setMenuOpen(false)}
               className={cn(
-                "block px-4 py-3 rounded-xl text-sm font-medium transition-colors",
+                `block px-4 py-3 ${radius.xl} ${typography.size.sm} ${typography.weight.medium} ${transitions.colorsNormal}`,
                 pathname.startsWith(link.href)
                   ? "bg-brand/10 text-brand"
                   : "text-gray-600 hover:bg-gray-50",
