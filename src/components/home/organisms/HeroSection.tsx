@@ -4,8 +4,14 @@ import { FiArrowRight } from "react-icons/fi";
 import { HiOutlineSparkles } from "react-icons/hi";
 import { SearchPrompt } from "../molecules";
 import { bentoRadius, cardHeights, typography, transitions } from "@/components/ui";
+import type { Category } from "@/lib/api/home/type";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  onSearchClick?: () => void;
+  categories?: Category[];
+}
+
+export function HeroSection({ onSearchClick, categories }: HeroSectionProps) {
   return (
     <div className={`lg:col-span-1 lg:row-span-2 bg-black ${bentoRadius.hero} p-8 ${cardHeights.hero} flex flex-col justify-between relative overflow-hidden`}>
       <div>
@@ -24,14 +30,14 @@ export function HeroSection() {
         </p>
       </div>
 
-      <SearchPrompt />
+      <SearchPrompt onSearchClick={onSearchClick} categories={categories} />
 
       <div className="flex items-center gap-3 mt-auto">
         <Link
-          href="/category"
+          href="/products"
           className={`bg-brand text-black ${typography.weight.semibold} px-6 py-3 rounded-2xl rounded-tl-lg hover:bg-brand-hover ${transitions.allNormal} hover:scale-[1.02] flex items-center gap-2`}
         >
-          ดูของทั้งหมด <FiArrowRight />
+          ดูสินค้าทั้งหมด <FiArrowRight />
         </Link>
       </div>
     </div>

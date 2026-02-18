@@ -1,47 +1,38 @@
 import React from "react";
 import Link from "next/link";
 import { FiSearch } from "react-icons/fi";
-import { BsBatteryCharging, BsHeadphones, BsLaptop } from "react-icons/bs";
-import { QuickTag } from "../atoms";
-import { transitions, radius, typography } from "@/components/ui";
+import { transitions, radius, typography, getCategoryIcon } from "@/components/ui";
+import type { Category } from "@/lib/api/home/type";
 
-const quickTags = [
-  {
-    href: "/category/charging-power",
-    icon: <BsBatteryCharging className={typography.size.sm} />,
-    label: "Power Bank",
-  },
-  {
-    href: "/category/audio",
-    icon: <BsHeadphones className={typography.size.sm} />,
-    label: "หูฟัง",
-  },
-  {
-    href: "/category/laptop",
-    icon: <BsLaptop className={typography.size.sm} />,
-    label: "Laptop",
-  },
-];
+interface SearchPromptProps {
+  onSearchClick?: () => void;
+  categories?: Category[];
+}
 
-export function SearchPrompt() {
+export function SearchPrompt({ onSearchClick, categories }: SearchPromptProps) {
+  const tags = (categories ?? []).slice(0, 3);
+
   return (
     <div className="mt-6 space-y-3">
-      <Link href="/category" className="block">
+      <button onClick={onSearchClick} className="block w-full text-left">
         <div className={`bg-white/10 backdrop-blur ${radius.xl} px-4 py-3 flex items-center gap-3 hover:bg-white/20 ${transitions.colorsNormal}`}>
           <FiSearch className="text-gray-400" />
           <span className={`text-gray-300 ${typography.size.sm}`}>ค้นหาสินค้า...</span>
         </div>
-      </Link>
-      <div className="flex flex-wrap gap-2">
-        {quickTags.map((tag) => (
-          <QuickTag
-            key={tag.href}
-            href={tag.href}
-            icon={tag.icon}
-            label={tag.label}
-          />
-        ))}
-      </div>
+      </button>
+      {tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/categories/${cat.slug}`}
+              className={`px-3 py-1.5 bg-white/5 border border-white/10 text-gray-400 text-xs ${radius.full} hover:bg-white/10 hover:text-gray-300 ${transitions.allNormal} flex items-center gap-1.5`}
+            >
+              {getCategoryIcon(cat.slug, typography.size.sm)} {cat.nameTh}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
