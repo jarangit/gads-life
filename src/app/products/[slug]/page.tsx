@@ -21,6 +21,7 @@ import {
   ProsCard,
   ConsCard,
   FinalVerdictCard,
+  PriceHistoryCard,
 } from "@/components/ui/organisms";
 
 interface ProductDetailPageProps {
@@ -163,6 +164,42 @@ export default async function ProductDetailPage({
         {product.cons && product.cons.length > 0 && (
           <ConsCard cons={product.cons} />
         )}
+      </div>
+
+      {/* Price History */}
+      <div className="max-w-7xl mx-auto mb-8">
+        <PriceHistoryCard
+          data={{
+            productSlug: slug,
+            currency: "THB",
+            source: "shopee",
+            range: {
+              months: 12,
+              from: "2025-03",
+              to: "2026-02",
+            },
+            monthly: [
+              { month: "2025-03", minPrice: 42900, avgPrice: 44500, sampleCount: 15 },
+              { month: "2025-04", minPrice: 43500, avgPrice: 45000, sampleCount: 12 },
+              { month: "2025-05", minPrice: 41500, avgPrice: 43000, sampleCount: 18 },
+              { month: "2025-06", minPrice: 40900, avgPrice: 42500, sampleCount: 20 },
+              { month: "2025-07", minPrice: 42000, avgPrice: 43500, sampleCount: 14 },
+              { month: "2025-08", minPrice: 41000, avgPrice: 42000, sampleCount: 16 },
+              { month: "2025-09", minPrice: 39900, avgPrice: 41000, sampleCount: 22 },
+              { month: "2025-10", minPrice: 40500, avgPrice: 42000, sampleCount: 19 },
+              { month: "2025-11", minPrice: 38900, avgPrice: 40500, sampleCount: 28 },
+              { month: "2025-12", minPrice: 41000, avgPrice: 42500, sampleCount: 25 },
+              { month: "2026-01", minPrice: 42000, avgPrice: 43000, sampleCount: 17 },
+              { month: "2026-02", minPrice: 41500, avgPrice: 42800, sampleCount: 14 },
+            ],
+            insight: {
+              cheapestMonth: "2025-11",
+              cheapestPrice: 38900,
+              currentPrice: 42800,
+              diffFromCheapest: 3900,
+            },
+          }}
+        />
       </div>
 
       {/* Final Verdict */}

@@ -12,7 +12,10 @@ export type {
 } from "./QuickVerdictCard";
 
 export { KeyHighlightsCard } from "./KeyHighlightsCard";
-export type { KeyHighlightsCardProps, HighlightData } from "./KeyHighlightsCard";
+export type {
+  KeyHighlightsCardProps,
+  HighlightData,
+} from "./KeyHighlightsCard";
 
 export { WeaknessesCard } from "./WeaknessesCard";
 export type { WeaknessesCardProps, WeaknessData } from "./WeaknessesCard";
@@ -43,3 +46,11 @@ export type { FeaturedBentoGridProps } from "./FeaturedBentoGrid";
 
 export { MonthlyEventList } from "./MonthlyEventList";
 export type { MonthlyEventListProps } from "./MonthlyEventList";
+
+export { PriceHistoryCard } from "./PriceHistoryCard";
+export type {
+  PriceHistoryCardProps,
+  PriceHistoryData,
+  MonthlyPriceData,
+  PriceInsight,
+} from "./PriceHistoryCard";
