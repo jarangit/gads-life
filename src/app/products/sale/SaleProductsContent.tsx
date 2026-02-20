@@ -53,7 +53,9 @@ export default function SaleProductsContent() {
     .map((product) => {
       const sellPrice = product.sellPrice as number;
       const discountAmount = product.price - sellPrice;
-      const discountPercent = Math.round((discountAmount / product.price) * 100);
+      const discountPercent = Math.round(
+        (discountAmount / product.price) * 100,
+      );
       return { ...product, sellPrice, discountAmount, discountPercent };
     })
     .sort((a, b) => b.discountPercent - a.discountPercent);
@@ -66,7 +68,10 @@ export default function SaleProductsContent() {
 
   if (isError) {
     return (
-      <ErrorFallback message={(error as Error)?.message} onRetry={() => refetch()} />
+      <ErrorFallback
+        message={(error as Error)?.message}
+        onRetry={() => refetch()}
+      />
     );
   }
 
@@ -96,7 +101,9 @@ export default function SaleProductsContent() {
                 <div className="text-gray-400 text-sm">ดีลที่กำลังลด</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-brand">{maxDiscount}%</div>
+                <div className="text-3xl font-bold text-brand">
+                  {maxDiscount}%
+                </div>
                 <div className="text-gray-400 text-sm">ส่วนลดสูงสุด</div>
               </div>
             </div>
@@ -122,7 +129,7 @@ export default function SaleProductsContent() {
                 </div>
                 <ProductGridCard
                   id={product.id}
-                  slug={product.slug}
+                  slug={product?.slug}
                   name={product.name}
                   image={product.image}
                   overallScore={product.overallScore}

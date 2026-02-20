@@ -40,7 +40,7 @@ export default async function CategoryDetailPage({
 export async function generateStaticParams() {
   try {
     const data = await fetchCategories({ page: 1, limit: 100 });
-    return data.items.map((item) => ({ slug: item.category.slug }));
+    return data.items.map((item) => ({ slug: item.slug }));
   } catch {
     return [];
   }
