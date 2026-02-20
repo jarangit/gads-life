@@ -56,7 +56,9 @@ export function ReviewRow({
         />
 
         <div className="flex-1 min-w-0">
-          <h3 className={`${typography.weight.semibold} text-gray-900 group-hover:text-brand ${transitions.colorsNormal} line-clamp-1 ${typography.size.body}`}>
+          <h3
+            className={`${typography.weight.semibold} text-gray-900 group-hover:text-brand ${transitions.colorsNormal} line-clamp-1 ${typography.size.body}`}
+          >
             {name}
           </h3>
           {subtitle && (
@@ -70,7 +72,7 @@ export function ReviewRow({
               <div className="text-base font-bold text-brand">{value}</div>
             )}
             {valueLabel && (
-              <div className={`${typography.size['2xs']} text-gray-400 mt-0.5`}>
+              <div className={`${typography.size["2xs"]} text-gray-400 mt-0.5`}>
                 {valueLabel}
               </div>
             )}
