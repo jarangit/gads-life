@@ -20,7 +20,7 @@ export function ProblemCard({
   radiusClass,
 }: ProblemCardProps) {
   return (
-    <Link href={slug} className="group">
+    <Link href={""} className="group">
       <div
         className={`bg-white/90 backdrop-blur-sm p-4 hover:shadow-lg hover:-translate-y-1 ${transitions.allNormal} h-full ${radiusClass}`}
       >
@@ -29,10 +29,14 @@ export function ProblemCard({
         >
           {icon}
         </div>
-        <h3 className={`${typography.weight.semibold} text-gray-900 ${typography.size.caption} ${typography.leading.tight}`}>
+        <h3
+          className={`${typography.weight.semibold} text-gray-900 ${typography.size.caption} ${typography.leading.tight}`}
+        >
           {title}
         </h3>
-        <p className={`${typography.size['2xs']} text-gray-500 mt-1 line-clamp-2 ${typography.leading.relaxed}`}>
+        <p
+          className={`${typography.size["2xs"]} text-gray-500 mt-1 line-clamp-2 ${typography.leading.relaxed}`}
+        >
           {description}
         </p>
       </div>

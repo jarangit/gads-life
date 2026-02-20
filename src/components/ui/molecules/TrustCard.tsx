@@ -29,7 +29,7 @@ export function TrustCard({
   title,
   description,
   variant = "default",
-  radius = bentoRadius.trustTR.split(' ')[0],
+  radius = bentoRadius.trustTR.split(" ")[0],
   iconBg = "bg-brand/10",
   iconSize = "lg",
   iconStyle = "raw",
@@ -37,22 +37,34 @@ export function TrustCard({
   const isDark = variant === "dark";
 
   return (
-    <Card variant={variant} radius={radius} padding="p-5">
-      {iconStyle === "box" ? (
-        <IconBox size={iconSize} bgClass={iconBg} radius="xl" className="mb-4">
-          {icon}
-        </IconBox>
-      ) : (
-        <div className="text-2xl mb-2">{icon}</div>
-      )}
-      <h3
-        className={`${typography.weight.bold} mb-0.5 ${typography.size.body} ${
-          isDark ? "" : "text-gray-900"
-        }`}
-      >
-        {title}
-      </h3>
-      <p className={`${typography.size.caption} text-gray-500`}>{description}</p>
+    <Card>
+      <div className="flex gap-4">
+        {iconStyle === "box" ? (
+          <IconBox
+            size={iconSize}
+            bgClass={iconBg}
+            radius="xl"
+            className="mb-4"
+          >
+            {icon}
+          </IconBox>
+        ) : (
+          <div className="text-2xl mb-2">{icon}</div>
+        )}
+        <div>
+          {" "}
+          <h3
+            className={`${typography.weight.bold} mb-0.5 ${
+              typography.size.body
+            } ${isDark ? "" : "text-gray-900"}`}
+          >
+            {title}
+          </h3>
+          <p className={`${typography.size.caption} text-gray-500`}>
+            {description}
+          </p>
+        </div>
+      </div>
     </Card>
   );
 }

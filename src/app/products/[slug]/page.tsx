@@ -167,7 +167,7 @@ export default async function ProductDetailPage({
       </div>
 
       {/* Price History */}
-      <div className="max-w-7xl mx-auto mb-8">
+      {/* <div className="max-w-7xl mx-auto mb-8">
         <PriceHistoryCard
           data={{
             productSlug: slug,
@@ -200,7 +200,7 @@ export default async function ProductDetailPage({
             },
           }}
         />
-      </div>
+      </div> */}
 
       {/* Final Verdict */}
       {product.finalVerdictPoints && product.finalVerdictPoints.length > 0 && (
