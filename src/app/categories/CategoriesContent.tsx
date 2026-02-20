@@ -77,7 +77,7 @@ export default function CategoriesContent() {
       )}
 
       {/* Trust Section */}
-      <section className="mt-12">
+      <section className="mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <TrustCard
             icon={<FiCheck className="text-2xl text-brand" />}
