@@ -8,10 +8,10 @@ interface TopPickCardProps {
 }
 
 export function TopPickCard({ item, radiusClass }: TopPickCardProps) {
-  console.log("🚀 ~ TopPickCard ~ item:", item);
   return (
     <ProductCardCompact
       id={item.id}
+      slug={item.slug}
       name={item.name}
       image={item.image}
       overallScore={item.overallScore}

@@ -21,8 +21,8 @@ export function TopPicksSection({ items }: TopPicksSectionProps) {
     <div className={`lg:col-span-2 bg-white ${bentoRadius.sectionTL} ${sectionPanel.padding}`}>
       <SectionHeader
         icon={<HiOutlineStar className={`text-xl ${accentColors.amber.text}`} />}
-        title="ของดีประจำเดือน"
-        linkHref="/top-picks"
+        title="ลกราคาอยู่ตอนนี้"
+        linkHref="/products/sale"
         linkText="ดูเพิ่ม"
       />
 

@@ -15,7 +15,7 @@ export function LatestReviewsSection({ reviews }: LatestReviewsSectionProps) {
       <SectionHeader
         icon={<HiOutlineClock className={`text-xl ${accentColors.blue.text}`} />}
         title="เพิ่งรีวิวไป"
-        linkHref="/reviews"
+        linkHref="/products"
         linkText="ดูเพิ่ม"
       />
 

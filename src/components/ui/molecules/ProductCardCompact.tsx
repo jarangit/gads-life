@@ -13,6 +13,7 @@ import { typography, transitions } from "../tokens";
 export interface ProductCardCompactProps {
   id: string;
   name: string;
+  slug: string;
   image?: string | null;
   overallScore: string | number;
   isRecommended?: boolean;
@@ -27,6 +28,7 @@ export interface ProductCardCompactProps {
 
 export function ProductCardCompact({
   id,
+  slug,
   name,
   image,
   overallScore,
@@ -38,7 +40,7 @@ export function ProductCardCompact({
   currency = "฿",
   sellPrice,
 }: ProductCardCompactProps) {
-  const link = href ?? `/product/${id}`;
+  const link = href ?? `/products/${slug}`;
   const hasDiscount = sellPrice != null && price != null && sellPrice < price;
   const displayPrice = hasDiscount ? sellPrice : price;
 
