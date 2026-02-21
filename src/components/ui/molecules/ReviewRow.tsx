@@ -11,6 +11,7 @@ import { typography, transitions } from "../tokens";
 
 export interface ReviewRowProps {
   id: string;
+  slug: string;
   name: string;
   image?: string | null;
   /** Left subtitle line */
@@ -25,6 +26,7 @@ export interface ReviewRowProps {
 
 export function ReviewRow({
   id,
+  slug,
   name,
   image,
   subtitle,
@@ -33,7 +35,7 @@ export function ReviewRow({
   href,
   radius = "rounded-xl",
 }: ReviewRowProps) {
-  const link = href ?? `/product/${id}`;
+  const link = href ?? `/products/${slug}`;
 
   return (
     <Link href={link} className="block group">

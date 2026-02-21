@@ -14,6 +14,7 @@ export function ReviewListItem({ review, radiusClass }: ReviewListItemProps) {
   return (
     <ReviewRow
       id={review.id}
+      slug={review.slug}
       name={review.name}
       image={review.image}
       subtitle={subtitle}

@@ -23,6 +23,7 @@ export interface Category {
 
 export interface LastReview {
   id: string;
+  slug: string;
   categoryId: null | string;
   brandId: null | string;
   name: string;
