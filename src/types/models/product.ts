@@ -1,5 +1,6 @@
 export interface IProductItemVm {
   id: string;
+  slug: string;
   name: string;
   subtitle: string;
   image: null;

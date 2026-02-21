@@ -13,7 +13,7 @@ import { typography, transitions } from "../tokens";
 export interface ProductCardCompactProps {
   id: string;
   name: string;
-  slug: string;
+  slug?: string;
   image?: string | null;
   overallScore: string | number;
   isRecommended?: boolean;

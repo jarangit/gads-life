@@ -72,3 +72,16 @@ export interface ICategoryListResponse {
   items: CategoryItemResponse[];
   pagination: Pagination;
 }
+
+export interface CategoryDto {
+  id: string;
+  slug: string;
+  nameTh: string;
+  nameEn: string | null;
+  description: string | null;
+  heroImage: string | null;
+  isActive: number;
+  orderIndex: number;
+  createdAt: string;
+  updatedAt: string;
+}

@@ -48,10 +48,41 @@ export const NoImage: Story = {
 export const Grid: Story = {
   render: () => (
     <div className="grid grid-cols-2 gap-3 max-w-md">
-      <ProductCardCompact id="1" name="Sony WH-1000XM5" image={null} overallScore={9.2} isRecommended subtitle="ANC Headphones" price={12900} />
-      <ProductCardCompact id="2" name="JBL Flip 6" image={null} overallScore={8.5} subtitle="Bluetooth Speaker" price={4990} sellPrice={3990} />
-      <ProductCardCompact id="3" name="Apple AirPods Pro 2" image={null} overallScore={9.0} isRecommended subtitle="TWS Earbuds" price={8990} />
-      <ProductCardCompact id="4" name="Samsung Galaxy Buds3" image={null} overallScore={7.8} subtitle="TWS Earbuds" price={5990} />
+      <ProductCardCompact
+        id="1"
+        name="Sony WH-1000XM5"
+        image={null}
+        overallScore={9.2}
+        isRecommended
+        subtitle="ANC Headphones"
+        price={12900}
+      />
+      <ProductCardCompact
+        id="2"
+        name="JBL Flip 6"
+        image={null}
+        overallScore={8.5}
+        subtitle="Bluetooth Speaker"
+        price={4990}
+        sellPrice={3990}
+      />
+      <ProductCardCompact
+        id="3"
+        name="Apple AirPods Pro 2"
+        image={null}
+        overallScore={9.0}
+        isRecommended
+        subtitle="TWS Earbuds"
+        price={8990}
+      />
+      <ProductCardCompact
+        id="4"
+        name="Samsung Galaxy Buds3"
+        image={null}
+        overallScore={7.8}
+        subtitle="TWS Earbuds"
+        price={5990}
+      />
     </div>
   ),
 };
