@@ -3,12 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { FiArrowLeft, FiStar } from "react-icons/fi";
+import { FiArrowLeft } from "react-icons/fi";
 import {
   Badge,
   Button,
-  Card,
-  ProductImage,
+  ProductGridCard,
   EmptyState,
   ErrorFallback,
 } from "@/components/ui";
@@ -16,63 +15,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/layouts/Footer";
 import { useCategoryBySlug } from "@/hooks";
 import { CategoryDetailSkeleton } from "@/components/Skeleton";
-import type { ProductItemDto } from "@/lib/api/category/types";
-
-// ──────────────────────────────────────────────
-//  Product card for category product listing
-// ──────────────────────────────────────────────
-
-function ProductItemCard({ product }: { product: ProductItemDto }) {
-  return (
-    <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 group">
-      {/* Image */}
-      <div className="aspect-square bg-gray-50 relative overflow-hidden">
-        <ProductImage
-          src={product.image}
-          alt={product.name}
-          sizeClass="w-full h-full"
-          radius=""
-          bgClass="bg-gray-50"
-          imagePadding="p-4"
-          hoverScale
-          fallbackIconClass="text-4xl text-gray-300"
-        />
-
-        {/* Recommended badge */}
-        {product.isRecommended && (
-          <div className="absolute top-3 left-3">
-            <Badge variant="success">แนะนำ</Badge>
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-4 space-y-2">
-        {/* Brand */}
-        <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
-          {product.brand.name}
-        </span>
-
-        {/* Name */}
-        <h3 className="font-bold text-gray-900 line-clamp-2 leading-tight">
-          {product.name}
-        </h3>
-
-        {/* Score */}
-        <div className="flex items-center gap-1.5">
-          <FiStar className="text-brand fill-brand w-4 h-4" />
-          <span className="font-semibold text-gray-900">
-            {product.overallScore.toFixed(1)}
-          </span>
-          <span className="text-gray-400 text-sm">/ 10</span>
-        </div>
-
-        {/* Price */}
-        <p className="text-lg font-bold text-gray-900">{product.priceLabel}</p>
-      </div>
-    </div>
-  );
-}
 
 // ──────────────────────────────────────────────
 //  Main category detail content
@@ -142,7 +84,7 @@ export default function CategoryDetailContent({ slug }: Props) {
 
           {/* Hero image */}
           {category.heroImage && (
-            <div className="mt-6 relative rounded-xl overflow-hidden aspect-[3/1]">
+            <div className="mt-6 relative rounded-xl overflow-hidden aspect-3/1">
               <Image
                 src={category.heroImage}
                 alt={category.nameTh || ""}
@@ -178,7 +120,18 @@ export default function CategoryDetailContent({ slug }: Props) {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {items.map((product) => (
-                <ProductItemCard key={product.id} product={product} />
+                <ProductGridCard
+                  key={product.id}
+                  id={product.id}
+                  slug={product.slug}
+                  name={product.name}
+                  image={product.image}
+                  overallScore={product.overallScore}
+                  isRecommended={product.isRecommended}
+                  priceLabel={product.priceLabel}
+                  brandName={product.brand.name}
+                  categoryName={category.nameTh || category.nameEn || category.slug}
+                />
               ))}
             </div>
           </section>
