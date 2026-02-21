@@ -16,7 +16,7 @@ import { SearchModal } from "@/components/search";
 export default function Home() {
   const { data: homeData } = useHome();
   const [searchOpen, setSearchOpen] = useState(false);
-
+// test
   if (!homeData) {
     return <HomePageSkeleton />;
   }
