@@ -48,6 +48,13 @@ export const metadata: Metadata = {
     description:
       "คัดสรรสินค้าจากการใช้งานจริง ไม่มีอันดับสปอนเซอร์ โปร่งใสทุกขั้นตอน",
   },
+  icons: {
+    icon: [
+      { url: "/icon-web.png" },
+      { url: "/icon-web.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [{ url: "/icon-web.png" }],
+  },
 };
 
 export default function RootLayout({
