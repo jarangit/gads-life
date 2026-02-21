@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import type { Metadata } from "next";
 import { fetchProductBySlug } from "@/lib/api/product/products";
 import {
@@ -23,6 +23,7 @@ import {
   FinalVerdictCard,
   PriceHistoryCard,
 } from "@/components/ui/organisms";
+import { Button } from "@/components/ui";
 
 interface ProductDetailPageProps {
   params: Promise<{
@@ -74,12 +75,27 @@ export default async function ProductDetailPage({
       <JsonLd data={jsonLd} />
 
       <div className="">
-      <Link
-        href="/products"
-        className="text-gray-600 hover:text-black font-medium flex items-center gap-1"
-      >
-        <FiArrowLeft /> กลับไปหน้าสินค้าทั้งหมด
-      </Link>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <Link
+          href="/products"
+          className="text-gray-600 hover:text-black font-medium flex items-center gap-1"
+        >
+          <FiArrowLeft /> กลับไปหน้าสินค้าทั้งหมด
+        </Link>
+        {product.affiliateLink && (
+          <Button
+            href={product.affiliateLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="primary"
+            size="sm"
+            radius="full"
+            className="gap-2"
+          >
+            เช็คราคา <FiArrowRight />
+          </Button>
+        )}
+      </div>
 
       {/* Product Title */}
       <div className="max-w-7xl mx-auto mb-8">

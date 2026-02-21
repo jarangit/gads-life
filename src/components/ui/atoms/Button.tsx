@@ -50,6 +50,8 @@ export interface ButtonProps {
   size?: ButtonSize;
   radius?: ButtonRadius;
   href?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
@@ -62,6 +64,8 @@ export function Button({
   size = "md",
   radius = "default",
   href,
+  target,
+  rel,
   onClick,
   className,
   disabled,
@@ -80,7 +84,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} target={target} rel={rel}>
         {children}
       </Link>
     );
