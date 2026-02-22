@@ -21,7 +21,7 @@ export function HeroImageCard({ image, name, className }: HeroImageCardProps) {
   return (
     <div
       className={cn(
-        " bg-white rounded-4xl p-8 relative overflow-hidden min-h-75 flex items-center justify-center",
+        "bg-white rounded-4xl p-8 relative overflow-hidden min-h-75 flex items-center justify-center",
         className,
       )}
     >

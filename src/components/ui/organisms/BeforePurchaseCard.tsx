@@ -29,8 +29,8 @@ export function BeforePurchaseCard({
   return (
     <div className={cn("bg-white rounded-4xl p-8", className)}>
       <div className="flex items-center gap-3 mb-6">
-        <div className={`${iconBoxSizes.lg} ${accentColors.purple.bg} ${radius.xl} flex items-center justify-center`}>
-          <FiHelpCircle className={`${typography.size['2xl']} ${accentColors.purple.text}`} />
+        <div className={`${iconBoxSizes.lg} ${accentColors.amber.bg} ${radius.xl} flex items-center justify-center`}>
+          <FiHelpCircle className={`${typography.size['2xl']} ${accentColors.amber.text}`} />
         </div>
         <div>
           <span className={`text-gray-400 ${typography.size.xs} ${typography.weight.semibold} tracking-wider uppercase`}>

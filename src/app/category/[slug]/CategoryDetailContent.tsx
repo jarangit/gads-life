@@ -56,6 +56,7 @@ export default function CategoryDetailContent({ slug }: Props) {
   }
 
   const { category, items, pagination } = data;
+  console.log("🚀 ~ CategoryDetailContent ~ items:", items)
 
   return (
     <div className="">

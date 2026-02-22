@@ -7,7 +7,7 @@
 
 import { FiX } from "react-icons/fi";
 import { cn } from "@/utils/cn";
-import { typography, radius, accentColors } from "../tokens";
+import { iconBoxSizes, typography, radius } from "../tokens";
 
 export interface WeaknessData {
   id: string;
@@ -27,11 +27,18 @@ export function WeaknessesCard({
 }: WeaknessesCardProps) {
   return (
     <div className={cn("bg-gray-900 rounded-4xl p-8 min-h-70", className)}>
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-gray-400 text-xs font-semibold tracking-wider uppercase">
-          จุดด้อย
-        </span>
-        <span className="text-gray-500 text-xs">WEAKNESSES</span>
+      <div className="flex items-center gap-3 mb-6">
+        <div className={`${iconBoxSizes.lg} bg-red-500/20 ${radius.xl} flex items-center justify-center`}>
+          <FiX className={`${typography.size['2xl']} text-red-400`} />
+        </div>
+        <div>
+          <span className={`text-gray-400 ${typography.size.xs} ${typography.weight.semibold} tracking-wider uppercase`}>
+            WEAKNESSES
+          </span>
+          <h2 className={`${typography.size.xl} ${typography.weight.bold} text-white`}>
+            จุดด้อย
+          </h2>
+        </div>
       </div>
       <div className="space-y-4">
         {weaknesses.map((weakness) => (
