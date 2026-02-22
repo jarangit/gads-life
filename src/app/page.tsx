@@ -8,7 +8,7 @@ import {
   ProblemsSection,
   CategoriesSection,
   LatestReviewsSection,
-  TrustSection,
+  QuickVerdictListSection,
   HomePageSkeleton,
 } from "@/components/home";
 import { SearchModal } from "@/components/search";
@@ -44,7 +44,9 @@ export default function Home() {
           {homeData.lastReview && (
             <LatestReviewsSection reviews={homeData.lastReview} />
           )}
-          <TrustSection />
+          {homeData.quickVerdictProducts && homeData.quickVerdictProducts.length > 0 && (
+            <QuickVerdictListSection items={homeData.quickVerdictProducts} />
+          )}
         </div>
       </div>
 

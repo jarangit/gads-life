@@ -6,6 +6,15 @@ export interface IHomeResponse {
   lastReview: LastReview[];
   topBrands: TopBrand[];
   sellProducts: IProductItemVm[];
+  quickVerdictProducts?: QuickVerdictProduct[];
+}
+
+export interface QuickVerdictProduct {
+  id: string;
+  slug: string;
+  name: string;
+  quickVerdict: string;
+  categoryName: string;
 }
 
 export interface Category {

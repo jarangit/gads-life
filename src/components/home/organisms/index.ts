@@ -5,3 +5,4 @@ export { CategoriesSection } from "./CategoriesSection";
 export { LatestReviewsSection } from "./LatestReviewsSection";
 export { TrustSection } from "./TrustSection";
 export { HomePageSkeleton } from "./HomePageSkeleton";
+export { QuickVerdictListSection } from "./QuickVerdictListSection";
