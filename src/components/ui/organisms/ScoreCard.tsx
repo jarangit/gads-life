@@ -36,15 +36,26 @@ export function ScoreCard({
     <div
       className={cn(
         "bg-black rounded-4xl p-8 text-white relative overflow-hidden min-h-75",
-        className
+        className,
       )}
     >
-      <span className="text-gray-400 text-xs font-semibold tracking-wider uppercase">
-        OVERALL SCORE
-      </span>
+      <div className="flex items-start justify-between">
+        <span className="text-gray-400 text-xs font-semibold tracking-wider uppercase">
+          OVERALL SCORE
+        </span>
+        {isRecommended && (
+          <span
+            className={`bg-brand text-black ${typography.size.xs} ${typography.weight.bold} px-3 py-1 rounded-full`}
+          >
+            RECOMMENDED
+          </span>
+        )}
+      </div>
       <div className="mt-4">
-        <span className="text-8xl font-bold text-brand">{overallScore}</span>
-        <span className="text-2xl text-gray-400">/10</span>
+        <span className="text-6xl font-bold text-brand tabular-nums">
+          {overallScore}
+        </span>
+        <span className="text-2xl text-gray-400">/5</span>
       </div>
       <div className="mt-6 space-y-2">
         {ratings.map((rating) => (
@@ -62,13 +73,6 @@ export function ScoreCard({
           </div>
         ))}
       </div>
-      {isRecommended && (
-        <div className="absolute bottom-6 right-6">
-          <span className={`bg-brand text-black ${typography.size.xs} ${typography.weight.bold} px-3 py-1 rounded-full`}>
-            RECOMMENDED
-          </span>
-        </div>
-      )}
     </div>
   );
 }
