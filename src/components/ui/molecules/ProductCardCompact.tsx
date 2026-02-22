@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { FiArrowRight, FiExternalLink } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { ProductImage } from "../atoms/ProductImage";
 import { RecommendedBadge, ScoreBadge } from "../atoms/Badge";
+import { Button } from "../atoms/Button";
 import { typography, transitions } from "../tokens";
 
 /* ─────────────────────────────────────────────
@@ -24,10 +26,11 @@ export interface ProductCardCompactProps {
   price?: number;
   currency?: string;
   sellPrice?: number;
+  affiliateLink?: string | null;
+  showActions?: boolean;
 }
 
 export function ProductCardCompact({
-  id,
   slug,
   name,
   image,
@@ -39,19 +42,22 @@ export function ProductCardCompact({
   price,
   currency = "฿",
   sellPrice,
+  affiliateLink,
+  showActions = false,
 }: ProductCardCompactProps) {
   const link = href ?? `/products/${slug}`;
   const hasDiscount = sellPrice != null && price != null && sellPrice < price;
   const displayPrice = hasDiscount ? sellPrice : price;
 
   return (
-    <Link href={link} className="group">
-      <div
-        className={cn(
-          "bg-gray-50/80 p-4 hover:bg-gray-100/80", transitions.allNormal, "hover:-translate-y-0.5",
-          radius,
-        )}
-      >
+    <div
+      className={cn(
+        "group bg-gray-50/80 hover:bg-gray-100/80",
+        transitions.allNormal,
+        radius,
+      )}
+    >
+      <Link href={link} className="block p-4 active:scale-[0.99]">
         <ProductImage
           src={image}
           alt={name}
@@ -67,7 +73,9 @@ export function ProductCardCompact({
           <ScoreBadge score={overallScore} />
         </div>
 
-        <h3 className={`${typography.weight.semibold} text-gray-900 mt-2 line-clamp-1 ${typography.size.body}`}>
+        <h3
+          className={`${typography.weight.semibold} text-gray-900 mt-2 line-clamp-1 ${typography.size.body}`}
+        >
           {name}
         </h3>
 
@@ -96,7 +104,26 @@ export function ProductCardCompact({
             )}
           </div>
         )}
-      </div>
-    </Link>
+      </Link>
+
+      {/* Action buttons */}
+      {showActions && (
+        <div className="px-4 pb-4 flex-col flex-wrap gap-y-2">
+          {affiliateLink && (
+            <Button
+              href={affiliateLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="outline"
+              size="sm"
+              radius="full"
+              className="flex-1 justify-center w-full"
+            >
+              เช็คราคา <FiExternalLink />
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

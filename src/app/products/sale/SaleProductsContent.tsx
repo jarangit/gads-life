@@ -13,7 +13,7 @@ import { useHome } from "@/hooks/useHome";
 function DealsPageSkeleton() {
   return (
     <div className="space-y-8">
-      <div className="rounded-[2rem] p-8 md:p-12 space-y-4 bg-black">
+        <div className="rounded-4xl p-8 md:p-12 space-y-4 bg-black">
         <Bone className="h-4 w-36 rounded-full bg-white/30" />
         <Bone className="h-10 w-2/3 rounded-xl bg-white/30" />
         <Bone className="h-5 w-full max-w-lg rounded-lg bg-white/30" />
@@ -35,32 +35,10 @@ function DealsPageSkeleton() {
   );
 }
 
-function formatPrice(price: number, currency = "THB") {
-  const symbol = currency === "THB" ? "฿" : "";
-  return `${symbol}${price.toLocaleString("th-TH")}`;
-}
-
 export default function SaleProductsContent() {
   const { data: homeData, isLoading, isError, error, refetch } = useHome();
 
-  const deals = (homeData?.sellProducts ?? [])
-    .filter(
-      (product) =>
-        typeof product.sellPrice === "number" &&
-        product.sellPrice > 0 &&
-        product.sellPrice < product.price,
-    )
-    .map((product) => {
-      const sellPrice = product.sellPrice as number;
-      const discountAmount = product.price - sellPrice;
-      const discountPercent = Math.round(
-        (discountAmount / product.price) * 100,
-      );
-      return { ...product, sellPrice, discountAmount, discountPercent };
-    })
-    .sort((a, b) => b.discountPercent - a.discountPercent);
-
-  const maxDiscount = deals[0]?.discountPercent ?? 0;
+  const deals = homeData?.sellProducts ?? [];
 
   if (isLoading && !homeData) {
     return <DealsPageSkeleton />;
@@ -78,7 +56,7 @@ export default function SaleProductsContent() {
   return (
     <div className="space-y-8 pb-12">
       <section>
-        <div className="rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden bg-black">
+          <div className="rounded-4xl p-8 md:p-12 text-white relative overflow-hidden bg-black">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl" />
 
@@ -100,12 +78,6 @@ export default function SaleProductsContent() {
                 <div className="text-3xl font-bold">{deals.length}</div>
                 <div className="text-gray-400 text-sm">ดีลที่กำลังลด</div>
               </div>
-              <div>
-                <div className="text-3xl font-bold text-brand">
-                  {maxDiscount}%
-                </div>
-                <div className="text-gray-400 text-sm">ส่วนลดสูงสุด</div>
-              </div>
             </div>
           </div>
         </div>
@@ -122,11 +94,7 @@ export default function SaleProductsContent() {
         {deals.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {deals.map((product) => (
-              <div key={product.id} className="relative">
-                <div className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold text-black bg-brand shadow-sm">
-                  <FiTag className="text-[11px]" />
-                  ลด {product.discountPercent}%
-                </div>
+              <div key={product.id}>
                 <ProductGridCard
                   id={product.id}
                   slug={product?.slug}
@@ -134,20 +102,11 @@ export default function SaleProductsContent() {
                   image={product.image}
                   overallScore={product.overallScore}
                   isRecommended={product.isRecommended}
-                  priceLabel={formatPrice(product.sellPrice, product.currency)}
                   brandName={product.brand?.name}
                   categoryName={product.category?.nameTh ?? undefined}
+                  affiliateLink={product.affiliateLink}
+                  showActions
                 />
-                <p className="mt-2 text-sm text-gray-500">
-                  จาก{" "}
-                  <span className="line-through">
-                    {formatPrice(product.price, product.currency)}
-                  </span>{" "}
-                  เหลือ{" "}
-                  <span className="font-semibold text-brand-dark">
-                    {formatPrice(product.sellPrice, product.currency)}
-                  </span>
-                </p>
               </div>
             ))}
           </div>

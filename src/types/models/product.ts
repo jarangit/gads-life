@@ -9,7 +9,7 @@ export interface IProductItemVm {
   price: number;
   currency: string;
   priceLabel: string;
-  affiliateLink: null;
+  affiliateLink: string | null;
   lastUpdated: Date;
   status: string;
   categoryId: string;

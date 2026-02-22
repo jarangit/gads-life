@@ -20,7 +20,7 @@ const variantStyles = {
   secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300",
   ghost: "bg-transparent text-brand hover:bg-brand/10",
   dark: "bg-black text-white hover:bg-gray-800",
-  outline: "border border-gray-200 text-gray-700 hover:bg-gray-50",
+  outline: "border border-brand text-brand-dark hover:bg-brand-light",
 } as const;
 
 // Token-based size presets

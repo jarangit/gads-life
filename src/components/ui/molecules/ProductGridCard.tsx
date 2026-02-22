@@ -7,11 +7,12 @@
  * ──────────────────────────────────────────────*/
 
 import Link from "next/link";
-import { FiStar } from "react-icons/fi";
+import { FiArrowRight, FiExternalLink, FiStar } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { Badge } from "@/components/ui/atoms/Badge";
 import { ProductImage } from "@/components/ui/atoms/ProductImage";
-import { transitions, typography, shadows } from "../tokens";
+import { Button } from "@/components/ui/atoms/Button";
+import { transitions, typography } from "../tokens";
 
 export interface ProductGridCardProps {
   id: string;
@@ -20,9 +21,11 @@ export interface ProductGridCardProps {
   image: string | null;
   overallScore: number;
   isRecommended: boolean;
-  priceLabel: string;
+  priceLabel?: string;
   brandName?: string;
   categoryName?: string;
+  affiliateLink?: string | null;
+  showActions?: boolean;
   radius?: string;
   className?: string;
 }
@@ -37,20 +40,23 @@ export function ProductGridCard({
   priceLabel,
   brandName,
   categoryName,
+  affiliateLink,
+  showActions = false,
   radius = "rounded-2xl",
   className,
 }: ProductGridCardProps) {
   const href = slug ? `/products/${slug}` : `/products/${id}`;
 
   return (
-    <Link href={href} className={cn("group block", className)}>
-      <div
-        className={cn(
-          "bg-white border border-gray-100 overflow-hidden",
-          `hover:shadow-lg hover:border-gray-200 ${transitions.allSlow}`,
-          radius,
-        )}
-      >
+    <div
+      className={cn(
+        "group bg-white border border-gray-100 overflow-hidden",
+        `hover:shadow-lg hover:border-gray-200 ${transitions.allSlow}`,
+        radius,
+        className,
+      )}
+    >
+      <Link href={href} className="block">
         {/* Image */}
         <div className="aspect-square bg-gray-50 relative overflow-hidden">
           <ProductImage
@@ -100,15 +106,45 @@ export function ProductGridCard({
           <div className="flex items-center gap-1.5">
             <FiStar className="text-brand fill-brand w-4 h-4" />
             <span className="font-semibold text-gray-900">
-              {/* {overallScore?.toFixed(1)} */}
+              {overallScore}
             </span>
-            <span className="text-gray-400 text-sm">/ 10</span>
+            <span className="text-gray-400 text-sm">/ 5</span>
           </div>
 
           {/* Price */}
-          <p className="text-lg font-bold text-gray-900">{priceLabel}</p>
+          {priceLabel && (
+            <p className="text-lg font-bold text-gray-900">{priceLabel}</p>
+          )}
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {/* Action buttons */}
+      {showActions && (
+        <div className="px-4 pb-4 flex gap-2">
+          <Button
+            href={href}
+            variant="secondary"
+            size="sm"
+            radius="full"
+            className="flex-1 justify-center"
+          >
+            ดูรีวิว <FiArrowRight />
+          </Button>
+          {affiliateLink && (
+            <Button
+              href={affiliateLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="primary"
+              size="sm"
+              radius="full"
+              className="flex-1 justify-center"
+            >
+              เช็คราคา <FiExternalLink />
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
