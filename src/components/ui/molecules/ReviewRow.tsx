@@ -75,7 +75,7 @@ export function ReviewRow({
             )}
             {valueLabel && (
               <div className={`${typography.size["2xs"]} text-gray-400 mt-0.5`}>
-                {valueLabel}
+                {/* {valueLabel} */}
               </div>
             )}
           </div>

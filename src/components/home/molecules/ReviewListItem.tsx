@@ -8,8 +8,7 @@ interface ReviewListItemProps {
 
 export function ReviewListItem({ review, radiusClass }: ReviewListItemProps) {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  const subtitle =
-    (review as any).category?.nameTh || (review as any).brand?.name || "";
+
 
   return (
     <ReviewRow
@@ -17,7 +16,7 @@ export function ReviewListItem({ review, radiusClass }: ReviewListItemProps) {
       slug={review.slug}
       name={review.name}
       image={review.image}
-      subtitle={subtitle}
+      subtitle={review.subtitle}
       value={review.overallScore}
       valueLabel={formatRelativeTime(review.updatedAt)}
       radius={radiusClass}
