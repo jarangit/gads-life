@@ -33,6 +33,8 @@ export interface FinalVerdictCardProps {
   price?: number;
   /** Affiliate link */
   affiliateLink?: string | null;
+  /** Product name shown near price */
+  productName?: string;
 }
 
 export function FinalVerdictCard({
@@ -41,6 +43,7 @@ export function FinalVerdictCard({
   pricing,
   price,
   affiliateLink,
+  productName,
 }: FinalVerdictCardProps) {
   const buyIfPoints = points
     .filter((p) => p.type === FinalVerdictType.BUY_IF)
@@ -65,6 +68,11 @@ export function FinalVerdictCard({
         <span className="text-brand text-xs font-semibold tracking-wider uppercase">
           FINAL VERDICT
         </span>
+          {productName && (
+                <p className="text-gray-400 text-xs mb-0.5 truncate max-w-xs">
+                  {productName}
+                </p>
+              )}
         <h2 className="text-3xl md:text-4xl font-bold mt-4 mb-6">
           สรุป: ควรซื้อไหม?
         </h2>
@@ -96,12 +104,16 @@ export function FinalVerdictCard({
         <div className="mt-8 pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div>
+            
               {pricing?.priceLabel && (
                 <span className="text-gray-400 text-sm">
                   {pricing.priceLabel}
                 </span>
               )}
               <p className="text-3xl font-bold">฿{formatPrice(displayPrice)}</p>
+              <p className="text-gray-500 text-xs mt-1">
+                * ราคาอาจมีการเปลี่ยนแปลงจากที่แสดง กรุณาตรวจสอบราคาล่าสุดก่อนซื้อ
+              </p>
             </div>
             {affiliateLink && (
               <a
