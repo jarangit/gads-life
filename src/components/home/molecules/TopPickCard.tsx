@@ -17,9 +17,6 @@ export function TopPickCard({ item, radiusClass }: TopPickCardProps) {
       overallScore={item.overallScore}
       isRecommended={item.isRecommended}
       radius={radiusClass}
-      price={item.price}
-      currency={item.currency}
-      sellPrice={item.sellPrice}
       showActions={true}
       affiliateLink={item.affiliateLink}
     />
