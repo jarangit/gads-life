@@ -129,7 +129,6 @@ export default function CategoryDetailContent({ slug }: Props) {
                   image={product.image}
                   overallScore={product.overallScore}
                   isRecommended={product.isRecommended}
-                  priceLabel={product.priceLabel}
                   brandName={product.brand.name}
                   categoryName={category.nameTh || category.nameEn || category.slug}
                 />

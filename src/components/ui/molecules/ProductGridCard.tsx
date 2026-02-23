@@ -21,7 +21,7 @@ export interface ProductGridCardProps {
   image: string | null;
   overallScore: number;
   isRecommended: boolean;
-  priceLabel?: string;
+  quickVerdict?: string;
   brandName?: string;
   categoryName?: string;
   affiliateLink?: string | null;
@@ -37,7 +37,7 @@ export function ProductGridCard({
   image,
   overallScore,
   isRecommended,
-  priceLabel,
+  quickVerdict,
   brandName,
   categoryName,
   affiliateLink,
@@ -98,22 +98,24 @@ export function ProductGridCard({
           </div>
 
           {/* Name */}
-          <h3 className={`${typography.weight.bold} text-gray-900 line-clamp-2 ${typography.leading.tight} group-hover:text-brand ${transitions.colorsNormal}`}>
+          <h3
+            className={`${typography.weight.bold} text-gray-900 line-clamp-2 ${typography.leading.tight} group-hover:text-brand ${transitions.colorsNormal}`}
+          >
             {name}
           </h3>
 
           {/* Score */}
           <div className="flex items-center gap-1.5">
             <FiStar className="text-brand fill-brand w-4 h-4" />
-            <span className="font-semibold text-gray-900">
-              {overallScore}
-            </span>
+            <span className="font-semibold text-gray-900">{overallScore}</span>
             <span className="text-gray-400 text-sm">/ 5</span>
           </div>
 
-          {/* Price */}
-          {priceLabel && (
-            <p className="text-lg font-bold text-gray-900">{priceLabel}</p>
+          {/* Quick Verdict */}
+          {quickVerdict && (
+            <p className=" text-gray-500 line-clamp-2 leading-relaxed font-semibold">
+              &ldquo;{quickVerdict}&rdquo;
+            </p>
           )}
         </div>
       </Link>

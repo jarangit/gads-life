@@ -32,6 +32,7 @@ export interface ProductResponse {
   ratings: ProductRating[];
   createdAt: string;
   updatedAt: string;
+  quickVerdict: ProductQuickVerdict | null;
 }
 
 export interface ProductRating {
@@ -131,7 +132,11 @@ export type IProductListResponse = PaginatedResponse<ProductResponse>;
 
 // ---- Query params ----
 
-export type ProductSortOption = "latest" | "priceAsc" | "priceDesc" | "scoreDesc";
+export type ProductSortOption =
+  | "latest"
+  | "priceAsc"
+  | "priceDesc"
+  | "scoreDesc";
 
 export interface ListProductsParams {
   page?: number;
