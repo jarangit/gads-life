@@ -3,12 +3,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { FiArrowLeft, FiExternalLink, FiCalendar, FiTag } from "react-icons/fi";
+import { FiArrowLeft, FiExternalLink, FiCalendar, FiTag, FiClock } from "react-icons/fi";
 import { mockNews } from "@/data/news";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
 import { typography, radius, transitions } from "@/components/ui";
+import { Badge } from "@/components/ui/atoms/Badge";
 import { getCategoryTone } from "../categoryStyles";
 
 /* ──── Metadata ──── */
@@ -21,8 +22,9 @@ export async function generateMetadata({
   const item = mockNews.find((n) => n.slug === slug);
   if (!item) return {};
   return buildMetadata({
-    title: item.title,
-    description: item.excerpt,
+    title: item.metaTitle ?? item.title,
+    description: item.metaDescription ?? item.summary ?? item.excerpt,
+    url: item.canonicalUrl ?? `/news/${item.slug}`,
   });
 }
 
@@ -75,8 +77,8 @@ export default async function NewsArticlePage({
   if (!item) notFound();
 
   const tone = getCategoryTone(item.category);
-  const paragraphs = item.body ?? [item.excerpt];
   const relatedItems = item.relatedSlugs ?? [];
+  const readingMinutes = Math.max(1, Math.round(item.readingTimeSeconds / 60));
 
   return (
     <main className="min-h-screen bg-background">
@@ -98,21 +100,35 @@ export default async function NewsArticlePage({
 
           {/* Title */}
           <div className="space-y-3">
-            <span
-              className={cn(
-                "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold border",
-                tone.bg,
-                tone.text,
-                tone.border,
-              )}
-            >
-              <FiTag className="text-[11px]" />
-              {item.category}
-            </span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span
+                className={cn(
+                  "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold border",
+                  tone.bg,
+                  tone.text,
+                  tone.border,
+                )}
+              >
+                <FiTag className="text-[11px]" />
+                {item.category}
+              </span>
+              <Badge size="xs" variant="info" className="bg-gray-100 text-gray-700">
+                {item.type}
+              </Badge>
+              <Badge size="xs" variant="success" className="bg-brand/10 text-brand-dark">
+                {item.status === "PUBLISHED" ? "เผยแพร่แล้ว" : "ร่าง"}
+              </Badge>
+            </div>
 
             <h1 className="text-3xl font-bold leading-snug text-foreground">
               {item.title}
             </h1>
+
+            {item.summary && (
+              <p className="text-base text-gray-600 leading-relaxed">
+                {item.summary}
+              </p>
+            )}
 
             {/* Meta row */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
@@ -125,6 +141,11 @@ export default async function NewsArticlePage({
                 แหล่งข่าว:&nbsp;
                 <span className="font-medium text-foreground">{item.source}</span>
               </span>
+              <span className="flex items-center gap-1.5">
+                <span className="h-3.5 w-px bg-gray-300" />
+                <FiClock className="text-gray-400" />
+                {readingMinutes} นาที
+              </span>
             </div>
           </div>
         </div>
@@ -134,22 +155,70 @@ export default async function NewsArticlePage({
       <div className="mx-auto max-w-3xl px-4">
         <div
           className={cn(
-            "my-6 flex h-48 items-center justify-center bg-gray-50 border border-dashed border-gray-200 sm:h-64",
+            "my-6 flex h-48 items-center justify-center bg-gray-50 border border-dashed border-gray-200 sm:h-64 overflow-hidden",
             radius["2xl"],
           )}
         >
-          <span className="text-4xl opacity-20">📰</span>
+          {item.heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={item.heroImage}
+              alt={item.heroImageAlt ?? item.title}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <span className="text-4xl opacity-20">📰</span>
+          )}
         </div>
       </div>
 
       {/* ── Article body ── */}
       <section className="mx-auto max-w-3xl px-4 pb-10">
-        <div className={cn("bg-white p-6 sm:p-8 border border-gray-100", radius["2xl"])}>
-          <div className="space-y-4 text-base leading-relaxed text-gray-700">
-            {paragraphs.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+        <div className={cn("bg-white p-6 sm:p-8 border border-gray-100 space-y-6", radius["2xl"])}>
+          {(item.sections?.length
+            ? item.sections
+            : [
+                {
+                  type: "TEXT",
+                  title: null,
+                  body: item.excerpt,
+                  orderIndex: 1,
+                },
+              ])
+            .slice()
+            .sort((a, b) => a.orderIndex - b.orderIndex)
+            .map((section, idx) => {
+              if (section.type === "TEXT") {
+                return (
+                  <div key={`${section.title ?? "text"}-${idx}`} className="space-y-2">
+                    {section.title && (
+                      <h2 className={cn("text-lg font-semibold text-foreground", typography.leading.tight)}>
+                        {section.title}
+                      </h2>
+                    )}
+                    {section.body && <p className="text-base leading-relaxed text-gray-700">{section.body}</p>}
+                  </div>
+                );
+              }
+
+              return (
+                <div key={`${section.title ?? "bullet"}-${idx}`} className="space-y-2">
+                  {section.title && (
+                    <h2 className={cn("text-lg font-semibold text-foreground", typography.leading.tight)}>
+                      {section.title}
+                    </h2>
+                  )}
+                  <ul className="list-disc pl-5 space-y-1 text-base text-gray-700">
+                    {(section.items ?? [])
+                      .slice()
+                      .sort((a, b) => a.orderIndex - b.orderIndex)
+                      .map((item) => (
+                        <li key={item.orderIndex}>{item.text}</li>
+                      ))}
+                  </ul>
+                </div>
+              );
+            })}
 
           {/* External source link */}
           {item.externalUrl && (
@@ -170,6 +239,47 @@ export default async function NewsArticlePage({
         </div>
 
         {/* ── Related news ── */}
+        {item.productLinks && item.productLinks.length > 0 && (
+          <div className="mt-8">
+            <h2 className={cn("mb-3 text-base font-semibold text-foreground", typography.leading.tight)}>
+              สินค้าที่กล่าวถึง
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {item.productLinks
+                .slice()
+                .sort((a, b) => a.orderIndex - b.orderIndex)
+                .map((link) => (
+                  <Badge
+                    key={`${link.productId}-${link.orderIndex}`}
+                    size="xs"
+                    variant="status"
+                    className="bg-gray-50 text-gray-700 border border-gray-200"
+                  >
+                    {link.productId} · {link.relationType.toLowerCase()}
+                  </Badge>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {item.tags && item.tags.length > 0 && (
+          <div className="mt-6">
+            <h3 className="text-sm font-semibold text-gray-700 mb-2">แท็ก</h3>
+            <div className="flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <Badge
+                  key={tag.tagId}
+                  size="xs"
+                  variant="score"
+                  className="bg-gray-100 text-gray-700"
+                >
+                  #{tag.tagId}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         {relatedItems.length > 0 && (
           <div className="mt-8">
             <h2 className={cn("mb-3 text-base font-semibold text-foreground", typography.leading.tight)}>

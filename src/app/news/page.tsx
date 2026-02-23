@@ -2,12 +2,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HiOutlineNewspaper } from "react-icons/hi";
-import { FiArrowRight, FiExternalLink } from "react-icons/fi";
+import { FiArrowRight, FiExternalLink, FiClock } from "react-icons/fi";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { mockNews, NewsItem } from "@/data/news";
 import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
 import { FilterChip } from "@/components/ui/atoms/FilterChip";
+import { Badge } from "@/components/ui/atoms/Badge";
 import { typography, radius, transitions } from "@/components/ui";
 import { getCategoryTone } from "./categoryStyles";
 
@@ -25,6 +26,8 @@ const allCategories = ["ทั้งหมด", ...Array.from(new Set(mockNews.m
 function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
   const relativeTime = formatRelativeTime(item.publishedAt);
   const tone = getCategoryTone(item.category);
+  const readingMinutes = Math.max(1, Math.round(item.readingTimeSeconds / 60));
+  const summaryText = item.summary || item.excerpt;
 
   const content = (
     <div
@@ -60,8 +63,8 @@ function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boole
           >
             {item.category}
           </span>
-          <span className="text-[11px] text-gray-400">
-            {item.source} · {relativeTime}
+          <span className="text-[11px] text-gray-400 flex items-center gap-1">
+            {item.source} · {relativeTime} · <FiClock className="text-[10px]" /> {readingMinutes} นาที
           </span>
         </div>
 
@@ -79,13 +82,28 @@ function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boole
           {item.title}
         </h2>
 
-        {/* Excerpt */}
+        {/* Summary */}
         <p className="text-[13px] text-gray-500 mt-1.5 leading-relaxed line-clamp-2">
-          {item.excerpt}
+          {summaryText}
         </p>
 
+        {/* Meta pills */}
+        <div className="mt-3 flex flex-wrap gap-2 text-[12px] text-gray-500">
+          <Badge size="xs" variant="info" className="bg-gray-100 text-gray-700">
+            {item.type}
+          </Badge>
+          <Badge size="xs" variant="score" className="bg-gray-50 text-gray-500">
+            {readingMinutes} นาทีอ่าน
+          </Badge>
+          {item.tags?.length > 0 && (
+            <Badge size="xs" variant="score" className="bg-brand/10 text-brand-dark">
+              {item.tags.length} แท็ก
+            </Badge>
+          )}
+        </div>
+
         {/* CTA */}
-        <div className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-gray-400 group-hover:text-brand transition-colors duration-200">
+        <div className="mt-2 inline-flex items-center gap-1 text-[12px] font-medium text-gray-400 group-hover:text-brand transition-colors duration-200">
           {item.externalUrl ? (
             <>อ่านต่อ <FiExternalLink className="text-[10px]" /></>
           ) : (
