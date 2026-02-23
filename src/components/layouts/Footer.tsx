@@ -15,6 +15,12 @@ export const Footer: React.FC = () => {
         </div>
         <div className={`flex gap-6 ${typography.size.caption} text-gray-500`}>
           <Link
+            href="/about"
+            className={`hover:text-gray-800 ${transitions.colorsNormal}`}
+          >
+            เกี่ยวกับเรา
+          </Link>
+          <Link
             href="/disclosure"
             className={`hover:text-gray-800 ${transitions.colorsNormal}`}
           >
