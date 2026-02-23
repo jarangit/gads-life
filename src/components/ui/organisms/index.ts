@@ -57,3 +57,5 @@ export type {
 
 export { AppLoading } from "./AppLoading";
 export type { AppLoadingProps } from "./AppLoading";
+
+export { CookieConsent } from "./CookieConsent";
