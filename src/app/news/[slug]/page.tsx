@@ -92,7 +92,7 @@ export default async function NewsArticlePage({
     <main className="min-h-screen bg-background">
       {/* ── Hero band ── */}
       <div className="bg-white border-b border-gray-100">
-        <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
+        <div className=" px-4 py-8 space-y-4">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 text-xs text-gray-400">
             <Link
@@ -178,7 +178,7 @@ export default async function NewsArticlePage({
       </div>
 
       {/* ── Image placeholder ── */}
-      <div className="mx-auto max-w-3xl px-4">
+      <div className=" px-4">
         <div
           className={cn(
             "my-6 flex h-48 items-center justify-center bg-gray-50 border border-dashed border-gray-200 sm:h-64 overflow-hidden",
@@ -199,7 +199,7 @@ export default async function NewsArticlePage({
       </div>
 
       {/* ── Article body ── */}
-      <section className="mx-auto max-w-3xl px-4 pb-10">
+      <section className=" px-4 pb-10">
         <div
           className={cn(
             "bg-white p-6 sm:p-8 border border-gray-100 space-y-6",
@@ -245,31 +245,35 @@ export default async function NewsArticlePage({
                 );
               }
 
-              return (
-                <div
-                  key={`${section.title ?? "bullet"}-${idx}`}
-                  className="space-y-2"
-                >
-                  {section.title && (
-                    <h2
-                      className={cn(
-                        "text-lg font-semibold text-foreground",
-                        typography.leading.tight,
-                      )}
-                    >
-                      {section.title}
-                    </h2>
-                  )}
-                  <ul className="list-disc pl-5 space-y-1 text-base text-gray-700">
-                    {(section.items ?? [])
-                      .slice()
-                      .sort((a, b) => a.orderIndex - b.orderIndex)
-                      .map((item) => (
-                        <li key={item.orderIndex}>{item.text}</li>
-                      ))}
-                  </ul>
-                </div>
-              );
+              if (section.type === "BULLET" && "items" in section) {
+                return (
+                  <div
+                    key={`${section.title ?? "bullet"}-${idx}`}
+                    className="space-y-2"
+                  >
+                    {section.title && (
+                      <h2
+                        className={cn(
+                          "text-lg font-semibold text-foreground",
+                          typography.leading.tight,
+                        )}
+                      >
+                        {section.title}
+                      </h2>
+                    )}
+                    <ul className="list-disc pl-5 space-y-1 text-base text-gray-700">
+                      {(section.items ?? [])
+                        .slice()
+                        .sort((a, b) => a.orderIndex - b.orderIndex)
+                        .map((item) => (
+                          <li key={item.orderIndex}>{item.text}</li>
+                        ))}
+                    </ul>
+                  </div>
+                );
+              }
+
+              return null;
             })}
 
           {/* External source link */}

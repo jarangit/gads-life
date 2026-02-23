@@ -131,7 +131,7 @@ export default function NewsPage() {
   const rest = mockNews.slice(2);
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-8">
         <div className="space-y-2">
