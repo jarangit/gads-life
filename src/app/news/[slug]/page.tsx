@@ -3,7 +3,13 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { FiArrowLeft, FiExternalLink, FiCalendar, FiTag, FiClock } from "react-icons/fi";
+import {
+  FiArrowLeft,
+  FiExternalLink,
+  FiCalendar,
+  FiTag,
+  FiClock,
+} from "react-icons/fi";
 import { mockNews } from "@/data/news";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { formatRelativeTime } from "@/components/ui/utils";
@@ -60,7 +66,9 @@ function RelatedCard({ slug }: { slug: string }) {
       <p className="text-sm font-medium leading-snug text-foreground group-hover:text-brand-dark line-clamp-2 transition-colors duration-150">
         {item.title}
       </p>
-      <span className="text-xs text-gray-400">{formatRelativeTime(item.publishedAt)}</span>
+      <span className="text-xs text-gray-400">
+        {formatRelativeTime(item.publishedAt)}
+      </span>
     </Link>
   );
 }
@@ -87,15 +95,23 @@ export default async function NewsArticlePage({
         <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 text-xs text-gray-400">
-            <Link href="/" className="hover:text-brand transition-colors duration-150">
+            <Link
+              href="/"
+              className="hover:text-brand transition-colors duration-150"
+            >
               หน้าแรก
             </Link>
             <span>/</span>
-            <Link href="/news" className="hover:text-brand transition-colors duration-150">
+            <Link
+              href="/news"
+              className="hover:text-brand transition-colors duration-150"
+            >
               ข่าวสินค้า
             </Link>
             <span>/</span>
-            <span className="max-w-50 truncate text-gray-500">{item.title}</span>
+            <span className="max-w-50 truncate text-gray-500">
+              {item.title}
+            </span>
           </nav>
 
           {/* Title */}
@@ -112,10 +128,18 @@ export default async function NewsArticlePage({
                 <FiTag className="text-[11px]" />
                 {item.category}
               </span>
-              <Badge size="xs" variant="info" className="bg-gray-100 text-gray-700">
+              <Badge
+                size="xs"
+                variant="info"
+                className="bg-gray-100 text-gray-700"
+              >
                 {item.type}
               </Badge>
-              <Badge size="xs" variant="success" className="bg-brand/10 text-brand-dark">
+              <Badge
+                size="xs"
+                variant="success"
+                className="bg-brand/10 text-brand-dark"
+              >
                 {item.status === "PUBLISHED" ? "เผยแพร่แล้ว" : "ร่าง"}
               </Badge>
             </div>
@@ -139,7 +163,9 @@ export default async function NewsArticlePage({
               <span className="flex items-center gap-1.5">
                 <span className="h-3.5 w-px bg-gray-300" />
                 แหล่งข่าว:&nbsp;
-                <span className="font-medium text-foreground">{item.source}</span>
+                <span className="font-medium text-foreground">
+                  {item.source}
+                </span>
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="h-3.5 w-px bg-gray-300" />
@@ -174,7 +200,12 @@ export default async function NewsArticlePage({
 
       {/* ── Article body ── */}
       <section className="mx-auto max-w-3xl px-4 pb-10">
-        <div className={cn("bg-white p-6 sm:p-8 border border-gray-100 space-y-6", radius["2xl"])}>
+        <div
+          className={cn(
+            "bg-white p-6 sm:p-8 border border-gray-100 space-y-6",
+            radius["2xl"],
+          )}
+        >
           {(item.sections?.length
             ? item.sections
             : [
@@ -184,27 +215,48 @@ export default async function NewsArticlePage({
                   body: item.excerpt,
                   orderIndex: 1,
                 },
-              ])
+              ]
+          )
             .slice()
             .sort((a, b) => a.orderIndex - b.orderIndex)
             .map((section, idx) => {
               if (section.type === "TEXT") {
                 return (
-                  <div key={`${section.title ?? "text"}-${idx}`} className="space-y-2">
+                  <div
+                    key={`${section.title ?? "text"}-${idx}`}
+                    className="space-y-2"
+                  >
                     {section.title && (
-                      <h2 className={cn("text-lg font-semibold text-foreground", typography.leading.tight)}>
+                      <h2
+                        className={cn(
+                          "text-lg font-semibold text-foreground",
+                          typography.leading.tight,
+                        )}
+                      >
                         {section.title}
                       </h2>
                     )}
-                    {section.body && <p className="text-base leading-relaxed text-gray-700">{section.body}</p>}
+                    {section.body && (
+                      <p className="text-base leading-relaxed text-gray-700">
+                        {section.body}
+                      </p>
+                    )}
                   </div>
                 );
               }
 
               return (
-                <div key={`${section.title ?? "bullet"}-${idx}`} className="space-y-2">
+                <div
+                  key={`${section.title ?? "bullet"}-${idx}`}
+                  className="space-y-2"
+                >
                   {section.title && (
-                    <h2 className={cn("text-lg font-semibold text-foreground", typography.leading.tight)}>
+                    <h2
+                      className={cn(
+                        "text-lg font-semibold text-foreground",
+                        typography.leading.tight,
+                      )}
+                    >
                       {section.title}
                     </h2>
                   )}
@@ -241,7 +293,12 @@ export default async function NewsArticlePage({
         {/* ── Related news ── */}
         {item.productLinks && item.productLinks.length > 0 && (
           <div className="mt-8">
-            <h2 className={cn("mb-3 text-base font-semibold text-foreground", typography.leading.tight)}>
+            <h2
+              className={cn(
+                "mb-3 text-base font-semibold text-foreground",
+                typography.leading.tight,
+              )}
+            >
               สินค้าที่กล่าวถึง
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -282,7 +339,12 @@ export default async function NewsArticlePage({
 
         {relatedItems.length > 0 && (
           <div className="mt-8">
-            <h2 className={cn("mb-3 text-base font-semibold text-foreground", typography.leading.tight)}>
+            <h2
+              className={cn(
+                "mb-3 text-base font-semibold text-foreground",
+                typography.leading.tight,
+              )}
+            >
               ข่าวที่เกี่ยวข้อง
             </h2>
             <div className="grid gap-3 sm:grid-cols-2">
