@@ -92,7 +92,7 @@ export default async function NewsArticlePage({
     <main className="min-h-screen bg-background">
       {/* ── Hero band ── */}
       <div className="bg-white border-b border-gray-100">
-        <div className=" px-4 py-8 space-y-4">
+        <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-1.5 text-xs text-gray-400">
             <Link
@@ -115,62 +115,44 @@ export default async function NewsArticlePage({
           </nav>
 
           {/* Title */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold border",
-                  tone.bg,
-                  tone.text,
-                  tone.border,
-                )}
-              >
-                <FiTag className="text-[11px]" />
-                {item.category}
-              </span>
-              <Badge
-                size="xs"
-                variant="info"
-                className="bg-gray-100 text-gray-700"
-              >
-                {item.type}
-              </Badge>
-              <Badge
-                size="xs"
-                variant="success"
-                className="bg-brand/10 text-brand-dark"
-              >
-                {item.status === "PUBLISHED" ? "เผยแพร่แล้ว" : "ร่าง"}
-              </Badge>
-            </div>
+          <div className="space-y-4">
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold border",
+                tone.bg,
+                tone.text,
+                tone.border,
+              )}
+            >
+              <FiTag className="text-[11px]" />
+              {item.category}
+            </span>
 
             <h1 className="text-3xl font-bold leading-snug text-foreground">
               {item.title}
             </h1>
 
             {item.summary && (
-              <p className="text-base text-gray-600 leading-relaxed">
+              <p className="text-[15px] text-gray-600 leading-relaxed">
                 {item.summary}
               </p>
             )}
 
             {/* Meta row */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
               <span className="flex items-center gap-1.5">
                 <FiCalendar className="text-gray-400" />
                 {formatRelativeTime(item.publishedAt)}
               </span>
-              <span className="flex items-center gap-1.5">
-                <span className="h-3.5 w-px bg-gray-300" />
-                แหล่งข่าว:&nbsp;
-                <span className="font-medium text-foreground">
-                  {item.source}
-                </span>
+              <span className="text-gray-300">•</span>
+              <span className="flex items-center gap-1">
+                แหล่งข่าว
+                <span className="font-medium text-foreground">{item.source}</span>
               </span>
+              <span className="text-gray-300">•</span>
               <span className="flex items-center gap-1.5">
-                <span className="h-3.5 w-px bg-gray-300" />
                 <FiClock className="text-gray-400" />
-                {readingMinutes} นาที
+                {readingMinutes} นาทีอ่าน
               </span>
             </div>
           </div>
@@ -178,7 +160,7 @@ export default async function NewsArticlePage({
       </div>
 
       {/* ── Image placeholder ── */}
-      <div className=" px-4">
+      <div className="mx-auto max-w-3xl px-4">
         <div
           className={cn(
             "my-6 flex h-48 items-center justify-center bg-gray-50 border border-dashed border-gray-200 sm:h-64 overflow-hidden",
@@ -199,11 +181,12 @@ export default async function NewsArticlePage({
       </div>
 
       {/* ── Article body ── */}
-      <section className=" px-4 pb-10">
+      <section className="mx-auto max-w-3xl px-4 pb-12">
         <div
           className={cn(
-            "bg-white p-6 sm:p-8 border border-gray-100 space-y-6",
+            "bg-white p-6 sm:p-8 border border-gray-100 space-y-7",
             radius["2xl"],
+            "shadow-xs",
           )}
         >
           {(item.sections?.length
@@ -224,7 +207,7 @@ export default async function NewsArticlePage({
                 return (
                   <div
                     key={`${section.title ?? "text"}-${idx}`}
-                    className="space-y-2"
+                    className="space-y-2.5"
                   >
                     {section.title && (
                       <h2
@@ -237,7 +220,7 @@ export default async function NewsArticlePage({
                       </h2>
                     )}
                     {section.body && (
-                      <p className="text-base leading-relaxed text-gray-700">
+                      <p className="text-[15px] leading-relaxed text-gray-700 whitespace-pre-line">
                         {section.body}
                       </p>
                     )}
@@ -249,7 +232,7 @@ export default async function NewsArticlePage({
                 return (
                   <div
                     key={`${section.title ?? "bullet"}-${idx}`}
-                    className="space-y-2"
+                    className="space-y-2.5"
                   >
                     {section.title && (
                       <h2
@@ -261,7 +244,7 @@ export default async function NewsArticlePage({
                         {section.title}
                       </h2>
                     )}
-                    <ul className="list-disc pl-5 space-y-1 text-base text-gray-700">
+                    <ul className="list-disc pl-5 space-y-1.5 text-[15px] leading-relaxed text-gray-700">
                       {(section.items ?? [])
                         .slice()
                         .sort((a, b) => a.orderIndex - b.orderIndex)
@@ -297,14 +280,9 @@ export default async function NewsArticlePage({
         {/* ── Related news ── */}
         {item.productLinks && item.productLinks.length > 0 && (
           <div className="mt-8">
-            <h2
-              className={cn(
-                "mb-3 text-base font-semibold text-foreground",
-                typography.leading.tight,
-              )}
-            >
+            <p className="text-sm font-semibold text-gray-700 mb-2">
               สินค้าที่กล่าวถึง
-            </h2>
+            </p>
             <div className="flex flex-wrap gap-2">
               {item.productLinks
                 .slice()
@@ -325,7 +303,7 @@ export default async function NewsArticlePage({
 
         {item.tags && item.tags.length > 0 && (
           <div className="mt-6">
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">แท็ก</h3>
+            <p className="text-sm font-semibold text-gray-700 mb-2">แท็ก</p>
             <div className="flex flex-wrap gap-2">
               {item.tags.map((tag) => (
                 <Badge
