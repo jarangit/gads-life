@@ -7,6 +7,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { mockNews, NewsItem } from "@/data/news";
 import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
+import { FilterChip } from "@/components/ui/atoms/FilterChip";
+import { typography, radius, transitions } from "@/components/ui";
+import { getCategoryTone } from "./categoryStyles";
 
 export const metadata: Metadata = buildMetadata({
   title: "ข่าวสินค้า",
@@ -15,41 +18,30 @@ export const metadata: Metadata = buildMetadata({
   url: "/news",
 });
 
-/* ─── Category color map ─── */
-const categoryColors: Record<string, string> = {
-  iPhone: "bg-blue-50 text-blue-700 border-blue-100",
-  Mac: "bg-gray-100 text-gray-700 border-gray-200",
-  iPad: "bg-violet-50 text-violet-700 border-violet-100",
-  AirPods: "bg-sky-50 text-sky-700 border-sky-100",
-  "Apple Watch": "bg-rose-50 text-rose-700 border-rose-100",
-  iOS: "bg-indigo-50 text-indigo-700 border-indigo-100",
-  Apple: "bg-gray-900 text-white border-transparent",
-};
-
-function getCategoryClass(cat: string) {
-  return categoryColors[cat] ?? "bg-brand-light text-brand-dark border-brand-light";
-}
-
 /* ─── All unique categories for filter chips ─── */
 const allCategories = ["ทั้งหมด", ...Array.from(new Set(mockNews.map((n) => n.category)))];
 
 /* ─── News Card ─── */
 function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
   const relativeTime = formatRelativeTime(item.publishedAt);
+  const tone = getCategoryTone(item.category);
 
   const content = (
     <div
       className={cn(
-        "group flex gap-4 bg-white rounded-2xl border border-gray-100 p-5",
-        "hover:shadow-md hover:border-gray-200 transition-all duration-200",
+        "group flex gap-4 bg-white border border-gray-100",
+        radius["2xl"],
+        "p-4 sm:p-5",
         featured && "sm:flex-col",
+        `hover:shadow-lg hover:border-gray-200 ${transitions.allSlow}`,
       )}
     >
       {/* Placeholder image area */}
       <div
         className={cn(
-          "shrink-0 rounded-xl bg-gray-100 flex items-center justify-center text-gray-300",
-          featured ? "w-full h-36" : "w-16 h-16",
+          "shrink-0 bg-gray-50 flex items-center justify-center text-gray-300 border border-dashed border-gray-200",
+          radius.xl,
+          featured ? "w-full h-40" : "w-16 h-16",
         )}
       >
         <HiOutlineNewspaper className={featured ? "text-4xl" : "text-2xl"} />
@@ -60,13 +52,15 @@ function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boole
         <div className="flex items-center gap-2 flex-wrap mb-2">
           <span
             className={cn(
-              "text-[10px] font-semibold px-2.5 py-0.5 rounded-full border",
-              getCategoryClass(item.category),
+              "text-[11px] font-semibold px-2.5 py-0.5 rounded-full border",
+              tone.bg,
+              tone.text,
+              tone.border,
             )}
           >
             {item.category}
           </span>
-          <span className="text-xs text-gray-400">
+          <span className="text-[11px] text-gray-400">
             {item.source} · {relativeTime}
           </span>
         </div>
@@ -74,21 +68,24 @@ function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boole
         {/* Title */}
         <h2
           className={cn(
-            "font-semibold text-gray-900 leading-snug",
-            "group-hover:text-brand transition-colors duration-200",
-            featured ? "text-base line-clamp-3" : "text-sm line-clamp-2",
+            typography.weight.semibold,
+            "text-gray-900",
+            featured
+              ? `${typography.size.base} leading-snug line-clamp-3`
+              : `${typography.size.sm} leading-snug line-clamp-2`,
+            `group-hover:text-brand ${transitions.colorsNormal}`,
           )}
         >
           {item.title}
         </h2>
 
         {/* Excerpt */}
-        <p className="text-xs text-gray-500 mt-1.5 leading-relaxed line-clamp-2">
+        <p className="text-[13px] text-gray-500 mt-1.5 leading-relaxed line-clamp-2">
           {item.excerpt}
         </p>
 
         {/* CTA */}
-        <div className="mt-3 flex items-center gap-1 text-xs font-medium text-gray-400 group-hover:text-brand transition-colors duration-200">
+        <div className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-gray-400 group-hover:text-brand transition-colors duration-200">
           {item.externalUrl ? (
             <>อ่านต่อ <FiExternalLink className="text-[10px]" /></>
           ) : (
@@ -117,51 +114,40 @@ export default function NewsPage() {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Breadcrumb */}
-      <div className="inline-flex items-center gap-2 text-xs text-gray-400 mb-6">
-        <Link href="/" className="hover:text-gray-600 transition-colors">
-          หน้าแรก
-        </Link>
-        <span>/</span>
-        <span>ข่าวสินค้า</span>
-      </div>
-
       {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center shrink-0">
-          <HiOutlineNewspaper className="text-violet-600 text-xl" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">ข่าวสินค้าล่าสุด</h1>
-          <p className="text-sm text-gray-500 mt-0.5">
-            อัปเดตข่าวสารเทคโนโลยีและสินค้าใหม่จากทั่วโลก
+      <div className="flex items-start justify-between gap-4 mb-8">
+        <div className="space-y-2">
+          <p className="inline-flex items-center gap-2 text-xs text-gray-400 uppercase tracking-[0.08em]">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+            ข่าว / News
           </p>
+          <h1 className="text-3xl font-bold text-gray-900 leading-tight">
+            ข่าวสินค้าล่าสุด
+          </h1>
+          <p className="text-sm text-gray-500 max-w-xl">
+            อัปเดตข่าวเทคโนโลยีแบบกระชับ ใช้ระบบดีไซน์เดียวกับรีวิวหลัก เพื่อประสบการณ์อ่านที่เบาและเร็ว
+          </p>
+        </div>
+        <div className="hidden sm:flex items-center gap-2 text-xs text-gray-400">
+          <Link href="/" className="hover:text-gray-600 transition-colors">หน้าแรก</Link>
+          <span>/</span>
+          <span>ข่าว</span>
         </div>
       </div>
 
       {/* Category filter chips (static — no client interaction needed for now) */}
       <div className="flex gap-2 flex-wrap mb-8">
         {allCategories.map((cat) => (
-          <span
-            key={cat}
-            className={cn(
-              "px-3 py-1.5 rounded-full text-xs font-medium border cursor-default",
-              cat === "ทั้งหมด"
-                ? "bg-black text-white border-transparent"
-                : "bg-white text-gray-600 border-gray-200 hover:border-gray-400 transition-colors",
-            )}
-          >
-            {cat}
-          </span>
+          <FilterChip key={cat} label={cat} selected={cat === "ทั้งหมด"} />
         ))}
       </div>
 
       {/* Featured grid – top 2 */}
       <section className="mb-6">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+        <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-[0.08em] mb-3">
           เด่นวันนี้
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           {featured.map((item) => (
             <NewsCard key={item.id} item={item} featured />
           ))}
@@ -170,7 +156,7 @@ export default function NewsPage() {
 
       {/* Rest list */}
       <section>
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+        <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-[0.08em] mb-3">
           ข่าวทั้งหมด
         </p>
         <div className="flex flex-col gap-3">
