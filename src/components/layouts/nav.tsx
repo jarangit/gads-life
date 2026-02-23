@@ -11,6 +11,7 @@ import { SearchModal } from "@/components/search";
 const navLinks = [
   { href: "/products", label: "สินค้า" },
   { href: "/categories", label: "หมวดหมู่" },
+  { href: "/news", label: "ข่าว" },
   // { href: "/activities", label: "กิจกรรม" },
   { href: "/products/sale", label: "ลดราคาตอนนี้", featured: true },
 ];
@@ -52,10 +53,10 @@ const Nav = () => {
                   href={link.href}
                   className={cn(
                     `${typography.size.sm} ${typography.weight.medium} ${transitions.colorsNormal}`,
-                    link.featured ? "!text-red-400 font-bold" : "hover:text-brand",
+                    link.featured ? "text-red-400! font-bold" : "hover:text-brand",
                     isLinkActive(link.href)
                       ? link.featured
-                        ? " !text-brand "
+                        ? " text-brand! "
                         : "text-brand"
                       : link.featured
                         ? "text-black"

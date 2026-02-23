@@ -2,6 +2,7 @@ export { HeroSection } from "./HeroSection";
 export { TopPicksSection } from "./TopPicksSection";
 export { TopPicksGridSection } from "./TopPicksGridSection";
 export { ProblemsSection } from "./ProblemsSection";
+export { NewsSection } from "./NewsSection";
 export { CategoriesSection } from "./CategoriesSection";
 export { LatestReviewsSection } from "./LatestReviewsSection";
 export { TrustSection } from "./TrustSection";

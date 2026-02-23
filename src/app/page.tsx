@@ -5,14 +5,15 @@ import { useHome } from "@/hooks/useHome";
 import {
   HeroSection,
   TopPicksSection,
-  TopPicksGridSection,
   ProblemsSection,
   CategoriesSection,
   LatestReviewsSection,
   QuickVerdictListSection,
+  NewsSection,
   HomePageSkeleton,
 } from "@/components/home";
 import { SearchModal } from "@/components/search";
+import { mockNews } from "@/data/news";
 
 export default function Home() {
   const { data: homeData } = useHome();
@@ -42,7 +43,7 @@ export default function Home() {
           <CategoriesSection categories={homeData.categories} />
         )}
 
-        {/* Latest Reviews + Trust */}
+        {/* Latest Reviews + Quick Verdict */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {homeData.lastReview && (
             <LatestReviewsSection reviews={homeData.lastReview} />
@@ -52,6 +53,9 @@ export default function Home() {
               <QuickVerdictListSection items={homeData.quickVerdictProducts} />
             )}
         </div>
+
+        {/* News */}
+        <NewsSection items={mockNews} />
 
         {/* Top Picks grid */}
         {/* {homeData.topPicks && homeData.topPicks.length > 0 && (
