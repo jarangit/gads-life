@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { FiArrowRight, FiExternalLink } from "react-icons/fi";
+import { FiExternalLink } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { ProductImage } from "../atoms/ProductImage";
 import { RecommendedBadge, ScoreBadge } from "../atoms/Badge";
@@ -23,9 +23,6 @@ export interface ProductCardCompactProps {
   href?: string;
   /** Border-radius class */
   radius?: string;
-  price?: number;
-  currency?: string;
-  sellPrice?: number;
   affiliateLink?: string | null;
   showActions?: boolean;
 }
@@ -39,15 +36,10 @@ export function ProductCardCompact({
   subtitle,
   href,
   radius = "rounded-2xl",
-  price,
-  currency = "฿",
-  sellPrice,
   affiliateLink,
   showActions = false,
 }: ProductCardCompactProps) {
   const link = href ?? `/products/${slug}`;
-  const hasDiscount = sellPrice != null && price != null && sellPrice < price;
-  const displayPrice = hasDiscount ? sellPrice : price;
 
   return (
     <div
@@ -85,25 +77,7 @@ export function ProductCardCompact({
           </p>
         )}
 
-        {displayPrice != null && (
-          <div className="mt-2 flex items-baseline gap-1.5">
-            <span
-              className={cn(
-                "text-sm font-bold",
-                hasDiscount ? "text-red-500" : "text-gray-900",
-              )}
-            >
-              {currency}
-              {displayPrice.toLocaleString()}
-            </span>
-            {hasDiscount && (
-              <span className="text-xs text-gray-400 line-through">
-                {currency}
-                {price!.toLocaleString()}
-              </span>
-            )}
-          </div>
-        )}
+
       </Link>
 
       {/* Action buttons */}

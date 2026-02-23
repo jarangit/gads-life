@@ -1,5 +1,6 @@
 export { HeroSection } from "./HeroSection";
 export { TopPicksSection } from "./TopPicksSection";
+export { TopPicksGridSection } from "./TopPicksGridSection";
 export { ProblemsSection } from "./ProblemsSection";
 export { CategoriesSection } from "./CategoriesSection";
 export { LatestReviewsSection } from "./LatestReviewsSection";

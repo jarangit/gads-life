@@ -5,6 +5,7 @@ import { QueryProvider } from "@/providers";
 import "./globals.css";
 import Nav from "@/components/layouts/nav";
 import { Footer } from "@/components/layouts/Footer";
+import { CookieConsent } from "@/components/ui";
 
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex",
@@ -100,6 +101,7 @@ export default function RootLayout({
           }}
         />
         <Footer />
+        <CookieConsent />
       </body>
     </html>
   );

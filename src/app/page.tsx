@@ -5,6 +5,7 @@ import { useHome } from "@/hooks/useHome";
 import {
   HeroSection,
   TopPicksSection,
+  TopPicksGridSection,
   ProblemsSection,
   CategoriesSection,
   LatestReviewsSection,
@@ -16,7 +17,7 @@ import { SearchModal } from "@/components/search";
 export default function Home() {
   const { data: homeData } = useHome();
   const [searchOpen, setSearchOpen] = useState(false);
-// test
+  // test
   if (!homeData) {
     return <HomePageSkeleton />;
   }
@@ -30,7 +31,9 @@ export default function Home() {
             onSearchClick={() => setSearchOpen(true)}
             categories={homeData.categories}
           />
-          {homeData.sellProducts && <TopPicksSection items={homeData.sellProducts} />}
+          {homeData.sellProducts && (
+            <TopPicksSection items={homeData.sellProducts} />
+          )}
           <ProblemsSection />
         </div>
 
@@ -44,10 +47,16 @@ export default function Home() {
           {homeData.lastReview && (
             <LatestReviewsSection reviews={homeData.lastReview} />
           )}
-          {homeData.quickVerdictProducts && homeData.quickVerdictProducts.length > 0 && (
-            <QuickVerdictListSection items={homeData.quickVerdictProducts} />
-          )}
+          {homeData.quickVerdictProducts &&
+            homeData.quickVerdictProducts.length > 0 && (
+              <QuickVerdictListSection items={homeData.quickVerdictProducts} />
+            )}
         </div>
+
+        {/* Top Picks grid */}
+        {/* {homeData.topPicks && homeData.topPicks.length > 0 && (
+          <TopPicksGridSection items={homeData.topPicks} />
+        )} */}
       </div>
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />

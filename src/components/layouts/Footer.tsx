@@ -3,6 +3,13 @@ import React from "react";
 import { FiCheck } from "react-icons/fi";
 import { transitions, typography } from "@/components/ui";
 
+const footerLinks: { href: string; label: string }[] = [
+  { href: "/about", label: "เกี่ยวกับเรา" },
+  // { href: "/disclosure", label: "Disclosure" },
+  // { href: "/methodology", label: "How we test" },
+  // { href: "/legal", label: "Legal stuff" },
+];
+
 export const Footer: React.FC = () => {
   return (
     <footer className="max-w-7xl mx-auto mt-16 pt-8 pb-6 border-t border-gray-200/60">
@@ -14,21 +21,15 @@ export const Footer: React.FC = () => {
           <span className={`${typography.weight.bold} text-gray-800 ${typography.size.sm}`}>gads✓life</span>
         </div>
         <div className={`flex gap-6 ${typography.size.caption} text-gray-500`}>
-          <Link
-            href="/disclosure"
-            className={`hover:text-gray-800 ${transitions.colorsNormal}`}
-          >
-            Disclosure
-          </Link>
-          <Link
-            href="/methodology"
-            className={`hover:text-gray-800 ${transitions.colorsNormal}`}
-          >
-            How we test
-          </Link>
-          <Link href="/legal" className={`hover:text-gray-800 ${transitions.colorsNormal}`}>
-            Legal stuff
-          </Link>
+          {footerLinks.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`hover:text-gray-800 ${transitions.colorsNormal}`}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
         <p className={`${typography.size.caption} text-gray-400`}>© 2026 gadslife</p>
       </div>

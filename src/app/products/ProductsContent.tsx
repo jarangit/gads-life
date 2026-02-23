@@ -166,6 +166,7 @@ export default function ProductsContent() {
     brandId: selectedBrandId,
     sort,
   });
+  console.log("🚀 ~ ProductsContent ~ productsData:", productsData);
 
   const { data: categoriesData } = useCategories({ page: 1, limit: 100 });
   const { data: brandsData } = useBrands({ page: 1, limit: 100 });
@@ -248,11 +249,7 @@ export default function ProductsContent() {
               </button>
             )}
           </div>
-          <SortSelect
-            options={SORT_OPTIONS}
-            value={sort}
-            onChange={setSort}
-          />
+          <SortSelect options={SORT_OPTIONS} value={sort} onChange={setSort} />
         </div>
 
         {/* Category chips */}
@@ -344,9 +341,9 @@ export default function ProductsContent() {
                   image={product.image}
                   overallScore={product.overallScore}
                   isRecommended={product.isRecommended}
-                  priceLabel={product.priceLabel}
                   brandName={product.brand?.name}
                   categoryName={product.category?.nameTh ?? undefined}
+                  quickVerdict={product.quickVerdict?.quote}
                 />
               ))}
             </div>

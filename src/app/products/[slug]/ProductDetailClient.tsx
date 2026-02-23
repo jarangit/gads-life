@@ -150,6 +150,7 @@ export default function ProductDetailClient({ slug }: ProductDetailClientProps) 
         <div className="max-w-7xl mx-auto mb-8">
           <FinalVerdictCard
             points={product.finalVerdictPoints}
+            productName={product.name}
             pricing={product.pricing}
             price={product.price}
             affiliateLink={product.affiliateLink}
