@@ -3,20 +3,16 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  FiArrowLeft,
-  FiExternalLink,
-  FiCalendar,
-  FiTag,
-  FiClock,
-} from "react-icons/fi";
+import { FiArrowLeft, FiExternalLink } from "react-icons/fi";
 import { mockNews } from "@/data/news";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
-import { typography, radius, transitions } from "@/components/ui";
+import { radius, transitions, typography } from "@/components/ui";
 import { Badge } from "@/components/ui/atoms/Badge";
-import { getCategoryTone } from "../categoryStyles";
+import {
+  NewsArticleHero,
+  RelatedNewsSection,
+} from "@/components/news";
 
 /* ──── Metadata ──── */
 export async function generateMetadata({
@@ -39,40 +35,6 @@ export function generateStaticParams() {
   return mockNews.map((item) => ({ slug: item.slug }));
 }
 
-/* ──── Related News Card ──── */
-function RelatedCard({ slug }: { slug: string }) {
-  const item = mockNews.find((n) => n.slug === slug);
-  if (!item) return null;
-  const tone = getCategoryTone(item.category);
-  return (
-    <Link
-      href={`/news/${item.slug}`}
-      className={cn(
-        "group flex flex-col gap-2 bg-white border border-gray-100 p-4",
-        radius.xl,
-        `hover:shadow-md ${transitions.allNormal}`,
-      )}
-    >
-      <span
-        className={cn(
-          "inline-flex w-fit items-center rounded-full px-2 py-0.5 text-xs font-semibold border",
-          tone.bg,
-          tone.text,
-          tone.border,
-        )}
-      >
-        {item.category}
-      </span>
-      <p className="text-sm font-medium leading-snug text-foreground group-hover:text-brand-dark line-clamp-2 transition-colors duration-150">
-        {item.title}
-      </p>
-      <span className="text-xs text-gray-400">
-        {formatRelativeTime(item.publishedAt)}
-      </span>
-    </Link>
-  );
-}
-
 /* ──── Page ──── */
 export default async function NewsArticlePage({
   params,
@@ -81,104 +43,14 @@ export default async function NewsArticlePage({
 }) {
   const { slug } = await params;
   const item = mockNews.find((n) => n.slug === slug);
-
   if (!item) notFound();
 
-  const tone = getCategoryTone(item.category);
   const relatedItems = item.relatedSlugs ?? [];
-  const readingMinutes = Math.max(1, Math.round(item.readingTimeSeconds / 60));
 
   return (
     <main className="min-h-screen bg-background">
-      {/* ── Hero band ── */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="mx-auto max-w-3xl px-4 py-8 space-y-4">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-xs text-gray-400">
-            <Link
-              href="/"
-              className="hover:text-brand transition-colors duration-150"
-            >
-              หน้าแรก
-            </Link>
-            <span>/</span>
-            <Link
-              href="/news"
-              className="hover:text-brand transition-colors duration-150"
-            >
-              ข่าวสินค้า
-            </Link>
-            <span>/</span>
-            <span className="max-w-50 truncate text-gray-500">
-              {item.title}
-            </span>
-          </nav>
-
-          {/* Title */}
-          <div className="space-y-4">
-            <span
-              className={cn(
-                "inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold border",
-                tone.bg,
-                tone.text,
-                tone.border,
-              )}
-            >
-              <FiTag className="text-[11px]" />
-              {item.category}
-            </span>
-
-            <h1 className="text-3xl font-bold leading-snug text-foreground">
-              {item.title}
-            </h1>
-
-            {item.summary && (
-              <p className="text-[15px] text-gray-600 leading-relaxed">
-                {item.summary}
-              </p>
-            )}
-
-            {/* Meta row */}
-            <div className="flex flex-wrap items-center gap-3 text-sm text-gray-500">
-              <span className="flex items-center gap-1.5">
-                <FiCalendar className="text-gray-400" />
-                {formatRelativeTime(item.publishedAt)}
-              </span>
-              <span className="text-gray-300">•</span>
-              <span className="flex items-center gap-1">
-                แหล่งข่าว
-                <span className="font-medium text-foreground">{item.source}</span>
-              </span>
-              <span className="text-gray-300">•</span>
-              <span className="flex items-center gap-1.5">
-                <FiClock className="text-gray-400" />
-                {readingMinutes} นาทีอ่าน
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Image placeholder ── */}
-      <div className="mx-auto max-w-3xl px-4">
-        <div
-          className={cn(
-            "my-6 flex h-48 items-center justify-center bg-gray-50 border border-dashed border-gray-200 sm:h-64 overflow-hidden",
-            radius["2xl"],
-          )}
-        >
-          {item.heroImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.heroImage}
-              alt={item.heroImageAlt ?? item.title}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <span className="text-4xl opacity-20">📰</span>
-          )}
-        </div>
-      </div>
+      {/* ── Article hero with breadcrumb, title, meta ── */}
+      <NewsArticleHero item={item} />
 
       {/* ── Article body ── */}
       <section className="mx-auto max-w-3xl px-4 pb-12">
@@ -320,21 +192,7 @@ export default async function NewsArticlePage({
         )}
 
         {relatedItems.length > 0 && (
-          <div className="mt-8">
-            <h2
-              className={cn(
-                "mb-3 text-base font-semibold text-foreground",
-                typography.leading.tight,
-              )}
-            >
-              ข่าวที่เกี่ยวข้อง
-            </h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {relatedItems.map((relSlug) => (
-                <RelatedCard key={relSlug} slug={relSlug} />
-              ))}
-            </div>
-          </div>
+          <RelatedNewsSection relatedSlugs={relatedItems} className="mt-8" />
         )}
 
         {/* ── Back link ── */}
