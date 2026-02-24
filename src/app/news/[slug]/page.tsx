@@ -22,7 +22,7 @@ export async function generateMetadata({
   return buildMetadata({
     title: item.metaTitle ?? item.title,
     description: item.metaDescription ?? item.summary ?? item.excerpt,
-    url: item.canonicalUrl ?? `/news/${item.slug}`,
+    url: `/news/${item.slug}`,
   });
 }
 
@@ -116,9 +116,7 @@ export default async function NewsArticlePage({
         )}
 
         {/* Related news */}
-        {relatedItems.length > 0 && (
-          <RelatedNewsSection items={relatedItems} />
-        )}
+        {relatedItems.length > 0 && <RelatedNewsSection items={relatedItems} />}
 
         {/* Back link */}
         <div>
