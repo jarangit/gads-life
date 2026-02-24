@@ -7,11 +7,7 @@ import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
 import { typography, radius, transitions } from "@/components/ui";
 import { Badge } from "@/components/ui/atoms/Badge";
-import {
-  CategoryBadge,
-  NewsImagePlaceholder,
-  NewsMetaTag,
-} from "@/components/news/atoms";
+import { CategoryBadge, NewsImagePlaceholder, NewsMetaTag } from "@/components/news/atoms";
 
 export interface NewsCardProps {
   item: NewsItem;
@@ -25,8 +21,11 @@ export function NewsCard({
   className,
 }: NewsCardProps) {
   const relativeTime = formatRelativeTime(item.publishedAt);
-  const readingMinutes = Math.max(1, Math.round(item.readingTimeSeconds / 60));
   const summaryText = item.summary || item.excerpt;
+  const primaryTag = item.tags?.[0]?.value ?? "ข่าว";
+  const readingMinutes = summaryText
+    ? Math.max(1, Math.round(summaryText.split(/\s+/).length / 200))
+    : undefined;
 
   const content = (
     <div
@@ -48,12 +47,8 @@ export function NewsCard({
       <div className="flex-1 min-w-0">
         {/* Category + meta */}
         <div className="flex items-center gap-2 flex-wrap mb-2">
-          <CategoryBadge category={item.category} />
-          <NewsMetaTag
-            source={item.source}
-            relativeTime={relativeTime}
-            readingMinutes={readingMinutes}
-          />
+          <CategoryBadge label={primaryTag} />
+          <NewsMetaTag relativeTime={relativeTime} readingMinutes={readingMinutes} />
         </div>
 
         {/* Title */}
@@ -77,26 +72,16 @@ export function NewsCard({
 
         {/* Meta pills */}
         <div className="mt-3 flex flex-wrap gap-2 text-[12px] text-gray-500">
-          <Badge
-            size="xs"
-            variant="info"
-            className="bg-gray-100 text-gray-700"
-          >
+          <Badge size="xs" variant="info" className="bg-gray-100 text-gray-700">
             {item.type}
           </Badge>
-          <Badge
-            size="xs"
-            variant="score"
-            className="bg-gray-50 text-gray-500"
-          >
-            {readingMinutes} นาทีอ่าน
-          </Badge>
+          {readingMinutes !== undefined && (
+            <Badge size="xs" variant="score" className="bg-gray-50 text-gray-500">
+              {readingMinutes} นาทีอ่าน
+            </Badge>
+          )}
           {item.tags?.length > 0 && (
-            <Badge
-              size="xs"
-              variant="score"
-              className="bg-brand/10 text-brand-dark"
-            >
+            <Badge size="xs" variant="score" className="bg-brand/10 text-brand-dark">
               {item.tags.length} แท็ก
             </Badge>
           )}

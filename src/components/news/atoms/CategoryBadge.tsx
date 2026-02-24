@@ -4,12 +4,12 @@ import { cn } from "@/utils/cn";
 import { getCategoryTone } from "@/app/news/categoryStyles";
 
 export interface CategoryBadgeProps {
-  category: string;
+  label: string;
   className?: string;
 }
 
-export function CategoryBadge({ category, className }: CategoryBadgeProps) {
-  const tone = getCategoryTone(category);
+export function CategoryBadge({ label, className }: CategoryBadgeProps) {
+  const tone = getCategoryTone(label);
 
   return (
     <span
@@ -18,10 +18,10 @@ export function CategoryBadge({ category, className }: CategoryBadgeProps) {
         tone.bg,
         tone.text,
         tone.border,
-        className
+        className,
       )}
     >
-      {category}
+      {label}
     </span>
   );
 }

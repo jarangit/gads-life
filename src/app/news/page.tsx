@@ -13,8 +13,15 @@ export const metadata: Metadata = buildMetadata({
   url: "/news",
 });
 
-/* ─── All unique categories for filter chips ─── */
-const allCategories = ["ทั้งหมด", ...Array.from(new Set(mockNews.map((n) => n.category)))];
+/* ─── Tag-based filters ─── */
+const allTags = [
+  "ทั้งหมด",
+  ...Array.from(
+    new Set(
+      mockNews.flatMap((n) => n.tags?.map((t) => t.value) ?? []),
+    ),
+  ),
+];
 
 /* ─── Page ─── */
 export default function NewsPage() {
@@ -44,10 +51,10 @@ export default function NewsPage() {
         </div>
       </div>
 
-      {/* Category filter chips (static — no client interaction needed for now) */}
+      {/* Tag filter chips (static — no client interaction needed for now) */}
       <div className="flex gap-2 flex-wrap mb-8">
-        {allCategories.map((cat) => (
-          <FilterChip key={cat} label={cat} selected={cat === "ทั้งหมด"} />
+        {allTags.map((tag) => (
+          <FilterChip key={tag} label={tag} selected={tag === "ทั้งหมด"} />
         ))}
       </div>
 
