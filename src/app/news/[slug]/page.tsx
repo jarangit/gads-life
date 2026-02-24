@@ -7,7 +7,7 @@ import { FiArrowLeft, FiExternalLink } from "react-icons/fi";
 import { mockNews } from "@/data/news";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { cn } from "@/utils/cn";
-import { radius, transitions, typography } from "@/components/ui";
+import { transitions } from "@/components/ui";
 import { Badge } from "@/components/ui/atoms/Badge";
 import {
   NewsArticleHero,
@@ -47,114 +47,88 @@ export default async function NewsArticlePage({
 
   const relatedItems = item.relatedSlugs ?? [];
 
+  const sections = (
+    item.sections?.length
+      ? item.sections
+      : [{ type: "TEXT", title: null, body: item.excerpt, orderIndex: 1 }]
+  )
+    .slice()
+    .sort((a, b) => a.orderIndex - b.orderIndex);
+
   return (
-    <main className="min-h-screen bg-background">
-      {/* ── Article hero with breadcrumb, title, meta ── */}
+    <main className="min-h-screen bg-background pb-16">
+      {/* ── Badge, date, title, hero image ── */}
       <NewsArticleHero item={item} />
 
       {/* ── Article body ── */}
-      <section className="mx-auto max-w-3xl px-4 pb-12">
-        <div
-          className={cn(
-            "bg-white p-6 sm:p-8 border border-gray-100 space-y-7",
-            radius["2xl"],
-            "shadow-xs",
-          )}
-        >
-          {(item.sections?.length
-            ? item.sections
-            : [
-                {
-                  type: "TEXT",
-                  title: null,
-                  body: item.excerpt,
-                  orderIndex: 1,
-                },
-              ]
-          )
-            .slice()
-            .sort((a, b) => a.orderIndex - b.orderIndex)
-            .map((section, idx) => {
-              if (section.type === "TEXT") {
-                return (
-                  <div
-                    key={`${section.title ?? "text"}-${idx}`}
-                    className="space-y-2.5"
-                  >
-                    {section.title && (
-                      <h2
-                        className={cn(
-                          "text-lg font-semibold text-foreground",
-                          typography.leading.tight,
-                        )}
-                      >
-                        {section.title}
-                      </h2>
-                    )}
-                    {section.body && (
-                      <p className="text-[15px] leading-relaxed text-gray-700 whitespace-pre-line">
-                        {section.body}
-                      </p>
-                    )}
-                  </div>
-                );
-              }
+      <article className="mx-auto max-w-3xl px-4 mt-10 space-y-8">
+        {sections.map((section, idx) => {
+          if (section.type === "TEXT") {
+            return (
+              <div key={`text-${idx}`} className="space-y-3">
+                {section.title && (
+                  <h2 className="text-xl font-semibold text-foreground leading-snug">
+                    {section.title}
+                  </h2>
+                )}
+                {section.body && (
+                  <p className="text-[15px] leading-loose text-gray-700">
+                    {section.body}
+                  </p>
+                )}
+              </div>
+            );
+          }
 
-              if (section.type === "BULLET" && "items" in section) {
-                return (
-                  <div
-                    key={`${section.title ?? "bullet"}-${idx}`}
-                    className="space-y-2.5"
-                  >
-                    {section.title && (
-                      <h2
-                        className={cn(
-                          "text-lg font-semibold text-foreground",
-                          typography.leading.tight,
-                        )}
-                      >
-                        {section.title}
-                      </h2>
-                    )}
-                    <ul className="list-disc pl-5 space-y-1.5 text-[15px] leading-relaxed text-gray-700">
-                      {(section.items ?? [])
-                        .slice()
-                        .sort((a, b) => a.orderIndex - b.orderIndex)
-                        .map((item) => (
-                          <li key={item.orderIndex}>{item.text}</li>
-                        ))}
-                    </ul>
-                  </div>
-                );
-              }
+          if (section.type === "BULLET" && "items" in section) {
+            return (
+              <div key={`bullet-${idx}`} className="space-y-3">
+                {section.title && (
+                  <h2 className="text-xl font-semibold text-foreground leading-snug">
+                    {section.title}
+                  </h2>
+                )}
+                <ul className="space-y-2.5 text-[15px] leading-loose text-gray-700">
+                  {(section.items ?? [])
+                    .slice()
+                    .sort((a, b) => a.orderIndex - b.orderIndex)
+                    .map((it) => (
+                      <li key={it.orderIndex} className="flex gap-2.5">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
+                        {it.text}
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            );
+          }
 
-              return null;
-            })}
+          return null;
+        })}
 
-          {/* External source link */}
-          {item.externalUrl && (
-            <a
-              href={item.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "mt-6 inline-flex items-center gap-2 rounded-full border bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600",
-                "hover:bg-gray-100 hover:text-foreground",
-                transitions.colorsNormal,
-              )}
-            >
-              อ่านข่าวต้นฉบับที่ {item.source}
-              <FiExternalLink className="text-xs" />
-            </a>
-          )}
-        </div>
+        {/* External source */}
+        {item.externalUrl && (
+          <a
+            href={item.externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-600",
+              `hover:bg-gray-50 hover:text-foreground ${transitions.colorsNormal}`
+            )}
+          >
+            อ่านข่าวต้นฉบับที่ {item.source}
+            <FiExternalLink className="text-xs" />
+          </a>
+        )}
 
-        {/* ── Related news ── */}
+        {/* Divider before meta sections */}
+        <hr className="border-gray-100" />
+
+        {/* Product links */}
         {item.productLinks && item.productLinks.length > 0 && (
-          <div className="mt-8">
-            <p className="text-sm font-semibold text-gray-700 mb-2">
-              สินค้าที่กล่าวถึง
-            </p>
+          <div>
+            <p className="mb-2 text-sm font-semibold text-gray-600">สินค้าที่กล่าวถึง</p>
             <div className="flex flex-wrap gap-2">
               {item.productLinks
                 .slice()
@@ -164,7 +138,7 @@ export default async function NewsArticlePage({
                     key={`${link.productId}-${link.orderIndex}`}
                     size="xs"
                     variant="status"
-                    className="bg-gray-50 text-gray-700 border border-gray-200"
+                    className="border border-gray-200 bg-white text-gray-600"
                   >
                     {link.productId} · {link.relationType.toLowerCase()}
                   </Badge>
@@ -173,16 +147,17 @@ export default async function NewsArticlePage({
           </div>
         )}
 
+        {/* Tags */}
         {item.tags && item.tags.length > 0 && (
-          <div className="mt-6">
-            <p className="text-sm font-semibold text-gray-700 mb-2">แท็ก</p>
+          <div>
+            <p className="mb-2 text-sm font-semibold text-gray-600">แท็ก</p>
             <div className="flex flex-wrap gap-2">
               {item.tags.map((tag) => (
                 <Badge
                   key={tag.tagId}
                   size="xs"
                   variant="score"
-                  className="bg-gray-100 text-gray-700"
+                  className="bg-gray-100 text-gray-600"
                 >
                   #{tag.tagId}
                 </Badge>
@@ -191,24 +166,25 @@ export default async function NewsArticlePage({
           </div>
         )}
 
+        {/* Related news */}
         {relatedItems.length > 0 && (
-          <RelatedNewsSection relatedSlugs={relatedItems} className="mt-8" />
+          <RelatedNewsSection relatedSlugs={relatedItems} />
         )}
 
-        {/* ── Back link ── */}
-        <div className="mt-8">
+        {/* Back link */}
+        <div>
           <Link
             href="/news"
             className={cn(
-              "inline-flex items-center gap-2 text-sm font-medium text-gray-500",
-              `hover:text-brand ${transitions.colorsNormal}`,
+              "inline-flex items-center gap-2 text-sm font-medium text-gray-400",
+              `hover:text-brand ${transitions.colorsNormal}`
             )}
           >
             <FiArrowLeft />
             กลับไปยังหน้าข่าวทั้งหมด
           </Link>
         </div>
-      </section>
+      </article>
     </main>
   );
 }
