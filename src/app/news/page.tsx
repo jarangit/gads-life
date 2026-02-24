@@ -75,7 +75,7 @@ export default function NewsPage() {
         <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-[0.08em] mb-3">
           ข่าวทั้งหมด
         </p>
-        <div className="flex flex-col gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2  gap-4">
           {rest.map((item) => (
             <NewsCard key={item.id} item={item} />
           ))}

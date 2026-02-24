@@ -1,13 +1,12 @@
 /* ──────── News Card Molecule ──────── */
 
 import Link from "next/link";
-import { FiArrowRight, FiExternalLink } from "react-icons/fi";
+import { FiClock } from "react-icons/fi";
 import { NewsItem } from "@/data/news";
 import { formatRelativeTime } from "@/components/ui/utils";
 import { cn } from "@/utils/cn";
-import { typography, radius, transitions } from "@/components/ui";
-import { Badge } from "@/components/ui/atoms/Badge";
-import { CategoryBadge, NewsImagePlaceholder, NewsMetaTag } from "@/components/news/atoms";
+import { radius, transitions } from "@/components/ui";
+import { CategoryBadge } from "@/components/news/atoms";
 
 export interface NewsCardProps {
   item: NewsItem;
@@ -15,87 +14,60 @@ export interface NewsCardProps {
   className?: string;
 }
 
-export function NewsCard({
-  item,
-  featured = false,
-  className,
-}: NewsCardProps) {
+export function NewsCard({ item, featured = false, className }: NewsCardProps) {
+  const primaryTag = item.tags?.[0]?.value ?? item.category ?? "ข่าว";
   const relativeTime = formatRelativeTime(item.publishedAt);
   const summaryText = item.summary || item.excerpt;
-  const primaryTag = item.tags?.[0]?.value ?? "ข่าว";
+  const imageUrl = item.heroImage ?? "/images/placeholder-news.jpg";
   const readingMinutes = summaryText
     ? Math.max(1, Math.round(summaryText.split(/\s+/).length / 200))
     : undefined;
 
-  const content = (
+  const cardBody = (
     <div
       className={cn(
-        "group flex gap-4 bg-white border border-gray-100",
+        "relative isolate block overflow-hidden bg-gray-900",
         radius["2xl"],
-        "p-4 sm:p-5",
-        featured && "sm:flex-col",
-        `hover:shadow-lg hover:border-gray-200 ${transitions.allSlow}`,
-        className
+        featured ? "min-h-[320px]" : "min-h-[260px]",
+        "shadow-sm border border-gray-100/80",
+        `hover:shadow-lg hover:-translate-y-[1px] ${transitions.allSlow} `,
+        className,
       )}
     >
-      {/* Image placeholder */}
-      <NewsImagePlaceholder
-        size={featured ? "lg" : "sm"}
-        className={featured ? "w-full" : ""}
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${imageUrl})` }}
+        aria-hidden
       />
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-black/35 to-black/90 " />
 
-      <div className="flex-1 min-w-0">
-        {/* Category + meta */}
-        <div className="flex items-center gap-2 flex-wrap mb-2">
-          <CategoryBadge label={primaryTag} />
-          <NewsMetaTag relativeTime={relativeTime} readingMinutes={readingMinutes} />
+      {/* Badge */}
+      <div className="absolute top-3 left-3">
+        <CategoryBadge label={primaryTag} className="bg-white/90 backdrop-blur text-gray-800" />
+      </div>
+
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-end p-4 text-white hover:backdrop-blur-lg transition-[backdrop-filter] duration-3000">
+        <div className="space-y-1">
+          <p className="text-[13px] text-white/85 line-clamp-1">{summaryText}</p>
+          <h3 className={cn("text-lg font-semibold leading-snug line-clamp-2")}>
+            {item.title}
+          </h3>
         </div>
 
-        {/* Title */}
-        <h2
-          className={cn(
-            typography.weight.semibold,
-            "text-gray-900",
-            featured
-              ? `${typography.size.base} leading-snug line-clamp-3`
-              : `${typography.size.sm} leading-snug line-clamp-2`,
-            `group-hover:text-brand ${transitions.colorsNormal}`
-          )}
-        >
-          {item.title}
-        </h2>
-
-        {/* Summary */}
-        <p className="text-[13px] text-gray-500 mt-1.5 leading-relaxed line-clamp-2">
-          {summaryText}
-        </p>
-
-        {/* Meta pills */}
-        <div className="mt-3 flex flex-wrap gap-2 text-[12px] text-gray-500">
-          <Badge size="xs" variant="info" className="bg-gray-100 text-gray-700">
-            {item.type}
-          </Badge>
+        <div className="mt-3 flex items-center gap-2 text-xs text-white/80">
+          <span className="font-semibold text-white">{item.source ?? "ข่าว"}</span>
+          <span className="h-1 w-1 rounded-full bg-white/60" />
+          <span className="inline-flex items-center gap-1">
+            <FiClock className="text-[11px]" />
+            {readingMinutes !== undefined ? `${readingMinutes} นาทีอ่าน` : relativeTime}
+          </span>
           {readingMinutes !== undefined && (
-            <Badge size="xs" variant="score" className="bg-gray-50 text-gray-500">
-              {readingMinutes} นาทีอ่าน
-            </Badge>
-          )}
-          {item.tags?.length > 0 && (
-            <Badge size="xs" variant="score" className="bg-brand/10 text-brand-dark">
-              {item.tags.length} แท็ก
-            </Badge>
-          )}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-2 inline-flex items-center gap-1 text-[12px] font-medium text-gray-400 group-hover:text-brand transition-colors duration-200">
-          {item.externalUrl ? (
             <>
-              อ่านต่อ <FiExternalLink className="text-[10px]" />
-            </>
-          ) : (
-            <>
-              อ่านรีวิว <FiArrowRight className="text-[10px]" />
+              <span className="h-1 w-1 rounded-full bg-white/60" />
+              <span>{relativeTime}</span>
             </>
           )}
         </div>
@@ -106,10 +78,10 @@ export function NewsCard({
   if (item.externalUrl) {
     return (
       <a href={item.externalUrl} target="_blank" rel="noopener noreferrer">
-        {content}
+        {cardBody}
       </a>
     );
   }
 
-  return <Link href={`/news/${item.slug}`}>{content}</Link>;
+  return <Link href={`/news/${item.slug}`}>{cardBody}</Link>;
 }
