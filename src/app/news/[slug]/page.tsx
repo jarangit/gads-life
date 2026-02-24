@@ -48,7 +48,7 @@ export default async function NewsArticlePage({
   const relatedItems = mockNews.filter((n) => n.slug !== item.slug);
 
   return (
-    <main className="min-h-screen bg-background pb-16">
+    <div className="min-h-screen bg-background pb-16">
       {/* ── Badge, date, title, hero image ── */}
       <NewsArticleHero item={item} />
 
@@ -129,6 +129,6 @@ export default async function NewsArticlePage({
           </Link>
         </div>
       </article>
-    </main>
+    </div>
   );
 }

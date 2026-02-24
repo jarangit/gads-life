@@ -39,19 +39,34 @@ export function NewsArticleHero({ item, className }: NewsArticleHeroProps) {
       {/* Hero image */}
       <div
         className={cn(
-          "mt-6 overflow-hidden bg-gray-100",
+          "relative mt-6 overflow-hidden bg-gray-100",
           radius["2xl"],
-          "w-full aspect-16/7",
-          "flex items-center justify-center"
+          "w-full",
+          "flex items-center justify-center",
+          "min-h-[220px] sm:min-h-[280px]",
         )}
       >
         {item.heroImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={item.heroImage}
-            alt={item.heroImageAlt ?? item.title}
-            className="h-full w-full object-cover"
-          />
+          <>
+            <div
+              className="absolute inset-0 scale-110 blur-3xl"
+              style={{
+                backgroundImage: `url(${item.heroImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(28px)",
+                transform: "scale(1.12)",
+              }}
+              aria-hidden
+            />
+            <div className="absolute inset-0 bg-black/15" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.heroImage}
+              alt={item.heroImageAlt ?? item.title}
+              className="relative z-10 max-h-[420px] w-full object-contain"
+            />
+          </>
         ) : (
           <span className="text-5xl opacity-10">📰</span>
         )}
