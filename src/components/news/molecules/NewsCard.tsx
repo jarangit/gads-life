@@ -1,5 +1,4 @@
 /* ──────── News Card Molecule ──────── */
-
 import Link from "next/link";
 import { FiClock } from "react-icons/fi";
 import { NewsItem } from "@/data/news";
@@ -92,5 +91,5 @@ export function NewsCard({ item, featured = false, className }: NewsCardProps) {
     );
   }
 
-  return <Link href={`/news/${item.slug}?id=${item.id}`}>{cardBody}</Link>;
+  return <Link href={`/news/${item.slug}`}>{cardBody}</Link>;
 }
