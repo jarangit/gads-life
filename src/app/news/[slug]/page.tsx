@@ -42,8 +42,18 @@ export async function generateStaticParams() {
 export default async function NewsArticlePage({
   params,
 }: {
-  params: Promise<{ slug: string; id: string }>;
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return <NewsArticleContent id="" slug={slug} />;
+
+  let articleId: string = "";
+  try {
+    const response = await fetchContentArticles({ page: 1, limit: 100 });
+    const matched = response.items.find((item) => item.slug === slug);
+    if (matched) articleId = String(matched.id);
+  } catch {
+    // fall through — client will handle missing id gracefully
+  }
+
+  return <NewsArticleContent id={articleId} slug={slug} />;
 }

@@ -13,7 +13,6 @@ import {
   HomePageSkeleton,
 } from "@/components/home";
 import { SearchModal } from "@/components/search";
-import { mockNews } from "@/data/news";
 
 export default function Home() {
   const { data: homeData } = useHome();
@@ -55,7 +54,9 @@ export default function Home() {
         </div>
 
         {/* News */}
-        <NewsSection items={mockNews} />
+        {homeData.featuredArticles && homeData.featuredArticles.length > 0 && (
+          <NewsSection items={homeData.featuredArticles} />
+        )}
 
         {/* Top Picks grid */}
         {/* {homeData.topPicks && homeData.topPicks.length > 0 && (

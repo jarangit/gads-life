@@ -7,7 +7,19 @@ export interface IHomeResponse {
   topBrands: TopBrand[];
   sellProducts: IProductItemVm[];
   quickVerdictProducts?: QuickVerdictProduct[];
+  featuredArticles: FeaturedNewsItem[];
 }
+export interface FeaturedNewsItem {
+    id:           string;
+    slug:         string;
+    title:        string;
+    excerpt:      string;
+    heroImage:    string;
+    heroImageAlt: string;
+    type:         string;
+    publishedAt:  Date;
+}
+
 
 export interface QuickVerdictProduct {
   id: string;

@@ -2,6 +2,7 @@
 
 /* ──────── News Article Content ──────── */
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { FiArrowLeft } from "react-icons/fi";
 import type { NewsItem } from "@/data/news";
@@ -37,11 +38,13 @@ function toNewsItem(item: ContentArticleResponse): NewsItem {
   };
 }
 
-export function NewsArticleContent({ slug }: NewsArticleContentProps) {
+export function NewsArticleContent({ id }: NewsArticleContentProps) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [id]);
+
   const { data: articlesList } = useArticles({ page: 1, limit: 100 });
-  const matchedItem = articlesList?.items.find((entry) => entry.slug === slug);
-  const articleId = matchedItem?.id ?? "";
-  const { data: article } = useArticleById(articleId);
+  const { data: article } = useArticleById(id);
 
   if (!article) return null;
 

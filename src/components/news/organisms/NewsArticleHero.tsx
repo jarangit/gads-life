@@ -1,5 +1,6 @@
 /* ──────── News Article Hero Organism ──────── */
 
+import { HiOutlineNewspaper } from "react-icons/hi";
 import { NewsItem } from "@/data/news";
 import { cn } from "@/utils/cn";
 import { radius } from "@/components/ui";
@@ -68,7 +69,7 @@ export function NewsArticleHero({ item, className }: NewsArticleHeroProps) {
             />
           </>
         ) : (
-          <span className="text-5xl opacity-10">📰</span>
+          <HiOutlineNewspaper className="text-7xl text-gray-300" />
         )}
       </div>
     </div>
