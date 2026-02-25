@@ -45,13 +45,15 @@ export interface ContentArticleResponse {
   updatedAt: string;
 }
 
+export type ContentArticleDetailResponse = ContentArticleResponse;
+
 export type IContentArticleListResponse = PaginatedResponse<ContentArticleResponse>;
 
 export interface ListContentArticlesParams {
   page?: number;
   limit?: number;
-  type?: ContentArticleType;
-  status?: ContentArticleStatus;
-  isFeatured?: 0 | 1;
-  search?: string;
+  // type?: ContentArticleType;
+  // status?: ContentArticleStatus;
+  // isFeatured?: 0 | 1;
+  // search?: string;
 }

@@ -51,7 +51,7 @@ function NewsRow({ item, isLast }: NewsRowProps) {
           <span
             className={cn(
               "text-[10px] font-semibold px-2 py-0.5 rounded-full border",
-              getCategoryClass(item.category),
+              getCategoryClass(item.category ?? ''),
             )}
           >
             {item.category}

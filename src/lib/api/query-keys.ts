@@ -45,5 +45,7 @@ export const queryKeys = {
     all: ["content-articles"] as const,
     list: (params?: Record<string, string | number | boolean>) =>
       [...queryKeys.contentArticles.all, "list", params ?? {}] as const,
+    detail: (id: string | number) =>
+      [...queryKeys.contentArticles.all, "detail", id] as const,
   },
 } as const;

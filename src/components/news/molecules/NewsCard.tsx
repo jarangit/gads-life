@@ -45,24 +45,33 @@ export function NewsCard({ item, featured = false, className }: NewsCardProps) {
 
       {/* Badge */}
       <div className="absolute top-3 left-3">
-        <CategoryBadge label={primaryTag} className="bg-white/90 backdrop-blur text-gray-800" />
+        <CategoryBadge
+          label={primaryTag}
+          className="bg-white/90 backdrop-blur text-gray-800"
+        />
       </div>
 
       {/* Content */}
       <div className="absolute inset-0 flex flex-col justify-end p-4 text-white hover:backdrop-blur-lg transition-[backdrop-filter] duration-3000">
         <div className="space-y-1">
-          <p className="text-[13px] text-white/85 line-clamp-1">{summaryText}</p>
+          <p className="text-[13px] text-white/85 line-clamp-1">
+            {summaryText}
+          </p>
           <h3 className={cn("text-lg font-semibold leading-snug line-clamp-2")}>
             {item.title}
           </h3>
         </div>
 
         <div className="mt-3 flex items-center gap-2 text-xs text-white/80">
-          <span className="font-semibold text-white">{item.source ?? "ข่าว"}</span>
+          <span className="font-semibold text-white">
+            {item.source ?? "ข่าว"}
+          </span>
           <span className="h-1 w-1 rounded-full bg-white/60" />
           <span className="inline-flex items-center gap-1">
             <FiClock className="text-[11px]" />
-            {readingMinutes !== undefined ? `${readingMinutes} นาทีอ่าน` : relativeTime}
+            {readingMinutes !== undefined
+              ? `${readingMinutes} นาทีอ่าน`
+              : relativeTime}
           </span>
           {readingMinutes !== undefined && (
             <>
@@ -83,5 +92,5 @@ export function NewsCard({ item, featured = false, className }: NewsCardProps) {
     );
   }
 
-  return <Link href={`/news/${item.slug}`}>{cardBody}</Link>;
+  return <Link href={`/news/${item.slug}?id=${item.id}`}>{cardBody}</Link>;
 }
