@@ -40,4 +40,10 @@ export const queryKeys = {
     list: (params?: Record<string, string | number | boolean>) =>
       [...queryKeys.brands.all, "list", params ?? {}] as const,
   },
+
+  contentArticles: {
+    all: ["content-articles"] as const,
+    list: (params?: Record<string, string | number | boolean>) =>
+      [...queryKeys.contentArticles.all, "list", params ?? {}] as const,
+  },
 } as const;
