@@ -12,8 +12,8 @@ const footerLinks: { href: string; label: string }[] = [
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="max-w-7xl mx-auto mt-16 pt-8 pb-6 border-t border-gray-200/60">
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+    <footer className="container  border-t border-gray-200/60">
+      <div className="py-12 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-black rounded-full flex items-center justify-center">
             <FiCheck className={`text-brand ${typography.size.xs}`} />

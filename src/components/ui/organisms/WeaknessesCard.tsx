@@ -47,7 +47,7 @@ export function WeaknessesCard({
             className="flex items-start gap-3"
           >
             <FiX className={`${accentColors.red.text} mt-1 shrink-0`} />
-            <p className={`${typography.weight.medium} text-gray-800`}>{weakness.content}</p>
+            <p className={` text-gray-800`}>{weakness.content}</p>
           </div>
         ))}
       </div>

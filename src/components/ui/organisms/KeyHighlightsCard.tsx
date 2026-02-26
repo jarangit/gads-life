@@ -47,7 +47,7 @@ export function KeyHighlightsCard({
             className="flex items-start gap-3"
           >
             <FiStar className="text-brand-dark mt-1 shrink-0" />
-            <p className={`${typography.weight.medium} text-gray-800`}>{highlight.content}</p>
+            <p className={` text-gray-800`}>{highlight.content}</p>
           </div>
         ))}
       </div>

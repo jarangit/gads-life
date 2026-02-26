@@ -52,15 +52,15 @@ const Nav = () => {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    `${typography.size.sm} ${typography.weight.medium} ${transitions.colorsNormal}`,
-                    link.featured ? "text-red-400! font-bold" : "hover:text-brand",
+                    `${typography.size.sm} ${typography.weight.medium} ${transitions.colorsNormal} pb-1 border-b-2`,
+                    link.featured ? "font-bold" : "hover:text-brand",
                     isLinkActive(link.href)
                       ? link.featured
-                        ? " text-brand! "
-                        : "text-brand"
+                        ? "text-brand! border-brand"
+                        : ""
                       : link.featured
-                        ? "text-black"
-                        : "text-gray-600",
+                        ? "text-black border-transparent"
+                        : "text-gray-600 border-transparent",
                   )}
                 >
                   {link.label}

@@ -23,7 +23,7 @@ export function NewsArticleHero({ item, className }: NewsArticleHeroProps) {
   const primaryTag = item.tags?.[0]?.value ?? item.category ?? "ข่าว";
 
   return (
-    <div className={cn("mx-auto max-w-3xl px-4 pt-10 pb-2", className)}>
+    <div className={cn("mx-auto max-w-3xl px-4 pb-2", className)}>
       {/* Category / tag badge */}
       <CategoryBadge label={primaryTag} className="mb-3" />
 

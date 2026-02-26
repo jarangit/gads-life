@@ -24,14 +24,14 @@ type IconEntry = (sizeClass: string) => React.ReactNode;
 
 const iconFactories: Record<string, IconEntry> = {
   laptop: (s) => <HiOutlineDesktopComputer className={`text-gray-700 ${s}`} />,
-  smartphone: (s) => <HiOutlineDeviceMobile className={`text-gray-700 ${s}`} />,
-  audio: (s) => <HiOutlineMusicNote className={`text-gray-700 ${s}`} />,
+  "smart-phone": (s) => <HiOutlineDeviceMobile className={`text-gray-700 ${s}`} />,
+  "earbuds": (s) => <HiOutlineMusicNote className={`text-gray-700 ${s}`} />,
   wearable: (s) => <BsSmartwatch className={`text-gray-700 ${s}`} />,
   home: (s) => <HiOutlineHome className={`text-gray-700 ${s}`} />,
   "home-gadgets": (s) => <HiOutlineHome className={`text-gray-700 ${s}`} />,
   desk: (s) => <HiOutlineOfficeBuilding className={`text-gray-700 ${s}`} />,
   "desk-work": (s) => <HiOutlineOfficeBuilding className={`text-gray-700 ${s}`} />,
-  charging: (s) => <HiOutlineLightningBolt className={`text-gray-700 ${s}`} />,
+  "charging-accessories": (s) => <HiOutlineLightningBolt className={`text-gray-700 ${s}`} />,
   "charging-power": (s) => (
     <HiOutlineLightningBolt className={`text-gray-700 ${s}`} />
   ),
