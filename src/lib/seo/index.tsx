@@ -9,6 +9,16 @@ export {
 export type { BuildMetadataOptions } from "./metadata";
 
 export {
+  buildSeoMeta,
+  buildCanonicalUrl,
+} from "./page-router-meta";
+export type {
+  SeoEntityType,
+  SeoEntityInput,
+  DynamicSeoMeta,
+} from "./page-router-meta";
+
+export {
   buildProductReviewJsonLd,
   buildBreadcrumbJsonLd,
   buildProductListJsonLd,
