@@ -14,3 +14,6 @@ export * from "./brand/brands";
 
 export * from "./content-articles/types";
 export * from "./content-articles/articles";
+
+export * from "./feedback/types";
+export * from "./feedback/feedback";
