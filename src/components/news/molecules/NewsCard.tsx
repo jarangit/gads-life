@@ -51,7 +51,7 @@ export function NewsCard({ item, featured = false, className }: NewsCardProps) {
       </div>
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-4 text-white hover:backdrop-blur-lg transition-[backdrop-filter] duration-3000">
+      <div className="absolute inset-0 flex flex-col justify-end p-4 text-white hover:backdrop-blur-lg transition-[backdrop-filter] duration-1000">
         <div className="space-y-1">
           <p className="text-[13px] text-white/85 line-clamp-1">
             {summaryText}
