@@ -58,7 +58,7 @@ function Step({ number, title, description }: StepProps) {
 /* ─── Page ─── */
 export default function AboutPage() {
   return (
-    <div className="">
+    <div className="container">
       {/* Breadcrumb */}
       <div className="inline-flex items-center gap-2 text-xs text-gray-400 mb-6">
         <Link href="/" className="hover:text-gray-600 transition-colors">

@@ -27,7 +27,7 @@ export default function ActivitiesPage() {
   );
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="container space-y-8 pb-12">
       {/* Page header */}
       <div>
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">

@@ -81,8 +81,8 @@ export default function RootLayout({
       >
         <QueryProvider>
           <Nav />
-          <main className="container min-h-screen">
-            <div className="py-12">{children}</div>
+          <main className="min-h-screen">
+            <div className="py-8">{children}</div>
           </main>
         </QueryProvider>
         <script

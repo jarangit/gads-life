@@ -134,6 +134,7 @@ import {
   // Design Tokens
   spacing, radius, shadows, typography, colors, transitions,
   buttonSizes, badgeSizes, iconBoxSizes,
+  editorial,            // ← Apple Newsroom-style section layout tokens
   
   // Atoms
   Badge, RecommendedBadge, ScoreBadge,
@@ -348,6 +349,103 @@ Page        → Wires up hooks → organisms; thin layer
 3. **Is it a full page section?** → `src/components/home/organisms/` (or other feature folder)
 4. **Is it feature-specific?** → `src/components/{feature}/` with re-exports from ui
 5. **Always** add to the relevant `index.ts` barrel export.
+
+---
+
+## Editorial Design System (Home Page)
+
+The home page follows an **Apple Newsroom-style editorial layout** — vertical sections, clean whitespace between them, no bento-panel wrappers.
+
+### Philosophy
+
+| Old (Bento) | New (Editorial) |
+|-------------|-----------------|
+| `bg-white` panel wrapping each section | Sections sit directly on page background |
+| Asymmetric `bentoRadius` corners per section | Consistent `rounded-2xl` cards inside sections |
+| `sectionPanel.padding` wrapper | No section wrapper — just a `<section>` tag |
+| `SectionHeader` (small `text-lg`) | `editorial.title` (`text-2xl font-bold`) |
+| `lg:col-span-*` on the page grid | Linear `space-y-10 md:space-y-12` stack |
+
+### `editorial` Token (tokens.ts)
+
+```ts
+import { editorial } from "@/components/ui";
+
+editorial.header     // section header row (flex + mb-5)
+editorial.title      // "text-2xl font-bold text-gray-900"
+editorial.link       // subtle "see more" link
+editorial.card       // "bg-white rounded-2xl"
+editorial.cardBorder // "bg-white rounded-2xl border border-gray-100"
+editorial.cardHover  // hover lift + shadow
+editorial.featuredCard // dark image-overlay featured card
+editorial.gap        // "gap-4"
+editorial.sectionGap // "space-y-10 md:space-y-12"
+```
+
+### Home Page Layout
+
+```
+[ HeroSection       ] ← dark 2-col card (headline + search)
+[ CategoriesSection ] ← horizontal scrollable pill row
+[ LatestReviews     ] ← featured big card (2/3) + 3 small stacked  (1/3)
+[ TopPicksSection   ] ← 3-col equal product cards
+[ ProblemsSection   ] ← 4-chip problem cards (2×2 → 4×1)
+[ NewsSection       ] ← big article card (2/3) + 2 stacked + compact list
+[ QuickVerdict      ] ← 2-col tile grid
+```
+
+### Card Patterns
+
+**Featured card** (hero of a section):
+```tsx
+<Link href="..." className={cn(editorial.featuredCard, "md:col-span-2 min-h-[320px]", editorial.cardHover)}>
+  <div className="absolute inset-0 bg-cover bg-center ..." style={{ backgroundImage: `url(${img})` }} />
+  <div className="absolute inset-0 bg-linear-to-t from-black/85 to-transparent" />
+  <div className="relative z-10 p-5 ...">...</div>
+</Link>
+```
+
+**Small list card** (beside the featured card):
+```tsx
+<Link href="..." className={cn("group flex gap-3 items-start p-3.5", editorial.cardBorder, "hover:border-gray-200 hover:shadow-md", transitions.allNormal)}>
+  <div className="w-14 h-14 shrink-0 rounded-lg bg-gray-100 overflow-hidden">…</div>
+  <div>…title, subtitle, score…</div>
+</Link>
+```
+
+**Problem / chip card**:
+```tsx
+<Link href="..." className={cn("group flex flex-col gap-3 p-4", editorial.cardBorder, "hover:border-gray-200 hover:shadow-md", transitions.allNormal)}>
+  <div className={cn("w-10 h-10 rounded-xl ...", problem.color)}>{icon}</div>
+  <div><p className="text-sm font-semibold">…</p>…</div>
+</Link>
+```
+
+### Section Template
+
+Every home organism follows this template:
+
+```tsx
+export function XSection({ data }: XSectionProps) {
+  return (
+    <section>
+      {/* Header row */}
+      <div className={editorial.header}>
+        <div className="flex items-center gap-2">
+          <SomeIcon className="text-xl text-gray-500" />
+          <h2 className={editorial.title}>หัวข้อภาษาไทย</h2>
+        </div>
+        <Link href="/path" className={editorial.link}>ดูเพิ่ม <FiArrowRight /></Link>
+      </div>
+
+      {/* Card grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {data.map(item => <XCard key={item.id} item={item} />)}
+      </div>
+    </section>
+  );
+}
+```
 
 ---
 

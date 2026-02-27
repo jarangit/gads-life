@@ -222,6 +222,36 @@ export const gridPresets = {
   "4col": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
 } as const;
 
+/**
+ * Editorial layout — Apple Newsroom-style sections.
+ *
+ * Used for the home-page redesign: plain vertical sections
+ * with a clean header row, card grid, and whitespace separation.
+ * Every home-page organism should consume these instead of the
+ * old `bentoRadius` / `sectionPanel` panel wrappers.
+ */
+export const editorial = {
+  /** Section header row – title on left, optional "see more" on right */
+  header: "flex items-center justify-between mb-5",
+  /** Section title – large bold */
+  title: "text-2xl font-bold text-gray-900",
+  titleLg: "text-3xl font-bold text-gray-900",
+  /** "See more" link – subtle but tappable */
+  link: "text-sm font-medium text-brand-dark flex items-center gap-1 hover:gap-1.5 transition-all duration-150",
+  /** Plain white card – use for list / compact items */
+  card: "bg-white rounded-2xl",
+  /** White card with subtle border */
+  cardBorder: "bg-white rounded-2xl border border-gray-100",
+  /** Hover lift for all interactive cards */
+  cardHover: "hover:shadow-hover hover:-translate-y-0.5 transition-all duration-200",
+  /** Dark featured card (image-overlay) – the "hero" of a section */
+  featuredCard: "group relative flex flex-col justify-end overflow-hidden bg-gray-900 rounded-2xl",
+  /** Standard gap between editorial cards */
+  gap: "gap-4",
+  /** Section vertical spacing (between sections on the page) */
+  sectionGap: "space-y-10 md:space-y-12",
+} as const;
+
 /* ═══════════════════════════════════════════════
  *  4. Type Exports
  * ═══════════════════════════════════════════════ */
@@ -238,3 +268,4 @@ export type BentoRadiusKey = keyof typeof bentoRadius;
 export type CardHeightKey = keyof typeof cardHeights;
 export type AccentColorKey = keyof typeof accentColors;
 export type GridPresetKey = keyof typeof gridPresets;
+export type EditorialKey = keyof typeof editorial;

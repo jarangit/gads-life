@@ -76,7 +76,7 @@ const navItems = [
 /* ─── Page ─── */
 export default function LegalPage() {
   return (
-    <div className="">
+    <div className="container">
       {/* Header */}
       <div className="mb-10">
         <div className="inline-flex items-center gap-2 text-xs text-gray-400 mb-4">

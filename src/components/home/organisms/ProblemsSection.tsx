@@ -1,4 +1,6 @@
+/* ──────── ProblemsSection – 4-chip editorial grid ──────── */
 import React from "react";
+import Link from "next/link";
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import {
   BsBatteryCharging,
@@ -6,8 +8,8 @@ import {
   BsLightningCharge,
 } from "react-icons/bs";
 import { HiOutlineDesktopComputer } from "react-icons/hi";
-import { ProblemCard } from "../molecules";
-import { accentColors, bentoRadius, sectionPanel, typography, radius } from "@/components/ui";
+import { cn } from "@/utils/cn";
+import { accentColors, editorial, transitions } from "@/components/ui";
 
 const commonProblems = [
   {
@@ -44,36 +46,45 @@ const commonProblems = [
   },
 ];
 
-const radiusClasses = [
-  `${radius['2xl']} rounded-tl-3xl`,
-  radius['2xl'],
-  radius['2xl'],
-  `${radius['2xl']} rounded-br-3xl`,
-];
-
 export function ProblemsSection() {
   return (
-    <div className={`lg:col-span-2 bg-linear-to-br from-amber-50/80 via-orange-50/50 to-yellow-50/80 ${bentoRadius.sectionTR} ${sectionPanel.padding}`}>
-      <div className="flex items-center gap-2 mb-5">
-        <HiOutlineQuestionMarkCircle className={`text-xl ${accentColors.orange.icon}`} />
-        <h2 className={`${typography.size.lg} ${typography.weight.bold} text-gray-900`}>
-          เจอปัญหาแบบนี้มั้ย?
-        </h2>
+    <section>
+      <div className={editorial.header}>
+        <div className="flex items-center gap-2">
+          <HiOutlineQuestionMarkCircle className={`text-xl ${accentColors.orange.icon}`} />
+          <h2 className={editorial.title}>เจอปัญหาแบบนี้มั้ย?</h2>
+        </div>
       </div>
 
-      <div className={`grid grid-cols-2 md:grid-cols-4 ${sectionPanel.gap}`}>
-        {commonProblems.map((problem, idx) => (
-          <ProblemCard
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {commonProblems.map((problem) => (
+          <Link
             key={problem.id}
-            icon={problem.icon}
-            title={problem.title}
-            description={problem.description}
-            color={problem.color}
-            slug={problem.slug}
-            radiusClass={radiusClasses[idx] || radius['2xl']}
-          />
+            href={problem.slug}
+            className={cn(
+              "group flex flex-col gap-3 p-4",
+              editorial.cardBorder,
+              "hover:border-gray-200 hover:shadow-md",
+              transitions.allNormal,
+            )}
+          >
+            <div
+              className={cn(
+                "w-10 h-10 rounded-xl flex items-center justify-center",
+                problem.color,
+              )}
+            >
+              {problem.icon}
+            </div>
+            <div>
+              <p className="text-sm font-semibold text-gray-900">{problem.title}</p>
+              <p className="text-[12px] text-gray-500 mt-0.5 leading-snug">
+                {problem.description}
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

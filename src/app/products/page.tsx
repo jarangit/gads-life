@@ -13,5 +13,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
-  return <ProductsContent />;
+  return <div className="container"><ProductsContent /></div>;
 }

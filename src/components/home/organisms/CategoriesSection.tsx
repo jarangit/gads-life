@@ -1,40 +1,49 @@
+/* ──────── CategoriesSection – horizontal scrollable pills ──────── */
 import React from "react";
+import Link from "next/link";
+import { FiArrowRight } from "react-icons/fi";
 import { HiOutlineFolder } from "react-icons/hi";
-import { SectionHeader } from "../atoms";
-import { CategoryIconCard } from "../molecules";
+import { cn } from "@/utils/cn";
+import { getCategoryIcon, editorial, transitions } from "@/components/ui";
 import { Category } from "@/lib/api/home/type";
-import { bentoRadius, sectionPanel } from "@/components/ui";
 
 interface CategoriesSectionProps {
   categories: Category[];
 }
 
-const getRadiusClass = (idx: number): string => {
-  if (idx === 0) return bentoRadius.catTL;
-  if (idx === 2) return bentoRadius.catTR;
-  if (idx === 5) return bentoRadius.catBR;
-  return bentoRadius.catDefault;
-};
-
 export function CategoriesSection({ categories }: CategoriesSectionProps) {
   return (
-    <div className={`bg-white ${bentoRadius.sectionBL} ${sectionPanel.padding}`}>
-      <SectionHeader
-        icon={<HiOutlineFolder className="text-xl text-gray-600" />}
-        title="เลือกตามหมวด"
-        linkHref="/categories"
-        linkText="ทั้งหมด"
-      />
+    <section>
+      <div className={editorial.header}>
+        <div className="flex items-center gap-2">
+          <HiOutlineFolder className="text-xl text-gray-500" />
+          <h2 className={editorial.title}>เลือกตามหมวด</h2>
+        </div>
+        <Link href="/categories" className={editorial.link}>
+          ทั้งหมด <FiArrowRight className="text-xs" />
+        </Link>
+      </div>
 
-      <div className={`grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 ${sectionPanel.gap}`}>
-        {categories.slice(0, 6).map((category, idx) => (
-          <CategoryIconCard
+      {/* Horizontal scrollable pill row */}
+      <div className="flex gap-2.5 overflow-x-auto scrollbar-hide pb-2 -mx-1 px-1">
+        {categories.map((category) => (
+          <Link
             key={category.id}
-            category={category}
-            radiusClass={getRadiusClass(idx)}
-          />
+            href={`/category/${category.slug}`}
+            className={cn(
+              "flex-none flex items-center gap-2",
+              "bg-white rounded-full px-4 py-2.5",
+              "text-sm font-medium text-gray-700",
+              "border border-gray-200",
+              "hover:border-brand hover:text-brand-dark hover:bg-brand-light/50",
+              transitions.allNormal,
+            )}
+          >
+            {getCategoryIcon(category.slug, "text-base")}
+            {category.nameTh}
+          </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

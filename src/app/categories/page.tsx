@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function CategoriesPage() {
-  return <CategoriesContent />;
+  return <div className="container"><CategoriesContent /></div>;
 }

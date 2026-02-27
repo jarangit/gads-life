@@ -17,51 +17,54 @@ import { SearchModal } from "@/components/search";
 export default function Home() {
   const { data: homeData } = useHome();
   const [searchOpen, setSearchOpen] = useState(false);
-  // test
+
   if (!homeData) {
     return <HomePageSkeleton />;
   }
 
   return (
     <>
-      <div className="space-y-6">
-        {/* Hero + Top Picks + Problems */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <HeroSection
-            onSearchClick={() => setSearchOpen(true)}
-            categories={homeData.categories}
-          />
-          {homeData.sellProducts && (
-            <TopPicksSection items={homeData.sellProducts} />
-          )}
-          <ProblemsSection />
-        </div>
+      <div className="container space-y-8 md:space-y-10">
+        {/* Hero — dark card on gray bg */}
+        <HeroSection
+          onSearchClick={() => setSearchOpen(true)}
+          categories={homeData.categories}
+        />
 
-        {/* Categories */}
+        {/* Categories — white stripe */}
         {homeData.categories && (
-          <CategoriesSection categories={homeData.categories} />
+          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
+            <CategoriesSection categories={homeData.categories} />
+          </div>
         )}
 
-        {/* Latest Reviews + Quick Verdict */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {homeData.lastReview && (
-            <LatestReviewsSection reviews={homeData.lastReview} />
-          )}
-          {homeData.quickVerdictProducts &&
-            homeData.quickVerdictProducts.length > 0 && (
-              <QuickVerdictListSection items={homeData.quickVerdictProducts} />
-            )}
-        </div>
+        {/* Latest Reviews — gray bg, dark image card contrasts well */}
+        {homeData.lastReview && (
+          <LatestReviewsSection reviews={homeData.lastReview} />
+        )}
 
-        {/* News */}
+        {/* Top Picks — white stripe */}
+        {homeData.sellProducts && (
+          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
+            <TopPicksSection items={homeData.sellProducts} />
+          </div>
+        )}
+
+        {/* Problems — gray bg */}
+        <ProblemsSection />
+
+        {/* News — white stripe */}
         {homeData.featuredArticles && homeData.featuredArticles.length > 0 && (
-          <NewsSection items={homeData.featuredArticles} />
+          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
+            <NewsSection items={homeData.featuredArticles} />
+          </div>
         )}
 
-        {/* Top Picks grid */}
-        {/* {homeData.topPicks && homeData.topPicks.length > 0 && (
-          <TopPicksGridSection items={homeData.topPicks} />
-        )} */}
+        {/* Quick Verdict — gray bg */}
+        {homeData.quickVerdictProducts &&
+          homeData.quickVerdictProducts.length > 0 && (
+            <QuickVerdictListSection items={homeData.quickVerdictProducts} />
+          )}
       </div>
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />

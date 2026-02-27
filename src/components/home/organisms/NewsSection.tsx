@@ -3,8 +3,7 @@ import Link from "next/link";
 import { HiOutlineNewspaper } from "react-icons/hi";
 import { FiArrowRight } from "react-icons/fi";
 import { cn } from "@/utils/cn";
-import { SectionHeader } from "../atoms";
-import { bentoRadius, sectionPanel, transitions, typography } from "@/components/ui";
+import { editorial, transitions, typography } from "@/components/ui";
 import { FeaturedNewsItem } from "@/lib/api/home/type";
 import { formatRelativeTime } from "@/components/ui/utils";
 
@@ -136,26 +135,30 @@ export function NewsSection({ items }: NewsSectionProps) {
   const sidePair = rest.slice(0, 2);
   const compact = rest.slice(2);
 
-  return (
-    <div className={`bg-linear-to-br from-pink-50 to-white ${bentoRadius.sectionBL} ${sectionPanel.padding}`}>
-      <SectionHeader
-        icon={<HiOutlineNewspaper className="text-xl text-violet-500" />}
-        title="ข่าวล่าสุด"
-        linkHref="/news"
-        linkText="ดูทั้งหมด"
-      />
 
-      {/* Bento grid: big card + 2 stacked small cards */}
-      <div className={`mt-3 grid grid-cols-1 md:grid-cols-3 ${sectionPanel.gap}`}>
-        <NewsBigCard item={first} radiusClass={`${bentoRadius.catTL} md:rounded-tl-3xl`} />
+  return (
+    <section>
+      <div className={editorial.header}>
+        <div className="flex items-center gap-2">
+          <HiOutlineNewspaper className="text-xl text-violet-500" />
+          <h2 className={editorial.title}>ข่าวล่าสุด</h2>
+        </div>
+        <Link href="/news" className={editorial.link}>
+          ดูทั้งหมด <FiArrowRight className="text-xs" />
+        </Link>
+      </div>
+
+      {/* Featured card (2/3) + 2 stacked small cards (1/3) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <NewsBigCard item={first} radiusClass="rounded-2xl" />
 
         {sidePair.length > 0 && (
-          <div className="flex flex-col gap-2.5 md:gap-3">
+          <div className="flex flex-col gap-3">
             {sidePair.map((item, idx) => (
               <NewsSmallCard
                 key={item.id}
                 item={item}
-                radiusClass={idx === 0 ? bentoRadius.catTR : bentoRadius.catBR}
+                radiusClass={idx === sidePair.length - 1 ? "rounded-2xl rounded-br-3xl" : "rounded-2xl"}
               />
             ))}
           </div>
@@ -164,13 +167,13 @@ export function NewsSection({ items }: NewsSectionProps) {
 
       {/* Compact rows for remaining items */}
       {compact.length > 0 && (
-        <div className={`mt-2.5 md:mt-3 grid grid-cols-1 md:grid-cols-2 ${sectionPanel.gap}`}>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
           {compact.map((item) => (
             <NewsCompactRow key={item.id} item={item} />
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

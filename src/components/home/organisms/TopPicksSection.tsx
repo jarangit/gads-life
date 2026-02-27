@@ -1,40 +1,44 @@
+/* ──────── TopPicksSection – editorial 3-col card grid ──────── */
 import React from "react";
+import Link from "next/link";
+import { FiArrowRight } from "react-icons/fi";
 import { HiOutlineStar } from "react-icons/hi";
-import { SectionHeader } from "../atoms";
+import { accentColors, editorial, radius } from "@/components/ui";
 import { TopPickCard } from "../molecules";
-import { LastReview } from "@/lib/api/home/type";
 import { IProductItemVm } from "@/types/models/product";
-import { accentColors, bentoRadius, sectionPanel, radius } from "@/components/ui";
 
 interface TopPicksSectionProps {
   items: IProductItemVm[];
 }
 
 const radiusClasses = [
-  `${radius['2xl']} rounded-tl-3xl`,
-  radius['2xl'],
-  `${radius['2xl']} rounded-br-3xl`,
+  `${radius["2xl"]} rounded-tl-3xl`,
+  radius["2xl"],
+  `${radius["2xl"]} rounded-br-3xl`,
 ];
 
 export function TopPicksSection({ items }: TopPicksSectionProps) {
   return (
-    <div className={`lg:col-span-2 bg-white ${bentoRadius.sectionTL} ${sectionPanel.padding}`}>
-      <SectionHeader
-        icon={<HiOutlineStar className={`text-xl ${accentColors.amber.text}`} />}
-        title="ลดราคาอยู่ตอนนี้"
-        linkHref="/products/sale"
-        linkText="ดูเพิ่ม"
-      />
+    <section>
+      <div className={editorial.header}>
+        <div className="flex items-center gap-2">
+          <HiOutlineStar className={`text-xl ${accentColors.amber.text}`} />
+          <h2 className={editorial.title}>ลดราคาอยู่ตอนนี้</h2>
+        </div>
+        <Link href="/products/sale" className={editorial.link}>
+          ดูเพิ่ม <FiArrowRight className="text-xs" />
+        </Link>
+      </div>
 
-      <div className={`grid grid-cols-1 md:grid-cols-3 ${sectionPanel.gap}`}>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {items.map((item, idx) => (
           <TopPickCard
             key={item.id}
             item={item}
-            radiusClass={radiusClasses[idx] || radius['2xl']}
+            radiusClass={radiusClasses[idx] || radius["2xl"]}
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

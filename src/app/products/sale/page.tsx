@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function SaleProductsPage() {
-  return <SaleProductsContent />;
+  return <div className="container"><SaleProductsContent /></div>;
 }
