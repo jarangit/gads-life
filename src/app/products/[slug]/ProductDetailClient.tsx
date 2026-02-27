@@ -31,7 +31,7 @@ export default function ProductDetailClient({ slug }: ProductDetailClientProps) 
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="container flex items-center justify-center ">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand" />
       </div>
     );
@@ -39,7 +39,7 @@ export default function ProductDetailClient({ slug }: ProductDetailClientProps) 
 
   if (isError || !product) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+      <div className="container flex flex-col items-center justify-center  gap-4">
         <p className="text-gray-500">ไม่พบข้อมูลสินค้า</p>
         <Link href="/products" className="text-brand hover:underline">
           กลับไปหน้าสินค้าทั้งหมด
@@ -49,7 +49,7 @@ export default function ProductDetailClient({ slug }: ProductDetailClientProps) 
   }
 
   return (
-    <div className="">
+    <div className="container">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <Link
           href="/products"

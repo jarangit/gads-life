@@ -2,7 +2,6 @@
 import React from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import { HiOutlineFolder } from "react-icons/hi";
 import { cn } from "@/utils/cn";
 import { getCategoryIcon, editorial, transitions } from "@/components/ui";
 import { Category } from "@/lib/api/home/type";
@@ -15,10 +14,7 @@ export function CategoriesSection({ categories }: CategoriesSectionProps) {
   return (
     <section>
       <div className={editorial.header}>
-        <div className="flex items-center gap-2">
-          <HiOutlineFolder className="text-xl text-gray-500" />
-          <h2 className={editorial.title}>เลือกตามหมวด</h2>
-        </div>
+        <h2 className={editorial.title}>เลือกตามหมวด</h2>
         <Link href="/categories" className={editorial.link}>
           ทั้งหมด <FiArrowRight className="text-xs" />
         </Link>

@@ -89,7 +89,7 @@ export default async function ProductDetailPage({
             <span className="text-8xl font-bold text-brand">
               {product.overallScore}
             </span>
-            <span className="text-2xl text-gray-400">/10</span>
+            <span className="text-2xl text-gray-400">/5</span>
           </div>
           <div className="mt-6 space-y-2">
             {product.ratings.map((rating, index) => (

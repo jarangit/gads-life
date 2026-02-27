@@ -3,9 +3,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FiArrowRight, FiPackage } from "react-icons/fi";
-import { HiOutlineClock } from "react-icons/hi";
 import { cn } from "@/utils/cn";
-import { accentColors, editorial, transitions } from "@/components/ui";
+import { editorial, transitions } from "@/components/ui";
 import { formatRelativeTime } from "@/components/ui/utils";
 import { LastReview } from "@/lib/api/home/type";
 
@@ -51,7 +50,7 @@ function ReviewFeaturedCard({ review }: { review: LastReview }) {
         </h3>
         <div className="flex items-baseline gap-1">
           <span className="text-3xl font-bold text-brand">{review.overallScore}</span>
-          <span className="text-white/50 text-sm">/ 10</span>
+          <span className="text-white/50 text-sm">/ 5</span>
         </div>
       </div>
     </Link>
@@ -64,7 +63,7 @@ function ReviewSmallCard({ review }: { review: LastReview }) {
     <Link
       href={`/products/${review.slug}`}
       className={cn(
-        "group flex gap-3 items-start p-3.5",
+        "group flex gap-3 items-start p-4",
         editorial.cardBorder,
         "hover:border-gray-200 hover:shadow-md",
         transitions.allNormal,
@@ -107,10 +106,7 @@ export function LatestReviewsSection({ reviews }: LatestReviewsSectionProps) {
   return (
     <section>
       <div className={editorial.header}>
-        <div className="flex items-center gap-2">
-          <HiOutlineClock className={`text-xl ${accentColors.blue.text}`} />
-          <h2 className={editorial.title}>เพิ่งรีวิวไป</h2>
-        </div>
+        <h2 className={editorial.title}>เพิ่งรีวิวไป</h2>
         <Link href="/products" className={editorial.link}>
           ดูเพิ่ม <FiArrowRight className="text-xs" />
         </Link>

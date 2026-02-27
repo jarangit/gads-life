@@ -28,7 +28,7 @@ export default async function CategoryDetailPage({
   params,
 }: CategoryPageProps) {
   const { slug } = await params;
-  return <CategoryDetailContent slug={slug} />;
+  return <div className="container"><CategoryDetailContent slug={slug} /></div>;
 }
 
 /**

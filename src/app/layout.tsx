@@ -82,7 +82,7 @@ export default function RootLayout({
         <QueryProvider>
           <Nav />
           <main className="min-h-screen">
-            <div className="py-8">{children}</div>
+            <div className="py-10">{children}</div>
           </main>
         </QueryProvider>
         <script

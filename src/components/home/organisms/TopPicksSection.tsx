@@ -2,8 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
-import { HiOutlineStar } from "react-icons/hi";
-import { accentColors, editorial, radius } from "@/components/ui";
+import { editorial, radius } from "@/components/ui";
 import { TopPickCard } from "../molecules";
 import { IProductItemVm } from "@/types/models/product";
 
@@ -21,10 +20,7 @@ export function TopPicksSection({ items }: TopPicksSectionProps) {
   return (
     <section>
       <div className={editorial.header}>
-        <div className="flex items-center gap-2">
-          <HiOutlineStar className={`text-xl ${accentColors.amber.text}`} />
-          <h2 className={editorial.title}>ลดราคาอยู่ตอนนี้</h2>
-        </div>
+        <h2 className={editorial.title}>ลดราคาอยู่ตอนนี้</h2>
         <Link href="/products/sale" className={editorial.link}>
           ดูเพิ่ม <FiArrowRight className="text-xs" />
         </Link>

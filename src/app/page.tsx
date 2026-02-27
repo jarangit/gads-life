@@ -5,7 +5,6 @@ import { useHome } from "@/hooks/useHome";
 import {
   HeroSection,
   TopPicksSection,
-  ProblemsSection,
   CategoriesSection,
   LatestReviewsSection,
   QuickVerdictListSection,
@@ -24,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="container space-y-8 md:space-y-10">
+      <div className="container space-y-12 md:space-y-16">
         {/* Hero — dark card on gray bg */}
         <HeroSection
           onSearchClick={() => setSearchOpen(true)}
@@ -33,9 +32,7 @@ export default function Home() {
 
         {/* Categories — white stripe */}
         {homeData.categories && (
-          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
-            <CategoriesSection categories={homeData.categories} />
-          </div>
+          <CategoriesSection categories={homeData.categories} />
         )}
 
         {/* Latest Reviews — gray bg, dark image card contrasts well */}
@@ -45,19 +42,15 @@ export default function Home() {
 
         {/* Top Picks — white stripe */}
         {homeData.sellProducts && (
-          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
-            <TopPicksSection items={homeData.sellProducts} />
-          </div>
+          <TopPicksSection items={homeData.sellProducts} />
         )}
 
         {/* Problems — gray bg */}
-        <ProblemsSection />
+        {/* <ProblemsSection /> */}
 
         {/* News — white stripe */}
         {homeData.featuredArticles && homeData.featuredArticles.length > 0 && (
-          <div className="bg-white -mx-4 px-4 py-8 md:py-10">
-            <NewsSection items={homeData.featuredArticles} />
-          </div>
+          <NewsSection items={homeData.featuredArticles} />
         )}
 
         {/* Quick Verdict — gray bg */}

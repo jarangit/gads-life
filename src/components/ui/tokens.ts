@@ -232,7 +232,7 @@ export const gridPresets = {
  */
 export const editorial = {
   /** Section header row – title on left, optional "see more" on right */
-  header: "flex items-center justify-between mb-5",
+  header: "flex items-center justify-between mb-4",
   /** Section title – large bold */
   title: "text-2xl font-bold text-gray-900",
   titleLg: "text-3xl font-bold text-gray-900",
@@ -249,7 +249,7 @@ export const editorial = {
   /** Standard gap between editorial cards */
   gap: "gap-4",
   /** Section vertical spacing (between sections on the page) */
-  sectionGap: "space-y-10 md:space-y-12",
+  sectionGap: "space-y-12 md:space-y-16",
 } as const;
 
 /* ═══════════════════════════════════════════════

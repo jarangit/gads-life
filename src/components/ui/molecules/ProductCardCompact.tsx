@@ -44,7 +44,7 @@ export function ProductCardCompact({
   return (
     <div
       className={cn(
-        "group bg-gray-50/80 hover:bg-gray-100/80",
+        "group bg-white hover:bg-white-100/80",
         transitions.allNormal,
         radius,
       )}

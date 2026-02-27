@@ -34,7 +34,7 @@ const Nav = () => {
     <>
       <header className="sticky top-0 z-50 backdrop-blur-md bg-white/30 border-b border-gray-100/50">
         <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-3">
-          <div className="flex items-center gap-8">
+          <div className="flex items-end gap-8">
             <Link href="/" className="flex items-center gap-2 text-xl">
               <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
                 <FiCheck className="text-brand text-xl" />

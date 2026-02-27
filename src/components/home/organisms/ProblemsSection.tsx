@@ -1,7 +1,6 @@
 /* ──────── ProblemsSection – 4-chip editorial grid ──────── */
 import React from "react";
 import Link from "next/link";
-import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 import {
   BsBatteryCharging,
   BsHeadphones,
@@ -50,10 +49,7 @@ export function ProblemsSection() {
   return (
     <section>
       <div className={editorial.header}>
-        <div className="flex items-center gap-2">
-          <HiOutlineQuestionMarkCircle className={`text-xl ${accentColors.orange.icon}`} />
-          <h2 className={editorial.title}>เจอปัญหาแบบนี้มั้ย?</h2>
-        </div>
+        <h2 className={editorial.title}>เจอปัญหาแบบนี้มั้ย?</h2>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">

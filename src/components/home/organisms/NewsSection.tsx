@@ -1,6 +1,5 @@
 /* ──────── NewsSection ──────── */
 import Link from "next/link";
-import { HiOutlineNewspaper } from "react-icons/hi";
 import { FiArrowRight } from "react-icons/fi";
 import { cn } from "@/utils/cn";
 import { editorial, transitions, typography } from "@/components/ui";
@@ -139,10 +138,7 @@ export function NewsSection({ items }: NewsSectionProps) {
   return (
     <section>
       <div className={editorial.header}>
-        <div className="flex items-center gap-2">
-          <HiOutlineNewspaper className="text-xl text-violet-500" />
-          <h2 className={editorial.title}>ข่าวล่าสุด</h2>
-        </div>
+        <h2 className={editorial.title}>ข่าวล่าสุด</h2>
         <Link href="/news" className={editorial.link}>
           ดูทั้งหมด <FiArrowRight className="text-xs" />
         </Link>
