@@ -32,10 +32,10 @@ export function HeroImageCard({ image, name, className }: HeroImageCardProps) {
             alt={name}
             width={300}
             height={300}
-            className="mx-auto"
+            className="mx-auto rounded-3xl"
           />
         )}
-        <span className="text-gray-500 text-sm">{name}</span>
+        <div className="text-gray-500 text-sm mt-4">{name}</div>
       </div>
     </div>
   );

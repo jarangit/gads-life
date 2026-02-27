@@ -87,7 +87,7 @@ export function ProductImage({
           alt={alt}
           fill
           className={cn(
-            "object-contain",
+            "object-contain rounded-3xl",
             imagePadding,
             hoverScale &&
               "group-hover:scale-105 transition-transform duration-300",
@@ -106,10 +106,10 @@ export function ProductImage({
         width={width ?? 300}
         height={height ?? 300}
         className={cn(
-          "object-contain mx-auto",
+          "object-contain mx-auto ",
           imagePadding,
           hoverScale &&
-            "group-hover:scale-105 transition-transform duration-300",
+            "group-hover:scale-105 transition-transform duration-300" ,
         )}
       />
     </div>
