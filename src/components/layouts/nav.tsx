@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 const Nav = () => {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const isLinkActive = (href: string) => {
@@ -59,8 +59,8 @@ const Nav = () => {
                         ? "text-brand! border-brand"
                         : ""
                       : link.featured
-                        ? "text-black border-transparent"
-                        : "text-gray-600 border-transparent",
+                      ? "text-black border-transparent"
+                      : "text-gray-600 border-transparent",
                   )}
                 >
                   {link.label}
@@ -112,12 +112,11 @@ const Nav = () => {
                   link.featured
                     ? " text-black"
                     : isLinkActive(link.href)
-                      ? "bg-brand/10 text-brand"
-                      : "text-gray-600 hover:bg-gray-50",
+                    ? "bg-brand/10 text-brand"
+                    : "text-gray-600 hover:bg-gray-50",
                 )}
               >
                 {link.label}
-               
               </Link>
             ))}
           </nav>
