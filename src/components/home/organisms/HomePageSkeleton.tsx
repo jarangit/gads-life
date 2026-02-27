@@ -1,7 +1,7 @@
 /* ──────── HomePageSkeleton – matches editorial layout ──────── */
 export function HomePageSkeleton() {
   return (
-    <div className="min-h-screen bg-background animate-pulse space-y-10 md:space-y-12">
+    <div className="container min-h-screen bg-background animate-pulse space-y-10 md:space-y-12">
       {/* Hero */}
       <div className="h-[300px] md:h-[340px] bg-gray-800 rounded-3xl" />
 
