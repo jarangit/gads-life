@@ -80,7 +80,7 @@ export function NewsArticleContent({ id }: NewsArticleContentProps) {
                     {section.heading}
                   </h2>
                 )}
-                <ul className="space-y-2.5 text-[15px] leading-loose text-gray-700">
+                <ul className="space-y-2.5 text-lg leading-loose text-gray-700">
                   {items.map((text, idx) => (
                     <li key={idx} className="flex gap-2.5">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400" />
@@ -99,7 +99,7 @@ export function NewsArticleContent({ id }: NewsArticleContentProps) {
                   {section.heading}
                 </h2>
               )}
-              <p className="text-[15px] leading-loose text-gray-700">
+              <p className="text-lg leading-loose text-gray-700">
                 {section.body}
               </p>
             </div>
